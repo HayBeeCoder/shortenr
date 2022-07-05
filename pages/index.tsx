@@ -44,7 +44,7 @@ const Home: NextPage = () => {
           </ul>
           <div className='justify-self-stretch'>
             <Input
-              className=" text-base pr-3"
+              className=" text-base pr-3 border-[#C3C0C3]"
               labelFor='original_url'
               handleChange={handleInput}
               placeholder="https://Enterthatlongurlandshortenit.com"
