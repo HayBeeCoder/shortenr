@@ -25,8 +25,9 @@ const Home: NextPage = () => {
       </Head>
       <section className='flex items-center justify-center  h-screen px-3'>
 
-        <div className='max-w-[600px] mx-auto flex flex-col gap-4 ' >
-          <h1 className='font-bold text-[24px] text-center'>A simple URL shortener <span className='text-[#2B7FFF]'>and more...</span></h1>
+        <div className='w-11/12 max-w-[600px] mx-auto flex flex-col gap-4 ' >
+          <h1 className='font-bold text-[24px] text-center'>A simple URL shortener {" "}
+           <span className='text-[#2B7FFF] block'>and more...</span></h1>
           <ul>
             <ListItem>
               Copy that Long URL
@@ -41,7 +42,7 @@ const Home: NextPage = () => {
               Optionally, Track this URL by signing up :)
             </ListItem>
           </ul>
-          <div>
+          <div className='justify-self-stretch'>
             <Input
               className=" text-base pr-3"
               labelFor='original_url'
@@ -52,7 +53,7 @@ const Home: NextPage = () => {
               value={input}
 
             />
-            <Button classname='bg-[#2B7FFF] text-white my-4'  >
+            <Button classname='bg-[#2B7FFF] text-white my-4 '  >
               Shorten URL
             </Button>
           </div>
