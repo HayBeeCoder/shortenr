@@ -21,7 +21,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             ?
             <></>
             :
-            <div className=' flex flex-auto   gap-1'>
+            <div className=' flex flex-auto justify-end items-center    gap-1 '>
               <Link href="/login">
                 <Button classname='basis-24 sm:basis-36 py-2 px-2 text-sm border-[1px] border-solid border-[#2b7fff] bg-[#2b7fff] inline'>
                   Log In
