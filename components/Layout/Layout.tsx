@@ -11,12 +11,13 @@ interface ILayout {
 const Layout: React.FC<ILayout> = ({ children }) => {
   const { pathname } = useRouter()
   // console.log(router)
+  console.log(pathname)
   return (
     <div className='w-ful'>
       <header className='fixed top-0  w-full px-2 py-3  flex justify-between gap-10'>
         <Logo />
         {
-          (pathname == "/login" || pathname == "/signup")
+          pathname.includes("/login") || pathname.includes("/signup")
             ?
             <></>
             :
@@ -27,7 +28,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button classname='basis-24 sm:basis-36 flex-grow py-2 px-2 text-sm text-[#2b7fff] border-[1px] border-solid border-[#2b7fff] bg-transparent inline'>
+                <Button classname='basis-24 sm:basis-36  py-2 px-2 text-sm text-[#2b7fff] border-[1px] border-solid border-[#2b7fff] bg-transparent inline'>
                   Sign Up
                 </Button>
               </Link>
