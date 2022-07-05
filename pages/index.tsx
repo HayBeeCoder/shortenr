@@ -53,7 +53,7 @@ const Home: NextPage = () => {
               value={input}
 
             />
-            <Button classname='bg-[#2B7FFF] text-white my-2 '  >
+            <Button classname='bg-[#0B1A30] text-white my-2 '  >
               Shorten URL
             </Button>
           </div>

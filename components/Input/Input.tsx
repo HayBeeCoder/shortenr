@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 
 interface Props {
-    placeholder: string,
+    placeholder?: string,
     label?: string,
     labelFor: string,
     handleChange: (e: React.FormEvent) => void,
@@ -42,7 +42,7 @@ const handleEyesClick = (e: React.FormEvent) => {
       name= {labelFor}
        type={type}
         placeholder={placeholder}
-         className={`outline-none p-3 pr-10 border-solid border-[1px]  rounded-md  block text-xs w-full focus:outline-none focus:border-primary-800 ${showRedBorder ? "border-red-400" : "border-secondary-600"} ${className}` }
+         className={`outline-none p-3 pr-10 border-solid border-[1px]  rounded-md  block text-xs w-full focus:outline-none focus:border-primary-800 focus:border-[#2B7FFF] ${showRedBorder ? "border-red-400" : "border-secondary-600"} ${className}` }
          onChange={e => handleChange(e)}
          value={value}/>
       
