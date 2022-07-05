@@ -30,13 +30,13 @@ const Home: NextPage = () => {
            <span className='text-[#2B7FFF] block'>and more...</span></h1>
           <ul>
             <ListItem>
-              Copy that Long URL
+              Copy that long URL
             </ListItem>
             <ListItem>
               Paste into the input box below
             </ListItem>
             <ListItem>
-              And Generate a short URL
+               Generate a short URL
             </ListItem>
             <ListItem>
               Optionally, Track this URL by signing up :)
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
               value={input}
 
             />
-            <Button classname='bg-[#2B7FFF] text-white my-4 '  >
+            <Button classname='bg-[#2B7FFF] text-white my-2 '  >
               Shorten URL
             </Button>
           </div>
