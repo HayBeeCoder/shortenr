@@ -22,12 +22,12 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             :
             <div className=' flex flex-auto   gap-1'>
               <Link href="/login">
-                <Button classname='basis-20 sm:basis-36 py-2 px-2 text-sm border-[1px] border-solid border-[#2b7fff] bg-[#2b7fff] inline'>
+                <Button classname='basis-24 sm:basis-36 py-2 px-2 text-sm border-[1px] border-solid border-[#2b7fff] bg-[#2b7fff] inline'>
                   Log In
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button classname=' basis-20 sm:basis-36 flex-grow py-2 px-2 text-sm text-[#2b7fff] border-[1px] border-solid border-[#2b7fff] bg-transparent inline'>
+                <Button classname='basis-24 sm:basis-36 flex-grow py-2 px-2 text-sm text-[#2b7fff] border-[1px] border-solid border-[#2b7fff] bg-transparent inline'>
                   Sign Up
                 </Button>
               </Link>
