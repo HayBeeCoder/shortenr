@@ -2,7 +2,7 @@ import React from 'react'
 
 const Logo = () => {
     return (
-        <div className='flex items-center'>
+        <div className='flex items-center '>
             <span>
 
                 <svg width="32" height="48" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -11,7 +11,7 @@ const Logo = () => {
                     <path d="M16 28V34C16 38.4183 19.5817 42 24 42V42C28.4183 42 32 38.4183 32 34V28" stroke="#0B1A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </span>
-            <p className='text-2xl font-black tracking-wider '>
+            <p className='text-base font-black tracking-wider '>
                 SHORTEN<span className='text-[#2B7FFF]'>R</span>
             </p>
 
