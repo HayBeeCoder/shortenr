@@ -16,7 +16,7 @@ interface Props {
 
 let inputType:string
 
-const Input:React.FC<Props> = ({placeholder,label,labelFor,children ,type , handleChange , value , showRedBorder, className} ) => {
+const Input:React.FC<Props> = ({placeholder,label,labelFor,type , handleChange , value , showRedBorder, className} ) => {
 
 const handleEyesClick = (e: React.FormEvent) => {
   const previousSibling = e.currentTarget.previousSibling as HTMLInputElement
