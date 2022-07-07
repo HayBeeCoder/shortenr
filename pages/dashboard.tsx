@@ -1,6 +1,6 @@
 import React from 'react'
 
-const dashboard = () => {
+const Dashboard = () => {
   return (
     <section className='flex items-center justify-center  min-h-screen'>
         <div className='w-full bg-'>
@@ -12,4 +12,4 @@ const dashboard = () => {
   )
 }
 
-export default dashboard
+export default Dashboard

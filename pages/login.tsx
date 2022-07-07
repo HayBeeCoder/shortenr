@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Button from '../components/Button'
 import Input from '../components/Input'
 
-const login = () => {
+const Login = () => {
   const [input, setInput] = useState({
     username: '',
     password: '',
@@ -64,4 +64,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login

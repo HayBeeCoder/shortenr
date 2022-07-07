@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { isModuleNamespaceObject } from 'util/types'
+// import { isModuleNamespaceObject } from 'util/types'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import { BASE_URL, REGEX_EMAIL } from '../constants'
@@ -10,7 +10,7 @@ import validateForm from '../helpers/validateForm'
 import useUser from '../hooks/useUser'
 
 
-const signup = () => {
+const Signup = () => {
   // const {data,isDone,isLoading,mutate} = useUser()
   const [showEmptyFieldError, setShowEmptyFieldError] = useState(false)
   const [showInputErrors, setShowInputErrors] = useState(false)
@@ -146,4 +146,4 @@ const signup = () => {
   )
 }
 
-export default signup
+export default Signup
