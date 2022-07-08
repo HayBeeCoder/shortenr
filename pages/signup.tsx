@@ -12,6 +12,7 @@ import useUser from '../hooks/useUser'
 
 const Signup = () => {
   // const {data,isDone,isLoading,mutate} = useUser()
+  const [serverResponse, setServerResponse] = useState('')
   const [showEmptyFieldError, setShowEmptyFieldError] = useState(false)
   const [showInputErrors, setShowInputErrors] = useState(false)
   const [input, setInput] = useState<IUser>({
@@ -41,7 +42,7 @@ const Signup = () => {
     // if
     if (input.email == '' || input.confirm_password || input.password) setShowEmptyFieldError(true)
 
-      console.log(validateForm(error,input))
+    // console.log(validateForm(error,input))
     if (!validateForm(error, input)) {
       setShowInputErrors(true)
     } else {
@@ -56,9 +57,15 @@ const Signup = () => {
       }
 
       try {
-        console.log(formData)
-        const result = await axios.post(BASE_URL + "auth/users/", formData).then(res => res.data)
-        console.log(result)
+        // console.log(formDat)
+        const result = await axios.post(BASE_URL + "auth/users/", formData)
+        if (result.status == 400 && result.data) {
+          setServerResponse(result.data?.email[0])
+        }else if(result.status == 200)
+        {
+            console.log(result.data)
+        }
+        // console.log(result)
       } catch (err) {
         console.log("error on sign up: ", err)
       }
@@ -77,68 +84,83 @@ const Signup = () => {
 
         <div className='justify-self-stretch space-y-5'>
           <div>
-          <Input
-            className=" text-base pr-3 border-[#C3C0C3]"
-            label="Email"
-            labelFor='email'
-            handleChange={handleInput}
-            placeholder="JohnDoe@gmail.com"
-            showRedBorder={showInputErrors}
-            type="text"
-            
+            <Input
+              className=" text-base pr-3 border-[#C3C0C3]"
+              label="Email"
+              labelFor='email'
+              handleChange={handleInput}
+              placeholder="JohnDoe@gmail.com"
+              showRedBorder={showInputErrors}
+              type="text"
 
-            value={input.email}
 
-          />
-         {showInputErrors &&   error.email != "" && <p className='text-xs text-red-500 '>Enter a valid email !</p>}
-
-        </div>
-        <div>
-
-          <Input
-            className=" text-base pr-3 border-[#C3C0C3]"
-            label="Password"
-            labelFor='password'
-            handleChange={handleInput}
-            //   placeholder="https://Enterthatlongurlandshortenit.com"
-            showRedBorder={showInputErrors}
-            type="password"
-
-            value={input.password}
-            
-            />
-            {showInputErrors && error.password != '' && <p className='text-xs text-red-500 '>Password must be at least six characters long!</p>}
-            </div>
-
-            <div>
-
-          <Input
-            className=" text-base pr-3 border-[#C3C0C3]"
-            label="Confirm password"
-            labelFor='confirm_password'
-            handleChange={handleInput}
-            //   placeholder="https://Enterthatlongurlandshortenit.com"
-            showRedBorder={showInputErrors}
-            type="password"
-
-            value={input.confirm_password}
+              value={input.email}
 
             />
-            {showInputErrors && error.confirm_password != '' && <p className='text-xs text-red-500 '>Passwords do not match!</p>}
-            </div>
-          <Button classname='bg-[#0B1A30] text-white my-2 ' onClick={(e) => handleSubmit(e)} >
+            {showInputErrors && error.email != "" && <p className='text-xs text-red-500 '>Enter a valid email !</p>}
+
+          </div>
+          <div>
+
+            <Input
+              className=" text-base pr-3 border-[#C3C0C3]"
+              label="Password"
+              labelFor='password'
+              handleChange={handleInput}
+              //   placeholder="https://Enterthatlongurlandshortenit.com"
+              showRedBorder={showInputErrors}
+              type="password"
+
+              value={input.password}
+
+            />
+
+            { 
+            showInputErrors &&
+             error.password != '' &&
+              <p className='text-xs text-red-500 '>Password must be at least six characters long!</p>
+              }
+
+          </div>
+
+          <div>
+
+            <Input
+              className=" text-base pr-3 border-[#C3C0C3]"
+              label="Confirm password"
+              labelFor='confirm_password'
+              handleChange={handleInput}
+              //   placeholder="https://Enterthatlongurlandshortenit.com"
+              showRedBorder={showInputErrors}
+              type="password"
+
+              value={input.confirm_password}
+
+            />
+            {
+              showInputErrors &&
+              error.confirm_password != '' &&
+              <p className='text-xs text-red-500 '>Passwords do not match!</p>
+            }
+
+          </div>
+          <div className='my-2'>
+
+            {serverResponse != '' && <p className='text-xs text-red-500 '>{serverResponse}</p>}
+            <Button classname='bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) => handleSubmit(e)} >
 
 
-            Submit
-          </Button>
-          <p className='text-center text-sm'>Already have an account ? {" "}
-            <span className='font-bold underline underline-offset-2 '>
-              <Link href='/login'>
+              Submit
+            </Button>
+            <p className='text-center text-sm'>Already have an account ? {" "}
+              <span className='font-bold underline underline-offset-2 '>
+                <Link href='/login'>
 
-                Log In
-              </Link>
-            </span>
-          </p>
+                  Log In
+                </Link>
+              </span>
+            </p>
+          </div>
         </div>
 
       </div>
