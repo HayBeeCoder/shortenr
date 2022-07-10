@@ -1,5 +1,19 @@
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    .circle {
+
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #fff;
+        animation: move 500ms linear 0ms infinite;
+        margin-right: 30px;
+    }
+    @keyframes move {
+        from {transform: translateX(0px)}
+        to {transform: translateX(45px)}
+      }
+}

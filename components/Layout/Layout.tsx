@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import path from 'node:path/win32'
 import React from 'react'
 import Button from '../Button'
 import Logo from '../Logo'
@@ -17,7 +18,10 @@ const Layout: React.FC<ILayout> = ({ children }) => {
       <header className='fixed top-0  w-full px-2 py-3  flex justify-between gap-10'>
         <Logo />
         {
-          pathname.includes("/login") || pathname.includes("/signup")
+          pathname.includes("/login") || 
+          pathname.includes("/signup") ||
+          pathname.includes("/confirmation") || 
+          pathname.includes("/activate")
             ?
             <></>
             :

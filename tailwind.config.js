@@ -9,6 +9,17 @@ module.exports = {
       'Lato': ['Lato', "sans-serif"]
     },
     extend: {
+      animation: {
+        grow: 'grow 500ms linear 0s infinite',
+      },
+      keyframes: {
+        grow: {
+          from: { transform: 'scale(0, 0)', opacity: 0 },
+          to: { transform: 'scale(1, 1)', opacity: 1 }
+          // '0%, 100%': { transform: 'rotate(-3deg)' },
+          // '50%': { transform: 'rotate(3deg)' },
+        }
+      }
     },
   },
   plugins: [],

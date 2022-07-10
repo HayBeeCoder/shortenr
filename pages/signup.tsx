@@ -8,10 +8,16 @@ import { BASE_URL, REGEX_EMAIL } from '../constants'
 import { fieldValidator } from '../helpers/signUpValidator'
 import validateForm from '../helpers/validateForm'
 import useUser from '../hooks/useUser'
+import Loader from '../components/Loader/Loader'
+import { useAppContext } from '../context/state'
+import { useRouter } from 'next/router'
 
 
 const Signup = () => {
+  const router = useRouter()
   // const {data,isDone,isLoading,mutate} = useUser()
+  const {state: {email} , setState: {setEmail}} = useAppContext()
+  const [isLoading, setisLoading] = useState(false)
   const [serverResponse, setServerResponse] = useState('')
   const [showEmptyFieldError, setShowEmptyFieldError] = useState(false)
   const [showInputErrors, setShowInputErrors] = useState(false)
@@ -37,8 +43,9 @@ const Signup = () => {
 
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    console.log(12345678)
     // if
     if (input.email == '' || input.confirm_password || input.password) setShowEmptyFieldError(true)
 
@@ -56,19 +63,26 @@ const Signup = () => {
         re_password: input.confirm_password
       }
 
-      try {
-        // console.log(formDat)
-        const result = await axios.post(BASE_URL + "auth/users/", formData)
-        if (result.status == 400 && result.data) {
-          setServerResponse(result.data?.email[0])
-        }else if(result.status == 200)
-        {
-            console.log(result.data)
-        }
-        // console.log(result)
-      } catch (err) {
-        console.log("error on sign up: ", err)
-      }
+      // try {
+      // console.log(formDat)
+      setisLoading(true)
+      axios.post(BASE_URL + "auth/users/", formData)
+        .then(response => {
+          // console.log(response)
+          if (response.status == 201 || response.status == 200) {
+            setEmail(formData.email)
+
+            // console.log(response)
+          }
+        }).catch((err: any) => {
+          console.log(err)
+          if ( err.response && err.response.status == 400) {
+            // console.log(err.response.data?.email[0])
+            setServerResponse(err.response.data?.email[0])
+          }
+          // console.log("error on sign up: ", err)
+        })
+        .finally(() =>  setisLoading(false))
 
 
       //else block ending
@@ -90,7 +104,7 @@ const Signup = () => {
               labelFor='email'
               handleChange={handleInput}
               placeholder="JohnDoe@gmail.com"
-              showRedBorder={showInputErrors}
+              showRedBorder={showInputErrors && error.email != ''}
               type="text"
 
 
@@ -108,18 +122,18 @@ const Signup = () => {
               labelFor='password'
               handleChange={handleInput}
               //   placeholder="https://Enterthatlongurlandshortenit.com"
-              showRedBorder={showInputErrors}
+              showRedBorder={ showInputErrors && error.password != ''}
               type="password"
 
               value={input.password}
 
             />
 
-            { 
-            showInputErrors &&
-             error.password != '' &&
+            {
+              showInputErrors &&
+              error.password != '' &&
               <p className='text-xs text-red-500 '>Password must be at least six characters long!</p>
-              }
+            }
 
           </div>
 
@@ -131,7 +145,7 @@ const Signup = () => {
               labelFor='confirm_password'
               handleChange={handleInput}
               //   placeholder="https://Enterthatlongurlandshortenit.com"
-              showRedBorder={showInputErrors}
+              showRedBorder={showInputErrors && error.confirm_password != ''}
               type="password"
 
               value={input.confirm_password}
@@ -147,10 +161,19 @@ const Signup = () => {
           <div className='my-2'>
 
             {serverResponse != '' && <p className='text-xs text-red-500 '>{serverResponse}</p>}
-            <Button classname='bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) => handleSubmit(e)} >
+            {/* <Button classname='focus:outline-[#0b1a30] bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) =>{
+              setEmail("haybeecodes@gmail.com")
+               router.push('/confirmation')
+            }} >
+Submit
+            </Button> */}
+            <Button classname='focus:outline-[#0b1a30] bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) => handleSubmit(e)} >
+            {
+              isLoading ? 
+              <Loader/> :
+              "Submit"
+            }
 
-
-              Submit
             </Button>
             <p className='text-center text-sm'>Already have an account ? {" "}
               <span className='font-bold underline underline-offset-2 '>
