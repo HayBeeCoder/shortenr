@@ -5,7 +5,7 @@ import axios from 'axios'
 import Link from 'next/link'
 import Loader from '../../components/Loader/Loader'
 
-const index = ({ uid }: { uid: string[] }) => {
+const Index = ({ uid }: { uid: string[] }) => {
     // console.log(uid)
     const [show, setShow] = useState(false)
     const router = useRouter()
@@ -22,7 +22,7 @@ const index = ({ uid }: { uid: string[] }) => {
 
     useEffect(() => {
         // .then(res => res.data)
-        console.log("always guarding")
+        // console.log("always guarding")
         // setIsActivating(true)
         axios.post(BASE_URL + "auth/users/activation/", formData)
             .then(response => {
@@ -38,7 +38,7 @@ const index = ({ uid }: { uid: string[] }) => {
                     setalreadyActivated(true)
                     setIsActivating(false)
                 }
-                console.log(e)
+                // console.log(e)
             })
             .finally(() => setIsActivating(false))
     }, [])
@@ -70,7 +70,7 @@ const index = ({ uid }: { uid: string[] }) => {
     )
 }
 
-export default index
+export default Index
 
 export const getServerSideProps = async ({ params }: any) => {
     const { uid } = params
