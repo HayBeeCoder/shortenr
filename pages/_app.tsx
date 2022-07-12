@@ -4,9 +4,11 @@ import Layout from '../components/Layout'
 import { AppWrapper } from '../context/state'
 import App from 'next/app'
 import ConfirmationGuard from '../components/ConfirmationGuard/ConfirmationGuard'
+import RouteGuard from '../components/RouteGuard/RouteGuard'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AppWrapper>
+      <RouteGuard>
 
       <Layout>
       {/* <ConfirmationGuard> */}
@@ -15,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         {/* </ConfirmationGuard> */}
       </Layout>
+      </RouteGuard>
     </AppWrapper>
   )
 }

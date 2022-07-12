@@ -7,16 +7,18 @@ import Input from '../components/Input'
 import { BASE_URL, REGEX_EMAIL } from '../constants'
 import { fieldValidator } from '../helpers/signUpValidator'
 import validateForm from '../helpers/validateForm'
-import useUser from '../hooks/useUser'
+import useUser from '../hooks/useFetchLinks'
 import Loader from '../components/Loader/Loader'
 import { useAppContext } from '../context/state'
 import { useRouter } from 'next/router'
+import { signup } from '../Services/user.services'
+import { format } from 'path'
 
 
 const Signup = () => {
   const router = useRouter()
   // const {data,isDone,isLoading,mutate} = useUser()
-  const {state: {email} , setState: {setEmail}} = useAppContext()
+  const {  setState: { setEmail } } = useAppContext()
   const [isLoading, setisLoading] = useState(false)
   const [serverResponse, setServerResponse] = useState('')
   const [showEmptyFieldError, setShowEmptyFieldError] = useState(false)
@@ -33,7 +35,7 @@ const Signup = () => {
   })
 
 
-  console.log(error)
+  // console.log(error)
 
   const handleInput = (e: React.FormEvent) => {
     const { name, value } = e.target as HTMLInputElement
@@ -45,7 +47,7 @@ const Signup = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(12345678)
+    // console.log(12345678)
     // if
     if (input.email == '' || input.confirm_password || input.password) setShowEmptyFieldError(true)
 
@@ -66,23 +68,31 @@ const Signup = () => {
       // try {
       // console.log(formDat)
       setisLoading(true)
-      axios.post(BASE_URL + "auth/users/", formData)
-        .then(response => {
-          // console.log(response)
-          if (response.status == 201 || response.status == 200) {
-            setEmail(formData.email)
-
-            // console.log(response)
-          }
-        }).catch((err: any) => {
-          console.log(err)
-          if ( err.response && err.response.status == 400) {
-            // console.log(err.response.data?.email[0])
-            setServerResponse(err.response.data?.email[0])
-          }
-          // console.log("error on sign up: ", err)
+      signup(formData)
+        .then(() => {
+          setEmail(formData.email)
+          router.push("/confirmation")
         })
-        .finally(() =>  setisLoading(false))
+        .catch((err: any) => {
+
+          console.log(err)
+
+          if (err.response && err.response.status == 400) {
+
+            const { email, password } = err.response.data
+
+            if (email) setServerResponse(err.response.data?.email[0])
+
+            else if (password) {
+
+              if (Array.isArray(password)) {
+                setServerResponse(password.join("\n"))
+              }
+            }
+            // console.log("error on sign up: ", err)
+          }
+        })
+        .finally(() => setisLoading(false))
 
 
       //else block ending
@@ -122,7 +132,7 @@ const Signup = () => {
               labelFor='password'
               handleChange={handleInput}
               //   placeholder="https://Enterthatlongurlandshortenit.com"
-              showRedBorder={ showInputErrors && error.password != ''}
+              showRedBorder={showInputErrors && error.password != ''}
               type="password"
 
               value={input.password}
@@ -168,11 +178,11 @@ const Signup = () => {
 Submit
             </Button> */}
             <Button classname='focus:outline-[#0b1a30] bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) => handleSubmit(e)} >
-            {
-              isLoading ? 
-              <Loader/> :
-              "Submit"
-            }
+              {
+                isLoading ?
+                  <Loader /> :
+                  "Submit"
+              }
 
             </Button>
             <p className='text-center text-sm'>Already have an account ? {" "}

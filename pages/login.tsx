@@ -1,11 +1,23 @@
+import axios from 'axios'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import Input from '../components/Input'
+import Loader from '../components/Loader/Loader'
+import { BASE_URL } from '../constants'
+import { useAppContext } from '../context/state'
+import axiosInstance from '../Services/axios.services'
+import { login } from '../Services/user.services'
 
 const Login = () => {
+  const router = useRouter()
+  const { setState: { setAccessToken }, state: { accessToken } } = useAppContext()
+
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+
   const [input, setInput] = useState({
-    username: '',
+    email: '',
     password: '',
   })
 
@@ -13,6 +25,54 @@ const Login = () => {
     const { name, value } = e.target as HTMLInputElement
     setInput({ ...input, [name]: value })
   }
+
+  const handleSubmit = () => {
+    const formData = {
+      email: input.email,
+      password: input.password
+    }
+    
+    if (input.email != '' || input.password != '') {
+      setIsLoggingIn(true)
+      login(formData)
+        .then(tokens => {
+          // console.log(tokens)
+          setAccessToken(tokens.access)
+      
+          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`
+          const returnUrl = (router.query.returnUrl as string) || '/dashboard';
+          // console.log(returnUrl)
+          router.push(returnUrl);
+          // console.log(accessToken)
+        })
+        .catch(e => console.log(e))
+        .finally(() => 
+        
+        {
+          router.query.returnUrl = ''
+          setIsLoggingIn(false)
+        })
+      // axios.post(BASE_URL + "auth/jwt/create/", formData)
+      //   .then(res => {
+      //     if(res.status == 200){
+      //       const {access,refresh} = res.data
+      //       axios.defaults.headers.common["Authorization"] = `Bearer ${access}`
+      //     }
+      //     console.log(res.status)
+      //     // console.log('ahdhdh')
+      //   })
+    }
+  }
+
+
+  useEffect(() => {
+    // redirect to home if already logged in
+    if (accessToken.length > 0) {
+      // router.push('/dashboard');
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className='flex items-center justify-center  h-screen'>
@@ -23,14 +83,14 @@ const Login = () => {
         <div className='justify-self-stretch space-y-5'>
           <Input
             className=" text-base pr-3 border-[#C3C0C3]"
-            label="Username"
-            labelFor='username'
+            label="Email"
+            labelFor='email'
             handleChange={handleInput}
             placeholder="JohnDoe@gmail.com"
             showRedBorder={false}
             type="text"
 
-            value={input.username}
+            value={input.email}
 
           />
           <Input
@@ -45,17 +105,24 @@ const Login = () => {
             value={input.password}
 
           />
-
-          <Button classname='bg-[#0B1A30] text-white my-2 '  >
-            Submit
+          <Button classname='bg-[#0B1A30] text-white my-2 ' onClick={handleSubmit} >
+            {
+              isLoggingIn
+                ?
+                <Loader />
+                :
+                'Submit'
+            }
           </Button>
-          <p className='text-center text-sm'>Are you a new user ? {" "}
-          <span className='font-bold underline underline-offset-2 '>
-           <Link href='/signup'> 
 
-                  Sign Up
-          </Link>
-          </span>
+
+          <p className='text-center text-sm'>Are you a new user ? {" "}
+            <span className='font-bold underline underline-offset-2 '>
+              <Link href='/signup'>
+
+                Sign Up
+              </Link>
+            </span>
           </p>
         </div>
 

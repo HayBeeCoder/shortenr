@@ -11,7 +11,7 @@ const Confirmation = () => {
                     <>
                         <p>There is nothing to see here :).</p>
                         <p>Return to <Link href="/">
-                            <span className='text-[#2b7fff]'>
+                        <span className='text-[#2b7fff] cursor-pointer'>
                                 Homepage
                             </span>
                         </Link>
