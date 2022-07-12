@@ -24,9 +24,10 @@ const TableRow = ({ long_url, short_url, date_created, }: ITableRow) => {
       <td>{long_url}</td>
       <td>{short_url}</td>
       <td>{date_created}</td>
-      <td className='flex gap-2'>
-        <Button classname=' bg-[#F8EAE6] !text-[#BD2C00] !p-0 '>Delete</Button>
-        <Button classname='!p-0 flex-grow-0 flex-shrink bg-[#E6F0FF] !text-[#2B7FFF]'>View</Button>
+      <td className='flex flex-col  lg:flex-row gap-2 items-center basis-16 pr-0'>
+        <Button classname='  bg-[#F8EAE6] !text-[#BD2C00] py-[5px] px-4 text-sm font-normal border-[#bd2c00] border-[1px] hidden md:block'>Delete</Button>
+        <Button classname='  bg-[#F8EAE6] !text-[#BD2C00] py-[5px] px-4 text-sm font-normal border-[#bd2c00] border-[1px] md:hidden'>Del</Button>
+        <Button classname='  bg-[#E6F0FF] !text-[#2B7FFF] border-[#2b7fff]  border-[1px] py-[5px] px-4 text-sm font-normal '>View</Button>
       </td>
     </tr>
   )
@@ -124,16 +125,22 @@ const Dashboard = () => {
       </div>
 
 
-      <div className='w-full'>
+      <div className='w-full  px-3 overflow-scroll'>
         {
           data &&
 
-          <table className='w-full px-3 text-left' >
+          <table className='w-full min-w-[600px] px-3 text-left' >
             <colgroup>
-            <col  className='w-[42/100] min-w-[300px]'/>
-            <col  className='w-[100px] min-w-[300px]'/>
-            <col  className='w-[42/100] min-w-[300px]'/>
-            <col  className='w-[42/100] min-w-[300px]'/>
+              {/* <col  className='w-[40/100] min-w-[300px]'/>
+            <col  className=' '/>
+            <col  className='w-[8/100] '/>
+            <col  className='w-[8/100] '/> */}
+
+              <col span={1} className="w-[40%]" />
+              <col span={1} className="w-[22%]" />
+              <col span={1} className="w-[13%]" />
+              <col span={1} className="w-[15%]" />
+              {/* </colgroup> */}
             </colgroup>
             {/* <colgroup span={20}>
               <col span={6} />
@@ -156,7 +163,7 @@ const Dashboard = () => {
                   {/* ------------------------------- */}
                 </th>
                 <th className=' '>
-                  
+
                   Short Url
 
                 </th>
@@ -173,6 +180,7 @@ const Dashboard = () => {
                 <th className='w-[2/10]  text-white' >
                   {/* {"                            "} */}
                   {/* ------------------------------------------------ */}
+                  miscella
                 </th>
               </tr>
             </thead>
