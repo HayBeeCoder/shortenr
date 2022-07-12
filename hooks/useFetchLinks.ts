@@ -5,17 +5,16 @@ import axiosInstance from "../Services/axios.services";
 //     owner: userEmail
 // })
 
-export default function useFetchLinks(userEmail: string){
-    const fetcher: Fetcher<IUserLinks,string> = (url: string) => axiosInstance.get(url,{params: {
-        owner: userEmail
-    }}).then(res => res.data)
+export default function useFetchLinks(userEmail: string | null){
+    const fetcher: Fetcher<IUserLinks,string | null> = (url: string ) => axiosInstance.get(url).then(res => res.data)
 
     // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
-    const {data,error} = useSWR(`links/`, fetcher)
+    const {data,error,mutate} = useSWR(userEmail ? `links/?owner=${userEmail}` : userEmail, fetcher)
 
     return {
         data,
         isLoading: !error && !data,
-        isError: error
+        isError: error,
+        mutate
     }
 }

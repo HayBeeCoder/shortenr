@@ -14,7 +14,7 @@ interface IUserLinks {
   count: number,
   next: null | number,
   prev: null | number,
-  result: IUserLink[]
+  results: IUserLink[]
 }
 
 interface IUserLink {

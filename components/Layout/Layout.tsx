@@ -15,10 +15,10 @@ interface ILayout {
 
 
 const Layout: React.FC<ILayout> = ({ children }) => {
-  const { state: { email,accessToken }, setState: { setAccessToken } } = useAppContext()
+  const { state: { email,accessToken }, setState: { setAccessToken,setEmail } } = useAppContext()
   // const [loggedInUser,setLoggedInUser] = useState('')
   // const decode: {user_id: string | undefined} = accessToken != '' ? jwtDecode(accessToken)  : {user_id: undefined}con
-  console.log(accessToken)
+  // console.log(accessToken)
   // const {user_id} =  accessToken != '' ? jwtDecode(accessToken) as { user_id: string} : {user_id: undefined}
   // const {data : user, isError} =  useFetchUser(undefined) 
   // console.log(user)
@@ -27,7 +27,8 @@ const Layout: React.FC<ILayout> = ({ children }) => {
   const { push, pathname } = useRouter()
   const handleLogout = () => {
     setAccessToken('')
-    push('/login')
+    setEmail('')
+    push('/')
   }
 
 //   useEffect(() => {

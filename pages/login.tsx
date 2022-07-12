@@ -47,7 +47,6 @@ const Login = () => {
         })
         .catch(e => console.log(e))
         .finally(() => 
-        
         {
           router.query.returnUrl = ''
           setIsLoggingIn(false)
@@ -65,14 +64,7 @@ const Login = () => {
   }
 
 
-  useEffect(() => {
-    // redirect to home if already logged in
-    if (accessToken.length > 0) {
-      // router.push('/dashboard');
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+ 
 
   return (
     <section className='flex items-center justify-center  h-screen'>

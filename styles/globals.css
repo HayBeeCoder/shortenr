@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+    table{
+        table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 14px 0;
+    }
+    tr{
+        padding: 10px 0;
+    }
+    td{
+        padding: 10px 0;
+        word-break: break-all
+    }
     .circle {
 
         width: 6px;

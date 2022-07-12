@@ -8,26 +8,26 @@ import axiosInstance from "../Services/axios.services";
 
 
 export default function useFetchUser(userId: string | undefined) {
-    let user_id: string
-    if(userId) user_id = userId
-    const fetcher: Fetcher<{ id: number, email: string }, any> = (url: string) => axiosInstance.get(url + user_id).then(res => res.data)
+    // let user_id: string
+    // if(userId) user_id = userId
+    // const fetcher: Fetcher<{ id: number, email: string }, any> = (url: string) => axiosInstance.get(url + user_id).then(res => res.data)
 
-    // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
-    // const { data, error, mutate } = useSWR(['auth/users/', userId], fetcher)
-    const { data, error, mutate } = useSWR('auth/users/', fetcher)
-    // console.log(data)
-    // useEffect(() => {
-    //     if(data){
+    // // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
+    // // const { data, error, mutate } = useSWR(['auth/users/', userId], fetcher)
+    // const { data, error, mutate } = useSWR('auth/users/', fetcher)
+    // // console.log(data)
+    // // useEffect(() => {
+    // //     if(data){
 
-    //         mutate({...data})
-    //     }
+    // //         mutate({...data})
+    // //     }
+    // // }
+    // //     , [data])
+
+    // return {
+    //     data,
+    //     isLoading: !error && !data,
+    //     isError: error,
+    //     mutate
     // }
-    //     , [data])
-
-    return {
-        data,
-        isLoading: !error && !data,
-        isError: error,
-        mutate
-    }
 }
