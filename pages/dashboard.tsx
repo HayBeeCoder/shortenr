@@ -225,7 +225,7 @@ const Dashboard = () => {
 
           </div> :
           <p className='text-center'>
-            :( Seems you haven't generated a short link at all.
+            :( Seems you haven&apos;t generated a short link at all.
           </p>
       }
 
