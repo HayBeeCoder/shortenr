@@ -82,7 +82,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
                   pathname.includes("/analytics")
                   ?
                   // <Link href="">
-                  <Button  classname='basis-24 sm:basis-36  py-2 px-2 md:px-5 text-sm text-[#0B1A30] border-[1px] border-solid border-[#0B1A30] bg-transparent inline hover:bg-[#0B1A30] hover:text-white hover:opacity-100' onClick={handleLogout}>
+                  <Button  classname='basis-24 sm:basis-36  py-2 px-2 md:px-5 text-sm !text-[#0B1A30] border-[1px] border-solid border-[#0B1A30] bg-transparent inline hover:bg-[#0B1A30] hover:text-white hover:opacity-100' onClick={handleLogout}>
                     Log Out
                   </Button>
                   :

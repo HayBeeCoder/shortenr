@@ -19,7 +19,7 @@ interface IUserLinks {
 
 interface IUserLink {
   // url: string,
-  // id: number,
+  id: number,
   short_link: string,
   long_link: string,
   date_created: string,
