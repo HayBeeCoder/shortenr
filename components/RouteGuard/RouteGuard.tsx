@@ -35,8 +35,10 @@ const RouteGuard = ({children}: IRouteGuard) => {
     function authCheck(url: string) {
         // redirect to login page if accessing a private page and not logged in 
         // const privatePaths = ['/dashboard' , '/analytics'];
-        const publicPaths = ['/login' , '/signup','/']
+        const publicPaths = ['/login' , '/signup','/','confirmation']
+        // const publicPaths = ['/login' , '/signup','/','confirmation']
         const path = url.split('?')[0];
+
         // console.log(path)
         // console.log(accessToken)
         // console.log("accesstoken:  " , accessToken)
@@ -46,7 +48,8 @@ const RouteGuard = ({children}: IRouteGuard) => {
         //     router.push(router.query.returnUrl as string)
         //     return children
         // }
-        if (accessToken == '' && !publicPaths.includes(path) ) {
+        //still need to remove this
+        if (accessToken == '' && (!publicPaths.includes(path) || path.includes('/activate'))) {
             setAuthorized(false);
 
             router.push({
