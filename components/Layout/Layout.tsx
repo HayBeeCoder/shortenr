@@ -76,27 +76,30 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             :
 
 
-            <div className=' flex flex-auto md:flex-none justify-end items-center gap-1 '>
+            <div className='    md:flex-none justify-end items-center  '>
               {
                 pathname.includes("/dashboard") ||
                   pathname.includes("/analytics")
                   ?
                   // <Link href="">
-                  <Button  classname='basis-24 sm:basis-36  py-2 px-2 md:px-5 text-sm !text-[#0B1A30] border-[1px] border-solid border-[#0B1A30] bg-transparent inline hover:bg-[#0B1A30] hover:text-white hover:opacity-100' onClick={handleLogout}>
+                  <button  className='mini-btn text-[#0B1A30] hover:text-[#fff] border-[#0B1A30] bg-transparent  hover:bg-[#0B1A30]' onClick={handleLogout}>
                     Log Out
-                  </Button>
+                  </button>
                   :
                   <>
+                  <div className='flex bg-orange md:w-80 gap-1 items-center'>
+
                     <Link href="/login">
-                      <Button classname='basis-24 sm:basis-36 py-2 px-2 md:px-5 text-sm border-[1px] border-solid border-[#0B1A30] bg-[#0B1A30] inline'>
+                      <button className=' sm:basis-36 mini-btn border-[#0B1A30] border-[1px] bg-[#0B1A30] text-white '>
                         Log In
-                      </Button>
+                      </button>
                     </Link>
                     <Link href="/signup">
-                      <Button classname='basis-24 sm:basis-36  py-2 px-2 md:px-5 text-sm text-[#0B1A30] border-[1px] border-solid border-[#0B1A30] bg-transparent inline hover:bg-[#0B1A30] hover:text-white hover:opacity-100'>
+                      <button className=' sm:basis-36  mini-btn text-[#0B1A30] border-[1px] border-solid border-[#0B1A30] bg-transparent hover:opacity-100'>
                         Sign Up
-                      </Button>
+                      </button>
                     </Link>
+                  </div>
                   </>
               }
             </div>

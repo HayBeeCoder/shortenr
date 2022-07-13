@@ -2,7 +2,7 @@ import React from 'react'
 
 const Skeleton = ({className}: {className: string}) => {
   return (
-    <div className={`bg-orange-500 ${className}`}></div>
+    <div className={`bg-gray-300 ${className}`}></div>
   )
 }
 

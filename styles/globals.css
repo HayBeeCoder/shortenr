@@ -34,4 +34,12 @@
 }
 
 @tailwind components;
+@layer components{
+    .btn{
+        @apply outline-none py-3 w-full block hover:opacity-80 focus:opacity-80 focus:outline-1 font-bold rounded-lg
+    }
+    .mini-btn{
+        @apply hover:opacity-80 focus:opacity-80 focus:outline-1 rounded-[4px] py-[5px] px-4 text-sm font-normal  border-[1px] 
+    }
+}
 @tailwind utilities;
