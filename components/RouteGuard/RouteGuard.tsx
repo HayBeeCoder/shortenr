@@ -49,7 +49,7 @@ const RouteGuard = ({children}: IRouteGuard) => {
         //     return children
         // }
         //still need to remove this
-        if (accessToken == '' && (!publicPaths.includes(path) || !path.includes('/activate'))) {
+        if (accessToken == '' && !publicPaths.includes(path)  && !path.includes('/activate')) {
             setAuthorized(false);
 
             router.push({
