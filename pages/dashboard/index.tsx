@@ -1,16 +1,19 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+import Link from 'next/link'
 import Router, { useRouter } from 'next/router'
-import React, { useDebugValue, useEffect, useState } from 'react'
+import React, { useDebugValue, useEffect, useLayoutEffect, useState } from 'react'
 import { KeyedMutator, mutate } from 'swr'
-import Button from '../components/Button'
-import Input from '../components/Input'
-import Skeleton from '../components/Skeleton/Skeleton'
+import Button from '../../components/Button'
+import Input from '../../components/Input'
+import RouteGuard from '../../components/RouteGuard/RouteGuard'
+import ShortenedUrlBanner from '../../components/ShortenedUrlBanner/ShortenedUrlBanner'
+import Skeleton from '../../components/Skeleton/Skeleton'
 // import { mutate } from 'swr'
-import { useAppContext } from '../context/state'
-import useFetchLinks from '../hooks/useFetchLinks'
-import useFetchUser from '../hooks/useFetchUser'
-import axiosInstance from '../Services/axios.services'
+import { useAppContext } from '../../context/state'
+import useFetchLinks from '../../hooks/useFetchLinks'
+import useFetchUser from '../../hooks/useFetchUser'
+import axiosInstance from '../../Services/axios.services'
 
 interface ITableRow {
   long_url: string,
@@ -38,7 +41,9 @@ const TableRow = ({ long_url, short_url, date_created, id, mutate }: ITableRow) 
       <td className='flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2'>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
+        <Link href='/dashboard/analytics'>
         <button className='mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] '>View</button>
+        </Link>
       </td>
     </tr>
   )
@@ -48,7 +53,7 @@ const TableRow = ({ long_url, short_url, date_created, id, mutate }: ITableRow) 
 const Dashboard = () => {
   const router = useRouter()
   const { state: { accessToken, email }, setState: { setEmail } } = useAppContext()
-  const { user_id }: { user_id: string | null } = accessToken == '' ? { user_id: null } : jwtDecode(accessToken)
+  const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
 
   const { data, isLoading, mutate } = useFetchLinks(email)
   // console.log(data)
@@ -63,7 +68,7 @@ const Dashboard = () => {
   }
 
   const handleSubmit = () => {
-    console.log(url.trim().length)
+    // console.log(url.trim().length)
     if (url.trim().length != 0) {
       const formData = {
         long_link: url
@@ -83,10 +88,10 @@ const Dashboard = () => {
 
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // console.log(user_id)
-    if (accessToken != '') {
-
+    // console.log(accessToken)
+    if (accessToken && accessToken != '' ) {
       axiosInstance.get(`auth/users/${user_id}/`)
         .then(res => {
           if (res.status == 200) {
@@ -125,20 +130,21 @@ const Dashboard = () => {
           shortenedUrl != ''
 
           &&
-          <div className='border-solid border-[1px] bg-[#FAFBFB] rounded-[8px]  px-2 md:px-4 pt-2 md:pt-1 py-1 w-full md:max-w-max relative md:flex items-center gap-2 max-w-lg mx-auto md:mx-w-none'>
-            <p className='text-sm flex-grow md:inline-block mb-2 md:mb-0  font-semibold'>Here you go:</p>
+          // <div className='border-solid border-[1px] bg-[#FAFBFB] rounded-[8px]  px-2 md:px-4 pt-2 md:pt- py-1 w-full md:max-w-max relative md:flex items-center gap-2 max-w-lg mx-auto md:mx-w-none'>
+          //   <p className='text-sm flex-grow md:inline-block mb-2 md:mb-0  font-semibold'>Here you go:</p>
             
-            <div className='flex flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center'>
+          //   <div className='flex flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center'>
 
 
-            <p className='text-base p-2 bg-white  text-[#2B7FFF]'>{shortenedUrl}</p>
-            <button className='inline-block  relative top-1/2 text-[#6B788E] hover:text-inherit p-2 self-end'>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-            </button>
-            </div>
-          </div>
+          //   <p className='text-base p-2 bg-white  text-[#2B7FFF]'>{shortenedUrl}</p>
+          //   <button className='inline-block  relative top-1/2 text-[#6B788E] hover:text-inherit p-2 self-end'>
+          //     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
+          //       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          //     </svg>
+          //   </button>
+          //   </div>
+          // </div>
+          <ShortenedUrlBanner shortenedUrl={shortenedUrl}/>
         }
       </div>
 
@@ -242,4 +248,13 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default RouteGuard(Dashboard)
+
+
+// export async function getStaticProps() {
+//   return {
+//     props: {
+//       protected: true,
+//     },
+//   }
+// }

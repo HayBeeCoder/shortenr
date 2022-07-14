@@ -46,6 +46,8 @@ export const signup = async (formData: signUpFormData) => {
 }
 
 export const logout = async () => {
-    await localStorage.removeItem("refresh")
+ 
+     localStorage.removeItem("refresh")
+     localStorage.removeItem("access_token")
     
 }

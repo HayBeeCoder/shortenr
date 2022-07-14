@@ -1,3 +1,4 @@
+import axios from 'axios'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -5,15 +6,45 @@ import React, { useState } from 'react'
 import Button from '../components/Button'
 import Input from '../components/Input'
 import ListItem from '../components/ListItem/ListItem'
+import Loader from '../components/Loader/Loader'
 import Logo from '../components/Logo'
+import ShortenedUrlBanner from '../components/ShortenedUrlBanner/ShortenedUrlBanner'
+import { BASE_URL } from '../constants'
+import { useAppContext } from '../context/state'
+import axiosInstance from '../Services/axios.services'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  const {state: {email}}  = useAppContext()
   const [input, setInput] = useState('')
+  const [shortenedUrl, setShortenedUrl] = useState<string | null> (null)
+  const [isLoading ,setIsLoading] = useState(false)
 
   const handleInput = (e: React.FormEvent) => {
     const { value } = e.target as HTMLInputElement
+
+  setShortenedUrl(null)
     setInput(value)
+  }
+  // console.log("email" , email)
+
+  const handleSubmit = () => {
+    const formData = {
+      long_link: input
+    }
+    if(input.trim() != ''){
+      setIsLoading(true)
+        axios.post(`${BASE_URL}links/`,formData)
+            .then(res => {
+              console.log(res.data)
+              setShortenedUrl(res.data.short_link)
+            })
+            .catch(
+              e => console.log("error on shortening in homepage: " , e)
+            )
+            .finally(() => setIsLoading(false))
+
+    }
   }
 
   return (
@@ -53,9 +84,23 @@ const Home: NextPage = () => {
               value={input}
 
             />
-            <Button classname='bg-[#0B1A30] text-white my-2 '  >
-              Shorten URL
+            <Button classname='bg-[#0B1A30] text-white my-2 '  onClick={handleSubmit}>
+              {
+                isLoading ?
+                <Loader/> :
+                'Shorten URL'
+
+              } 
             </Button>
+            
+            {
+              shortenedUrl
+
+              &&
+              <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
+
+            }
+            
           </div>
 
         </div>

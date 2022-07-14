@@ -5,6 +5,7 @@ import path from 'node:path/win32'
 import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../../context/state'
 import useFetchUser from '../../hooks/useFetchUser'
+import { logout } from '../../Services/user.services'
 import Button from '../Button'
 import Logo from '../Logo'
 
@@ -15,6 +16,7 @@ interface ILayout {
 
 
 const Layout: React.FC<ILayout> = ({ children }) => {
+  const router = useRouter()
   const { state: { email,accessToken }, setState: { setAccessToken,setEmail } } = useAppContext()
   // const [loggedInUser,setLoggedInUser] = useState('')
   // const decode: {user_id: string | undefined} = accessToken != '' ? jwtDecode(accessToken)  : {user_id: undefined}con
@@ -26,9 +28,11 @@ const Layout: React.FC<ILayout> = ({ children }) => {
   
   const { push, pathname } = useRouter()
   const handleLogout = () => {
+    
+    push('/')
     setAccessToken('')
     setEmail('')
-    push('/')
+    logout()
   }
 
 //   useEffect(() => {
@@ -38,17 +42,20 @@ const Layout: React.FC<ILayout> = ({ children }) => {
 //   )
   // console.log(router)
   // console.log(pathname)
+  // console.log( 'inside ', router.asPath, email)
+  // console.log('accesstoken: ' , accessToken)
   return (
-    <div className='w-ful'>
-      <header className=' top-0  w-full px-2 py-3  flex justify-between gap-10 items-center'>
+    <div className='w-full'>
+      <header className=' top-0  w-full px-2 py-3  flex justify-between gap-5 items-center'>
         <Logo />
         {
 
             // user?.email &&
             (
 
-              pathname.includes("/dashboard") ||
-              pathname.includes("/analytics")
+              pathname.includes("/dashboard") 
+              // ||
+              // pathname.includes("/analytics")
               )
             ?
             <p className='text-[14px] md:block hidden'> 
@@ -76,7 +83,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             :
 
 
-            <div className='    md:flex-none justify-end items-center  '>
+            <div className='flex-grow flex-end    md:flex-none justify-end items-center  '>
               {
                 pathname.includes("/dashboard") ||
                   pathname.includes("/analytics")
@@ -87,10 +94,10 @@ const Layout: React.FC<ILayout> = ({ children }) => {
                   </button>
                   :
                   <>
-                  <div className='flex bg-orange md:w-80 gap-1 items-center'>
+                  <div className='flex justify-end bg-orange-400 flex-grow md:w-80 gap-1 items-center'>
 
                     <Link href="/login">
-                      <button className=' sm:basis-36 mini-btn border-[#0B1A30] border-[1px] bg-[#0B1A30] text-white '>
+                      <button className='  sm:basis-36 mini-btn border-[#0B1A30] border-[1px] bg-[#0B1A30] text-white '>
                         Log In
                       </button>
                     </Link>
@@ -114,10 +121,10 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         )
             ?
             <p className='text-[14px] md:hidden block text-center'> 
-            <p className='font-semibold'>
+            <span className='font-semibold'>
             Logged In as:
 
-            </p>{"  "}
+            </span>{"  "}
              <span className='text-[#2B7FFF] text-[18px]'>
               {email }
             </span>

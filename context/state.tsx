@@ -1,4 +1,4 @@
-import React, { useState,createContext,useContext } from 'react'
+import React, { useState, createContext, useContext, useEffect, useLayoutEffect } from 'react'
 // import { createContext, useContext } from 'react'
 import { REGEX_EMAIL } from '../constants'
 type Action = { type: 'increment' } | { type: 'decrement' }
@@ -9,16 +9,17 @@ interface IsetState {
     setAccessToken: React.Dispatch<React.SetStateAction<string>>
     setRefreshToken: React.Dispatch<React.SetStateAction<string>>
 }
-type Tstate = { email: string, accessToken: string,refreshToken: string }
-type AppProviderProps = { children: React.ReactNode }
+type Tstate = { email: string, accessToken: string, refreshToken: string }
+type AppProviderProps = { children: React.ReactNode, setToken: React.Dispatch<React.SetStateAction<string>> }
 
 const AppContext = createContext<{ state: Tstate, setState: IsetState } | undefined>(undefined)
 
-export function AppWrapper({ children }: AppProviderProps) {
+export function AppWrapper({ children, setToken }: AppProviderProps) {
     const [email, setEmail] = useState('')
+    const [LinkId, setLinkId] = useState<null | number>(null)
     // const [user,setUser] = useState('')
-    const [accessToken,setAccessToken] = useState('')
-    const [refreshToken,setRefreshToken] = useState('')
+    const [accessToken, setAccessToken] = useState('')
+    const [refreshToken, setRefreshToken] = useState('')
 
 
     let sharedState = {
@@ -33,6 +34,18 @@ export function AppWrapper({ children }: AppProviderProps) {
             setRefreshToken
         }
     }
+    useEffect(
+        () => {
+            if ( accessToken == '' ) {
+                setAccessToken(
+
+                    JSON.parse(localStorage.getItem("access_token") as string)
+                )
+            }else{
+                localStorage.setItem("access_token" , JSON.stringify(accessToken))
+            }
+        },
+        [accessToken])
 
     return (
         <AppContext.Provider value={sharedState}>

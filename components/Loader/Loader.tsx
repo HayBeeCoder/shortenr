@@ -4,7 +4,7 @@ interface IProps {
 }
 const Loader = ({ color }: IProps) => {
     return (
-        <div className={`mx-auto container w-[75px] h-[15px]  flex relative`}>
+        <div className={`mx-auto container w-[75px] h-[15px] items-center flex relative`}>
             <span className={`circle absolute top-0 left-0 animate-grow ${color}`}></span>
             <span className={`circle ${color}`}></span>
             <span className={`circle ${color}`}></span>
