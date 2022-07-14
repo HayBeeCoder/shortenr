@@ -35,7 +35,7 @@ const Page = () => {
   
         <div className='col-start-4 col-span-6  row-start-1  md:flex items-end'>
 
-    <div className='space-y-3 md:space-y-0 p-4 md:p-0 rounded-md md:rounded-none bg-[#F9F9FC] md:bg-transparent bg-opacity-70 md:grid grid-cols-3 gap-1 grid-rows-1 w-full' >
+    <div className='mb-3 space-y-3 md:space-y-0 p-4 md:p-0 rounded-md md:rounded-none bg-[#F9F9FC] md:bg-transparent bg-opacity-70 md:grid grid-cols-3 gap-1 grid-rows-1 w-full' >
       <div className='col-start-1 row-start-1 row-span-1'>
 
       <MiniCard
@@ -50,13 +50,14 @@ const Page = () => {
       property='Shortened URL'
       value="https://egghead.io"
       isLoading={false}
+      colored
       />
       </div>
       <div className='col-start-3'>
       <MiniCard
       property='Date Created'
       value= "17th December, 2022"
-      isLoading={true}
+      isLoading={false}
       />
       </div>
       
