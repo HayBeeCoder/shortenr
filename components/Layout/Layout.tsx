@@ -59,11 +59,11 @@ const Layout: React.FC<ILayout> = ({ children }) => {
               )
             ?
             <p className='text-[14px] md:block hidden'> 
-            <span className='font-semibold'>
+            <span className='font-semibold '>
             Logged In as:
 
             </span>{"  "}
-             <span className='text-[#2B7FFF] text-[18px]'>
+             <span className='text-[#2B7FFF] text-[18px] '>
               {email}
             </span>
             </p>
@@ -83,18 +83,18 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             :
 
 
-            <div className='flex-grow flex-end    md:flex-none justify-end items-center  '>
+            <div className='  md:flex-none  items-center  relative'>
               {
                 pathname.includes("/dashboard") ||
                   pathname.includes("/analytics")
                   ?
                   // <Link href="">
-                  <button  className='mini-btn text-[#0B1A30] hover:text-[#fff] border-[#0B1A30] bg-transparent  hover:bg-[#0B1A30]' onClick={handleLogout}>
+                  <button  className='mini-btn text-[#0B1A30] hover:text-[#fff] border-[#0B1A30] bg-transparent  hover:bg-[#0B1A30] relative right-0' onClick={handleLogout}>
                     Log Out
                   </button>
                   :
                   <>
-                  <div className='flex justify-end bg-orange-400 flex-grow md:w-80 gap-1 items-center'>
+                  <div className='flex justify-end  flex-grow md:w-80 gap-1 items-center'>
 
                     <Link href="/login">
                       <button className='  sm:basis-36 mini-btn border-[#0B1A30] border-[1px] bg-[#0B1A30] text-white '>
@@ -121,7 +121,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         )
             ?
             <p className='text-[14px] md:hidden block text-center'> 
-            <span className='font-semibold'>
+            <span className='font-semibold block'>
             Logged In as:
 
             </span>{"  "}
