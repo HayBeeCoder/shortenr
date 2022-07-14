@@ -11,12 +11,6 @@ const RouteGuard = ( Protected : () => JSX.Element) => {
         
         const { state: { accessToken } } = useAppContext()
         const router = useRouter()
-        // console.log(accessToken)
-
-        if (accessToken && accessToken != '') {
-            return <Protected/>
-        }
-        
         useEffect(() => {
             const auth = JSON.parse(localStorage.getItem("access_token") as string)
             if (!auth) {
@@ -28,6 +22,13 @@ const RouteGuard = ( Protected : () => JSX.Element) => {
             }
            
         },[])
+        // console.log(accessToken)
+
+        if (accessToken && accessToken != '') {
+            return <Protected/>
+        }
+        
+      
     
         return (
             accessToken && accessToken != '' ? <Protected  /> : <></>
