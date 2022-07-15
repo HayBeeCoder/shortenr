@@ -18,6 +18,11 @@
         padding: 10px 30px 10px 0;
         word-break: break-all
     }
+    .truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .circle {
 
         width: 6px;

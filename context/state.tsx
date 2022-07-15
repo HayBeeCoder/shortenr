@@ -8,15 +8,16 @@ interface IsetState {
     setEmail: React.Dispatch<React.SetStateAction<string>>
     setAccessToken: React.Dispatch<React.SetStateAction<string>>
     setRefreshToken: React.Dispatch<React.SetStateAction<string>>
+    setLink:  React.Dispatch<React.SetStateAction<IUserLink | null>>
 }
-type Tstate = { email: string, accessToken: string, refreshToken: string }
+type Tstate = { email: string, accessToken: string, refreshToken: string ,link: IUserLink | null}
 type AppProviderProps = { children: React.ReactNode, setToken: React.Dispatch<React.SetStateAction<string>> }
 
 const AppContext = createContext<{ state: Tstate, setState: IsetState } | undefined>(undefined)
 
 export function AppWrapper({ children, setToken }: AppProviderProps) {
     const [email, setEmail] = useState('')
-    const [LinkId, setLinkId] = useState<null | number>(null)
+    const [link, setLink] = useState<IUserLink | null>(null)
     // const [user,setUser] = useState('')
     const [accessToken, setAccessToken] = useState('')
     const [refreshToken, setRefreshToken] = useState('')
@@ -24,11 +25,13 @@ export function AppWrapper({ children, setToken }: AppProviderProps) {
 
     let sharedState = {
         state: {
+            link,
             email,
             accessToken,
             refreshToken
         },
         setState: {
+            setLink,
             setEmail,
             setAccessToken,
             setRefreshToken

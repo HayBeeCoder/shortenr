@@ -2,7 +2,7 @@ import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router'
-import React, { useDebugValue, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useDebugValue, useEffect, useLayoutEffect, useState } from 'react'
 import { KeyedMutator, mutate } from 'swr'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
@@ -21,9 +21,31 @@ interface ITableRow {
   date_created: string,
   id: number,
   mutate: KeyedMutator<IUserLinks>
+  // setLink:  React.Dispatch<React.SetStateAction<IUserLink>>
 }
 
-const TableRow = ({ long_url, short_url, date_created, id, mutate }: ITableRow) => {
+
+
+const Dashboard = () => {
+  const router = useRouter()
+  const { state: { accessToken, email }, setState: { setEmail,setLink } } = useAppContext()
+  const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
+
+  const { data, isLoading, mutate } = useFetchLinks(email)
+  // console.log(data)
+  const [url, setUrl] = useState('')
+  const [shortenedUrl, setShortenedUrl] = useState('')
+
+  const handleInput = (e: React.FormEvent) => {
+    setShortenedUrl('')
+    const { value } = e.target as HTMLInputElement
+
+    setUrl(value)
+  }
+
+
+  
+const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }: ITableRow) => {
   const handleDelete = (id: number) => {
     axiosInstance.delete(`links/${id}`)
       .then(res => {
@@ -42,30 +64,15 @@ const TableRow = ({ long_url, short_url, date_created, id, mutate }: ITableRow) 
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
         <Link href='/dashboard/analytics'>
-        <button className='mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] '>View</button>
+        <button className='mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] ' onClick={() => setLink(data?.results.find(link => link.id == id) as IUserLink)}>View</button>
         </Link>
       </td>
     </tr>
   )
-}
+},[data])
 
 
-const Dashboard = () => {
-  const router = useRouter()
-  const { state: { accessToken, email }, setState: { setEmail } } = useAppContext()
-  const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
 
-  const { data, isLoading, mutate } = useFetchLinks(email)
-  // console.log(data)
-  const [url, setUrl] = useState('')
-  const [shortenedUrl, setShortenedUrl] = useState('')
-
-  const handleInput = (e: React.FormEvent) => {
-    setShortenedUrl('')
-    const { value } = e.target as HTMLInputElement
-
-    setUrl(value)
-  }
 
   const handleSubmit = () => {
     // console.log(url.trim().length)
@@ -223,6 +230,7 @@ const Dashboard = () => {
 
                   <TableRow
                     key={index}
+                    // setLink={setLink}
                     id={link.id}
                     long_url={link.long_link}
                     short_url={link.short_link}

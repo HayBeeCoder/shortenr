@@ -1,4 +1,5 @@
 
+
 interface IUser {
   email: string,
   password: string,
@@ -57,4 +58,15 @@ interface IUserLink {
 type CurrentMonth = {
   date: string,
   count__sum: number
+}
+
+interface IChartConfig {
+  canvasElement: HTMLCanvasElement ,
+  chartType: ChartType,
+  labels: string[],
+  data: number[],
+  backgroundColor:string[];
+  axes: boolean,
+  legend: boolean
+
 }

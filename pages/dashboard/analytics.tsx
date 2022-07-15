@@ -3,15 +3,21 @@ import React, { useLayoutEffect } from 'react'
 import MiniCard from '../../components/MiniCard/MiniCard'
 import RouteGuard from '../../components/RouteGuard/RouteGuard'
 import SubAnalytic from '../../components/SubAnalytic/SubAnalytic'
+import Subanalytics from '../../components/SubAnalytics/SubAnalytics'
 import ViewBanner from '../../components/ViewBanner/ViewBanner'
 import { useAppContext } from '../../context/state'
 import useFetchLinks from '../../hooks/useFetchLinks'
 import axiosInstance from '../../Services/axios.services'
+import  dayjs from "dayjs"
+
 
 const Page = () => {
   // const {data} = use
-  const {state: {email,accessToken},setState:{setEmail}} = useAppContext()
-  const { data, isLoading, mutate } = useFetchLinks(!!email.length ? email : null)
+  const {state: {email,accessToken,link},setState:{setEmail,}} = useAppContext()
+  console.log("link Id: " , link)
+  // const { data, isLoading, mutate } = useFetchLinks(!!email.length ? email : null)
+  // const { data, isLoading, mutate } = useFetchLinks(email)
+  // console.log(data)
 
   // console.log(data)
   useLayoutEffect(() => {
@@ -35,28 +41,28 @@ const Page = () => {
   
         <div className='col-start-4 col-span-6  row-start-1  md:flex items-end'>
 
-    <div className='mb-3 space-y-3 md:space-y-0 p-4 md:p-0 rounded-md md:rounded-none bg-[#F9F9FC] md:bg-transparent bg-opacity-70 md:grid grid-cols-3 gap-1 grid-rows-1 w-full' >
-      <div className='col-start-1 row-start-1 row-span-1'>
+    <div className='mb-3 space-y-3 md:space-y-0 p-4 md:p-0 rounded-md md:rounded-none bg-[#F9F9FC] md:bg-transparent bg-opacity-70 md:grid grid-cols-8 gap-1 grid-rows-1 w-full' >
+      <div className='col-start-1 col-span-2 row-start-1 row-span-1'>
 
       <MiniCard
       property='Original URL'
-      value="https://egghead.io/lessons/next-js-make-user-state-globally-accessible-in-next-js-with-react-context-and-providers"
-      isLoading={true}
+      value={link?.long_link as string}
+      isLoading={false}
       />
       </div>
       
-        <div className='col-start-2'>
+        <div className='col-start-3 col-span-4'>
       <MiniCard
       property='Shortened URL'
-      value="https://egghead.io"
+      value={link?.short_link as string}
       isLoading={false}
       colored
       />
       </div>
-      <div className='col-start-3'>
+      <div className='col-start-7 col-span-2'>
       <MiniCard
       property='Date Created'
-      value= "17th December, 2022"
+      value= {dayjs(link?.date_created as string).format('MMM D, YYYY')}
       isLoading={false}
       />
       </div>
@@ -67,24 +73,9 @@ const Page = () => {
      <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'>
     
 
-     <ViewBanner view_count='5' isLoading={true}/>
+     <ViewBanner view_count={ (link?.visit_count as number).toString()} isLoading={false}/>
     </div>
-
-     <div className='col-start-4 col-span-6  row-start-4 row-span-3'>
-     
-      <SubAnalytic title='Views' />
-     </div>
-     <div className='col-start-1 col-span-3  row-start-1 row-span-3'>
-
-    <SubAnalytic title='Browsers'/>
-     </div>
-     <div className='col-start-1 col-span-3  row-start-4 row-span-3'>
-    <SubAnalytic title='Devices'/>
-    </div>
-     <div className='col-start-10 col-span-3  row-start-1 row-span-6'>
-    <SubAnalytic title='Referrals'/>
-    </div>
-      
+<Subanalytics/>
     </section>
   )
 }
