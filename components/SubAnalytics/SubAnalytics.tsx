@@ -4,7 +4,11 @@ import buildChart from '../../helpers/buildChart'
 import SubAnalytic from '../SubAnalytic/SubAnalytic'
 import {Chart} from 'chart.js/auto'
 import { ChartType } from 'chart.js'
+import { processOtherAnalytics } from '../../helpers/processOtherAnalytics'
+import Skeleton from '../Skeleton/Skeleton'
 let browserChart: any
+
+const COLORS = [ "#0047B3","#0065FF","#6BA6FF","#96C0FF","#E6F0FF"  ]
 
 const b = [
     {
@@ -33,7 +37,15 @@ const b = [
         color: "#6BA6FF"
     },
 ]
-const Subanalytics = () => {
+
+interface IProps{
+    date_analytics: IDateTimeAnalytics
+    other_analytics: IOtherAnalytics
+    isLoading: boolean
+}
+
+
+const Subanalytics = ({date_analytics,other_analytics , isLoading}:IProps) => {
     const [doesBrowsersDataExist, setBrowsersDataExist] = useState(false)
     const [browsersData, setB] = useState(b)
 
@@ -41,12 +53,16 @@ const Subanalytics = () => {
         const canvasElement = document.getElementById("browsersChart") as HTMLCanvasElement;
         console.log(canvasElement)
         // console.log(canvasElement);
-        const labels = browsersData.map(lang => lang.label);
-        const data = browsersData.map(lang => lang.value);
+        if(other_analytics.Browser){
+
+            const [labels,values] = processOtherAnalytics(other_analytics.Browser) as [string[] , number[]]
+            console.log(labels,values)
+        
     
         setBrowsersDataExist(true);
-        if (data.length > 0) {
-          const backgroundColor = browsersData.map(({ color }) => (color) );
+        if (labels && values) {
+          const backgroundColor = COLORS.slice(0,values.length + 1)
+          console.log(values)
         //   const backgroundColor =color
         //   const borderColor = browsersData.map(lang => `${lang.color}`);
           const chartType: ChartType = 'doughnut' ;
@@ -56,15 +72,16 @@ const Subanalytics = () => {
             canvasElement,
             chartType,
             labels,
-            data,
+            data: values ,
             backgroundColor,
             // borderColor,
             axes,
             legend,
-          };
+          }
           buildChart(config);
+        };
         }
-      }, [browsersData]);
+      }, [other_analytics]);
 
       useEffect(()=> {
         browsersChart() 
@@ -88,7 +105,12 @@ const Subanalytics = () => {
 
             <div className='col-start-1 col-span-3  row-start-1 row-span-3'>
                 <SubAnalytic title='Browsers' toolTipMessage='Top 5 Browsers that visited generated URL'>
+                    {
+                        isLoading ?
+                        <Skeleton className='w-[300px] height=[250px]'/>
+                        :
                     <canvas id="browsersChart" width={300} height={250} className=" mx-auto" />
+                    }
                 </SubAnalytic>
             </div>
 

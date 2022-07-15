@@ -11,7 +11,7 @@ const RouteGuard = ( Protected : () => JSX.Element) => {
         
         const { state: { accessToken } } = useAppContext()
         const router = useRouter()
-        useEffect(() => {
+          useEffect(() => {
             const auth = JSON.parse(localStorage.getItem("access_token") as string)
             if (!auth) {
 

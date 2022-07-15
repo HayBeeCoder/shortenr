@@ -27,30 +27,13 @@ interface IUserLink {
   last_visited_date: string,
   visit_count: number,
   analytic: {
-    current_month: CurrentMotnh[],
-  // today_total: [],
-  // "today_by_hour": [],
-  // "this_week_by_day": [],
-  other_analytic: {
-    Browser: {
-      [key: string]: number
-      // "Firefox": 2
-    },
-    OS: {
-      // "Windows 10": 2
-      [key: string]: number
-    },
-    Device: {
-      // "PC": 2
-      [key: string]: number
-    },
-    // "Referer": {},
-    Country: {
-      [key: string]: number
-      
-    }
-  }
-},
+    date_time_anaylytic:IDateTimeAnalytics
+
+    // today_total: [],
+    // "today_by_hour": [],
+    // "this_week_by_day": [],
+    other_analytic: IOtherAnalytics
+  },
 
 
 }
@@ -61,12 +44,55 @@ type CurrentMonth = {
 }
 
 interface IChartConfig {
-  canvasElement: HTMLCanvasElement ,
+  canvasElement: HTMLCanvasElement,
   chartType: ChartType,
   labels: string[],
   data: number[],
-  backgroundColor:string[];
+  backgroundColor: string[];
   axes: boolean,
   legend: boolean
 
 }
+interface IOtherAnalytics{
+  Browser: {
+    [key: string]: number
+    // "Firefox": 2
+  },
+  OS: {
+    // "Windows 10": 2
+    [key: string]: number
+  },
+  Device: {
+    // "PC": 2
+    [key: string]: number
+  },
+  "Referer": {
+    [key: string]: number
+  },
+  Country: {
+    [key: string]: number
+
+  }
+}
+
+interface IDateTimeAnalytics{
+  current_month: {
+    date: string,
+    count__sum: number
+  }[]
+  today_count: {
+    date: string,
+    count__sum: number
+  }[]
+  this_week_by_day: {
+    date: string,
+    count__sum: number
+  }[]
+
+  today_by_hour:
+  {
+    "time__hour": number,
+    "count__sum": number
+  }[]
+}
+

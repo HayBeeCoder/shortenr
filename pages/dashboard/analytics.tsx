@@ -9,15 +9,27 @@ import { useAppContext } from '../../context/state'
 import useFetchLinks from '../../hooks/useFetchLinks'
 import axiosInstance from '../../Services/axios.services'
 import  dayjs from "dayjs"
+import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import useFetchLink from '../../hooks/useFetchLink'
 
 
 const Page = () => {
+  // console.log
   // const {data} = use
+  const router = useRouter()
+  // console.log(router.asPath)
+  const link_id = router.query.id
+  console.log(link_id)
+  // console.log("userId: " , user_id)
   const {state: {email,accessToken,link},setState:{setEmail,}} = useAppContext()
-  console.log("link Id: " , link)
+  console.log(typeof link_id)
+  // const user
+  // console.log("link Id: " , link)
+  // console.log(email)
   // const { data, isLoading, mutate } = useFetchLinks(!!email.length ? email : null)
-  // const { data, isLoading, mutate } = useFetchLinks(email)
-  // console.log(data)
+  const { data, isLoading, mutate } = useFetchLink(link_id as string)
+  console.log(data)
 
   // console.log(data)
   useLayoutEffect(() => {
@@ -46,24 +58,24 @@ const Page = () => {
 
       <MiniCard
       property='Original URL'
-      value={link?.long_link as string}
-      isLoading={false}
+      value={data?.long_link as string}
+      isLoading={isLoading}
       />
       </div>
       
         <div className='col-start-3 col-span-4'>
       <MiniCard
       property='Shortened URL'
-      value={link?.short_link as string}
-      isLoading={false}
+      value={data?.short_link as string}
+      isLoading={isLoading}
       colored
       />
       </div>
       <div className='col-start-7 col-span-2'>
       <MiniCard
       property='Date Created'
-      value= {dayjs(link?.date_created as string).format('MMM D, YYYY')}
-      isLoading={false}
+      value= {dayjs(data?.date_created as string).format('MMM D, YYYY')}
+      isLoading={isLoading}
       />
       </div>
       
@@ -73,9 +85,12 @@ const Page = () => {
      <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'>
     
 
-     <ViewBanner view_count={ (link?.visit_count as number).toString()} isLoading={false}/>
+     <ViewBanner view_count={ data ? (data?.visit_count as number ).toString():''} isLoading={isLoading}/>
     </div>
-<Subanalytics/>
+<Subanalytics 
+date_analytics={ data ? data?.analytic.date_time_anaylytic as IDateTimeAnalytics : {} as IDateTimeAnalytics} 
+other_analytics={data ? data?.analytic.other_analytic as IOtherAnalytics : {} as IOtherAnalytics} 
+isLoading={isLoading}/>
     </section>
   )
 }
@@ -85,10 +100,11 @@ export default RouteGuard(Page)
 // export async function getStaticPath(){
     
 // }
-// export async function getServerSideProps(){
+// export const getServerSideProps: GetServerSideProps = async(context)=>{
+//   const { id } = context.query;
 //     return{
 //         props: {
-
+//           id
 //         }
 //     }
 

@@ -50,6 +50,8 @@ axiosInstance.interceptors.request.use(async req =>{
         req.headers.Authorization = `Bearer ${response.data.access}`
     }
 
+    // console.log(req)
+
     return req
 
 

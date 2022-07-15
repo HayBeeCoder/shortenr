@@ -63,7 +63,7 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
       <td className='flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2'>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
-        <Link href='/dashboard/analytics'>
+        <Link href={`/dashboard/analytics?id=${id.toString()}`}  >
         <button className='mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] ' onClick={() => setLink(data?.results.find(link => link.id == id) as IUserLink)}>View</button>
         </Link>
       </td>
