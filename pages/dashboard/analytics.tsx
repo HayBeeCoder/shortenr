@@ -51,11 +51,11 @@ const Page = () => {
     }
   }, [accessToken]);
   return (
-    <section className="md:h-screen  w-full  px-[20px] gap-2 my-5">
+    <section className="  w-full  px-[20px] gap-2 my-5">
       {/* bg-[#F9F9FC] */}
-      <div className="md:grid gap-y-5">
+      {/* <div className="md:grid gap-y-5"> */}
 
-      <div className="mb-3 space-y-3  md:space-y-0  gap-4  md:p-0 rounded-md md:rounded-none  md:bg-white block  w-max mx-auto">
+      <div className=" w-full md:block sm:w-max mx-auto ">
         <MiniCard
           property="Original URL"
           value={data?.long_link as string}
@@ -82,8 +82,8 @@ const Page = () => {
 
       {/* <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'> */}
 
-      <div className="md:h-[300px] md:grid grid-cols-12 gap-3">
-        <div className="col-start-1 col-span-4 md:h-full">
+      <div className=" md:grid grid-cols-12 gap-3 mt-16">
+        <div className="col-start-1 col-span-4 w-full ">
           <ViewBanner
             view_count={data ? (data?.visit_count as number).toString() : ""}
             isLoading={isLoading}
@@ -93,6 +93,7 @@ const Page = () => {
           <SubAnalytic
             title="Views"
             toolTipMessage="Visits count within current month"
+            special
           >
             <canvas id="starChart" width={250} height={250} />
           </SubAnalytic>
@@ -112,7 +113,7 @@ const Page = () => {
         }
         isLoading={isLoading}
         />
-        </div>
+        {/* </div> */}
     </section>
   );
 };

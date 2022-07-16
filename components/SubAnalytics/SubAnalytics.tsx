@@ -53,36 +53,38 @@ const Subanalytics = ({
   const [browsersData, setB] = useState(b);
 
   const browsersChart = useCallback(() => {
-    const canvasElement = document.getElementById(
-      "browsersChart"
-    ) as HTMLCanvasElement;
+    if (!isLoading) {
+      const canvasElement = document.getElementById(
+        "browsersChart"
+      ) as HTMLCanvasElement;
 
-    if (other_analytics.Browser) {
-      const [labels, values] = processOtherAnalytics(
-        other_analytics.Browser
-      ) as [string[], number[]];
+      if (other_analytics.Browser) {
+        const [labels, values] = processOtherAnalytics(
+          other_analytics.Browser
+        ) as [string[], number[]];
 
-      if (labels && values) {
-        setBrowsersDataExist(true);
-        const backgroundColor = COLORS.slice(0, values.length + 1);
+        if (labels && values) {
+          setBrowsersDataExist(true);
+          const backgroundColor = COLORS.slice(0, values.length + 1);
 
-        const chartType: ChartType = "doughnut";
-        const axes = false;
-        const legend = true;
-        const config = {
-          canvasElement,
-          chartType,
-          labels,
-          data: values,
-          backgroundColor,
-          // borderColor,
-          axes,
-          legend,
-        };
-        buildChart(config);
-      } else setBrowsersDataExist(false);
+          const chartType: ChartType = "doughnut";
+          const axes = false;
+          const legend = true;
+          const config = {
+            canvasElement,
+            chartType,
+            labels,
+            data: values,
+            backgroundColor,
+            // borderColor,
+            axes,
+            legend,
+          };
+          buildChart(config);
+        } else setBrowsersDataExist(false);
+      }
     }
-  }, [other_analytics]);
+  }, [other_analytics,isLoading]);
 
   useEffect(() => {
     browsersChart();
@@ -90,8 +92,8 @@ const Subanalytics = ({
   }, [browsersChart]);
 
   return (
-    <div className="w-full md:grid grid-cols-12 gap-3">
-      <div className="col-start-1 col-span-4">
+    <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3 ">
+      <div className="md:col-start-1 md:col-span-4">
         <SubAnalytic
           title="Browsers"
           toolTipMessage="Top 5 Browsers that visited generated URL"
@@ -104,33 +106,30 @@ const Subanalytics = ({
               width={300}
               height={250}
               className=" mx-auto"
-            />
+            ></canvas>
           ) : (
             <p className="text-center mt-5 italic">No data exists yet!</p>
           )}
         </SubAnalytic>
       </div>
 
-      <div className="col-start-5 col-span-4 ">
+      <div className="md:col-start-5 md:col-span-4 ">
         <SubAnalytic
           title="Devices"
           toolTipMessage="Devices visitors used in accessing generated URL"
         >
-          <canvas
-            id="devicesChart"
-            width={300}
-            height={250}
-            className=""
-          />
+          <canvas id="devicesChart" width={300} height={250} className="" >
+            </canvas>
         </SubAnalytic>
       </div>
 
-      <div className="col-start-9 col-span-4 ">
+      <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
           title="Referrals"
           toolTipMessage="Sites visitors were before clicking generated URL"
         >
-          <canvas id="referralsChart" width={300} height={250} />
+          <canvas id="referralsChart" width={300} height={250} >
+            </canvas>
         </SubAnalytic>
       </div>
     </div>

@@ -11,14 +11,14 @@ interface IMiniCard {
 
 const MiniCard = ({ property, value, isLoading ,colored = false}: IMiniCard) => {
     return (
-        <div className='text-[15px] md:py-2 md:px-4 sm:flex items-center  '>
+        <div className='text-[15px] py-2 md:px-4 flex flex-wrap items-center  '>
             <p className='font-semibold  inline-block  mr-1  tracking-wide'>
                 {property}:
             </p>
             {
                 isLoading ?
                     <Skeleton className='block w-full h-4' /> :
-                    <span className={`block text-[14px] truncate tracking-wide ${ colored ? 'text-blue-600' : ''}`}>
+                    <span className={` text-[14px] truncate tracking-wide ${ colored ? 'text-blue-600' : ''}`}>
 
                         {value}
                     </span>
