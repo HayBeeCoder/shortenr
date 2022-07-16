@@ -1,11 +1,17 @@
 // import Chart from "chart.js";
 // import {Chart} from "chart.js"
+import { ChartType } from "chart.js";
 import Chart from "chart.js/auto"
 interface extendWindow extends Window{
+  charts: Chart<"pie", number[], string>[]
   chart: Chart<"pie", number[], string>
 }
 
-declare let window: extendWindow
+declare let window: extendWindow 
+let windowInitialized = false
+
+// console.log(window.charts)
+// let charts:  Chart<"pie", number[], string>[] = []
 // let chart: any
 
 // import { ChartType } from 'chart.js';
@@ -49,18 +55,27 @@ const buildLegend = (legend: boolean) => {
   return legend ? legendConfig : null;
 };
 
-const buildChart = (config: IChartConfig) => {
-  // console.log({ config });
-  console.log((window.chart))
- 
-  if(window.chart){
-    window.chart.destroy()
+const buildChart = (config: IChartConfig,id: number) => {
+  if(!windowInitialized) {
+    window.charts = []
+    windowInitialized = true
   }
-  const { canvasElement, chartType, labels, data, backgroundColor, axes, legend } =
-    config;
+  // console.log(window.charts)
+  // if(window.charts[id]) window.charts[id].destroy()
+  if(window.charts[id]) window.charts[id].destroy()
+  // let a:{ chart:  Chart<ChartType, number[], string> | undefined} = {chart: undefined}
+  // console.log({ config });
+  // let chart: Chart<ChartType, number[], string> | undefined
+  // console.log((window.chart))
+ 
+  // if(chart){
+    // a.chart && a.chart.destroy()
+  // }
+  const { canvasElement, chartType, labels, data, backgroundColor, axes, legend } = config;
   // if(window){
 
-  window.chart = new Chart(canvasElement, {
+  window.charts[id] = new Chart(canvasElement, {
+  // window.charts[id] = new Chart(canvasElement, {
       
     type: chartType,
     data: {
@@ -83,8 +98,8 @@ const buildChart = (config: IChartConfig) => {
         legend:{
           position: "bottom",
           labels:{
-            boxWidth: 5,
-            boxHeight: 5,
+            boxWidth: 10,
+            boxHeight: 9,
             padding: 12
           }
         },
@@ -98,7 +113,7 @@ const buildChart = (config: IChartConfig) => {
       }
     },
   });
-  return window.chart
+  return window.charts[id]
 // }
 };
 

@@ -11,7 +11,7 @@ interface IMiniCard {
 
 const MiniCard = ({ property, value, isLoading ,colored = false}: IMiniCard) => {
     return (
-        <div className='text-[15px] py-2 md:px-4 flex flex-wrap items-center  '>
+        <div className='text-[15px] py-2 md:px-4 flex flex-wrap items-baseline  '>
             <p className='font-semibold  inline-block  mr-1  tracking-wide'>
                 {property}:
             </p>

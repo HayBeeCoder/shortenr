@@ -15,7 +15,7 @@ import axiosInstance from '../Services/axios.services'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
-  const {state: {email}}  = useAppContext()
+  // const {state: {email}}  = useAppContext()
   const [input, setInput] = useState('')
   const [shortenedUrl, setShortenedUrl] = useState<string | null> (null)
   const [isLoading ,setIsLoading] = useState(false)
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
       setIsLoading(true)
         axios.post(`${BASE_URL}links/`,formData)
             .then(res => {
-              console.log(res.data)
+              // console.log(res.data)
               setShortenedUrl(res.data.short_link)
             })
             .catch(

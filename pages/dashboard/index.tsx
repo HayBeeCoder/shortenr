@@ -1,4 +1,5 @@
 import axios from 'axios'
+import dayjs from 'dayjs'
 import jwtDecode from 'jwt-decode'
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router'
@@ -27,9 +28,9 @@ interface ITableRow {
 
 
 const Dashboard = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const { state: { accessToken, email }, setState: { setEmail,setLink } } = useAppContext()
-  console.log(accessToken)
+  // console.log(accessToken)
   const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
 
   const { data, isLoading, mutate } = useFetchLinks(email)
@@ -60,7 +61,7 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
     <tr className='border-b-[1px] border-b-[#D9D9D9]'>
       <td className='pl-2'>{long_url}</td>
       <td>{short_url}</td>
-      <td>{date_created}</td>
+      <td>{dayjs(date_created).format("MMM D, YYYY")}</td>
       <td className='flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2'>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
