@@ -29,7 +29,7 @@ const SubAnalytic = ({toolTipMessage, title, children }: IProps) => {
 
     return (
 
-        <div className=' py-3 min-h-[320px] md:min-h-full bg-[#F9F9FC] rounded-md  mb-3'>
+        <div className=' py- min-h-[320px] md:min-h-full bg-[#FeFeFe] rounded-md  mb-3'>
             <div className='flex justify-center gap-2 items-center  mb-3 relative'>
 
                 <span className={` absolute w-full bg-gray-700 bg-opacity-50 text-white -top-12 rounded-sm p-2 text-[14px] max-w-[350px] text-center ${showToolTip ? "block" : "hidden"}`} >

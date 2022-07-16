@@ -12,7 +12,7 @@ class MyDocument extends Document {
                     {/* <link rel="preconnect" href="https://fonts.gstatic.com"  /> */}
                     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet" />
                 </Head>
-                <body className='font-Lato m-0 text-[#0B1A30] bg-[#fefefe]'>
+                <body className='font-Lato m-0 text-[#0B1A30] bg-[#F9F9FC]'>
                     <Main />
                     <NextScript />
                 </body>

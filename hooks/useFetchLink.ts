@@ -14,7 +14,7 @@ export default function useFetchLinks(link_id: string | null){
     console.log(link_id)
     // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
     let duplicate;
-    const {data,error,mutate} = useSWR(link_id ? `links/${link_id}/` : link_id, fetcher,{refreshInterval: 1000})
+    const {data,error,mutate} = useSWR(link_id ? `links/${link_id}/` : link_id, fetcher)
     // console.log(data)
     if(!duplicate || (JSON.stringify(duplicate) !== JSON.stringify(data))){
         duplicate = data

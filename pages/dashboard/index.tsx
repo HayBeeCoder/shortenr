@@ -29,6 +29,7 @@ interface ITableRow {
 const Dashboard = () => {
   const router = useRouter()
   const { state: { accessToken, email }, setState: { setEmail,setLink } } = useAppContext()
+  console.log(accessToken)
   const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
 
   const { data, isLoading, mutate } = useFetchLinks(email)
