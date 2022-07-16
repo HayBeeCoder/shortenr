@@ -33,6 +33,7 @@ try {
 }catch(e: any){
     if(e.response.status == 401){
         localStorage.removeItem("refresh")
+        return req
     }
 }
 // if(isValid.status == 401) localStorage.removeItem("refresh")
