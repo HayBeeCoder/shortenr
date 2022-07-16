@@ -25,22 +25,39 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async req =>{
     let authToken = localStorage.getItem('access_token') ? JSON.parse(localStorage.getItem('access_token') as string) : null
+let refreshToken = localStorage.getItem('refresh') ? JSON.parse(localStorage.getItem('refresh') as string) : null
+try {
+
+    const isValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
+    
+}catch(e: any){
+    if(e.response.status == 401){
+        localStorage.removeItem("refresh")
+    }
+}
+// if(isValid.status == 401) localStorage.removeItem("refresh")
+
+// localStorage.setItem("isValid" , is)
+// localStorage.removeItem("isValid")
+
 
     if(authToken){
-        // const isValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${authToken}`})
         // console.log('I am inside an interceptor: ', isValid)
+        // const isrefreshValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
+        // const isrefreshValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}ass`})
+        // localStorage.setItem("isValid",JSON.stringify(isrefreshValid))
+        // console.log(isrefreshValid)
         if(req.headers){
-        
+            
             req.headers.Authorization = `Bearer ${authToken}`
         }
         return req
     }
     if(
         !localStorage.getItem('refresh')
-    ){
-        return req
-    }
-
+        ){
+            return req
+        }
     const response = await axios.post(BASE_URL + 'auth/jwt/refresh' , {refresh: JSON.parse(localStorage.getItem("refresh") as string)})
     // console.log(refresh)
     localStorage.setItem("access_token", JSON.stringify(response.data.access))
