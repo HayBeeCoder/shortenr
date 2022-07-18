@@ -10,20 +10,20 @@ import { processOtherAnalytics } from "../../helpers/processOtherAnalytics";
 const COLORS = ["#0047B3", "#0065FF", "#6BA6FF", "#96C0FF", "#E6F0FF"];
 
 interface IProps {
-  date_analytics: IDateTimeAnalytics;
+  // date_analytics: IDateTimeAnalytics;
   other_analytics: IOtherAnalytics;
   isLoading: boolean;
 }
 
+// date_analytics,
 const Subanalytics = ({
-  date_analytics,
   other_analytics,
   isLoading,
 }: IProps) => {
   const [doesBrowsersDataExist, setBrowsersDataExist] = useState(false);
-  const [doesReferralsExist, setReferralsExist] = useState(false);
-  const [doesDevicesExist, setDevicesExist] = useState(false);
-  const [doesCountriesExist, setCountriesExist] = useState(false);
+  // const [doesReferralsExist, setReferralsExist] = useState(false);
+  // const [doesDevicesExist, setDevicesExist] = useState(false);
+  // const [doesCountriesExist, setCountriesExist] = useState(false);
 
   // const [browsersData, setB] = useState(b);
 
@@ -57,7 +57,8 @@ const Subanalytics = ({
           legend,
         };
         buildChart(config, 0);
-      } else setBrowsersDataExist(false);
+      }
+      // } else setBrowsersDataExist(false);
     }
     // }
   }, [other_analytics]);
@@ -74,7 +75,7 @@ const Subanalytics = ({
         ) as [string[], number[]];
 
         if (labels && values) {
-          setDevicesExist(true);
+          // setDevicesExist(true);
           const backgroundColor = COLORS.slice(0, values.length + 1);
 
           const chartType: ChartType = "doughnut";
@@ -91,7 +92,8 @@ const Subanalytics = ({
             legend,
           };
           buildChart(config, 1);
-        } else setReferralsExist(false);
+        }
+        //  else setReferralsExist(false);
       }
     }
   }, [other_analytics, isLoading]);
@@ -108,7 +110,7 @@ const Subanalytics = ({
         ) as [string[], number[]];
 
         if (labels && values) {
-          setCountriesExist(true);
+          // setCountriesExist(true);
           const backgroundColor = COLORS.slice(0, values.length + 1);
 
           const chartType: ChartType = "doughnut";
@@ -125,7 +127,8 @@ const Subanalytics = ({
             legend,
           };
           buildChart(config, 2);
-        } else setCountriesExist(false);
+        } 
+        // else setCountriesExist(false);
       }
     }
   }, [other_analytics, isLoading]);

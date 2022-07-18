@@ -26,16 +26,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(async req =>{
     let authToken = localStorage.getItem('access_token') ? JSON.parse(localStorage.getItem('access_token') as string) : null
 let refreshToken = localStorage.getItem('refresh') ? JSON.parse(localStorage.getItem('refresh') as string) : null
-try {
 
-    const isValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
-    
-}catch(e: any){
-    if(e.response.status == 401){
-        localStorage.removeItem("refresh")
-        return req
-    }
-}
 // if(isValid.status == 401) localStorage.removeItem("refresh")
 
 // localStorage.setItem("isValid" , is)
@@ -59,6 +50,19 @@ try {
         ){
             return req
         }
+        try {
+            if(refreshToken){
+
+                const isValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
+            }
+            
+        }catch(e: any){
+            if(e.response.status == 401){
+                localStorage.removeItem("refresh")
+                return req
+            }
+        }
+
     const response = await axios.post(BASE_URL + 'auth/jwt/refresh' , {refresh: JSON.parse(localStorage.getItem("refresh") as string)})
     // console.log(refresh)
     localStorage.setItem("access_token", JSON.stringify(response.data.access))

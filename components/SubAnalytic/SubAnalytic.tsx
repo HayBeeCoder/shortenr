@@ -4,9 +4,10 @@ interface IProps {
     title: string,
     toolTipMessage: string
     special?: boolean
+    should_flex?: boolean
 }
 
-const SubAnalytic = ({toolTipMessage, title, children ,special}: IProps) => {
+const SubAnalytic = ({toolTipMessage, title, children ,special,should_flex}: IProps) => {
         const [showToolTip,setShowToolTip] = useState(false)
 
         useEffect(
@@ -30,8 +31,8 @@ const SubAnalytic = ({toolTipMessage, title, children ,special}: IProps) => {
 
     return (
 
-        <div className={`py-10 h-full bg-[#FFF] rounded-md  ${special ? '' : 'max-w-[350px]  mx-auto md:max-w-none aspect-square md:aspect-auto md:h-full' }`}>
-            <div className='flex justify-center gap-2 items-center  mb-3 relative'>
+        <div className={`py-10 h-full bg-[#FFF] rounded-md  ${special ? '' : 'max-w-[350px]  mx-auto md:max-w-none aspect-square md:aspect-auto md:h-full ' } ${should_flex ? "flex flex-col" : ""}`}>
+            <div className='flex justify-center gap-2 items-center  mb-3 relative flex-shrink-0'>
 
                 <span className={` absolute w-full bg-gray-700 bg-opacity-50 text-white -top-12 rounded-sm p-2 text-[14px] max-w-[350px] text-center ${showToolTip ? "block" : "hidden"}`} >
                     {toolTipMessage}

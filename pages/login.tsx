@@ -37,14 +37,19 @@ const Login = () => {
       login(formData)
         .then(tokens => {
           // console.log(tokens)
-          setAccessToken(tokens.access)
-      
-          axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`
-          let returnUrl = (router.query.returnUrl as string) || '/dashboard';
-          if(returnUrl.includes("/dashboard")){
-            returnUrl = "/dashboard"
-          }
-          // console.log(returnUrl)
+        // }
+          // if(tokens){
+
+            setAccessToken(tokens.access)
+            
+            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`
+            console.log("beforereturnUrl")
+            let returnUrl = (router.query.returnUrl as string) || '/dashboard';
+            console.log("returnUrl")
+            if(returnUrl.includes("/dashboard")){
+              returnUrl = "/dashboard"
+            }
+            // console.log(returnUrl)
           router.push(returnUrl);
           // console.log(accessToken)
         })

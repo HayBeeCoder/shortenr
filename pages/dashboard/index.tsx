@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import dayjs from 'dayjs'
 import jwtDecode from 'jwt-decode'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ import axiosInstance from '../../Services/axios.services'
 interface ITableRow {
   long_url: string,
   short_url: string,
-  date_created: string,
+  last_visited: string,
   id: number,
   mutate: KeyedMutator<IUserLinks>
   // setLink:  React.Dispatch<React.SetStateAction<IUserLink>>
@@ -28,13 +28,22 @@ interface ITableRow {
 
 
 const Dashboard = () => {
-  // const router = useRouter()
+  const router = useRouter()
   const { state: { accessToken, email }, setState: { setEmail,setLink } } = useAppContext()
   // console.log(accessToken)
   const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
 
-  const { data, isLoading, mutate } = useFetchLinks(email)
+  const { data, isLoading, mutate,isError } = useFetchLinks(email)
+  console.log(isError)
   // console.log(data)
+  useEffect(() => {
+      if(isError && isError.response.status == 401) {
+        console.log("isError oooooo")
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("refresh")
+        router.replace('/login')
+      }
+  },[isError])
   const [url, setUrl] = useState('')
   const [shortenedUrl, setShortenedUrl] = useState('')
 
@@ -47,21 +56,31 @@ const Dashboard = () => {
 
 
   
-const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }: ITableRow) => {
+const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }: ITableRow) => {
   const handleDelete = (id: number) => {
     axiosInstance.delete(`links/${id}`)
       .then(res => {
         if (res.status == 204) {
           mutate()
         }
-      }).catch(e => console.log("error on deletion: ", e))
-  }
+      }).catch((e: AxiosError) => {
 
+        // console.log("error on deletion: ", e)
+        console.log( 'this is e: ' ,e)
+        if( e && e?.response?.status == 401){
+        router.replace('/login')   
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("refresh")
+        }
+      }
+       )
+  }
+console.log(last_visited , "sdafd")
   return (
     <tr className='border-b-[1px] border-b-[#D9D9D9]'>
       <td className='pl-2'>{long_url}</td>
       <td>{short_url}</td>
-      <td>{dayjs(date_created).format("MMM D, YYYY")}</td>
+      <td>{dayjs(last_visited).format("MMM D, YYYY")}</td>
       <td className='flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2'>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
         <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
@@ -82,6 +101,7 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
       const formData = {
         long_link: url
       }
+
       axiosInstance.post('links/', formData)
         .then(res => {
           if (res.status == 200 || res.status == 201 || res.status == 208) {
@@ -107,7 +127,14 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
             setEmail(res.data.email)
           }
         })
-        .catch(e => console.log(e))
+        .catch((e: any) => {
+          if(e.response.status == 401){
+            console.log("isLayouteffect error ooo")
+            router.replace('/login')
+            localStorage.removeItem("access_token")
+            localStorage.removeItem("refresh")
+          }
+        })
     }
   }, [accessToken])
 
@@ -214,7 +241,7 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
 
                   ----------
                   </span> */}
-                  Created On
+                  Last Date Visited
                   {/* <span className="text-white">
                   ----------
                   </span> */}
@@ -236,7 +263,7 @@ const TableRow = useCallback(({ long_url, short_url, date_created, id, mutate }:
                     id={link.id}
                     long_url={link.long_link}
                     short_url={link.short_link}
-                    date_created={link.date_created}
+                    last_visited={link.last_visited_date}
                     mutate={mutate}
                   />
                 ))

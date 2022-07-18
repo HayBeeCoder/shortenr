@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import useFetchLink from "../../hooks/useFetchLink";
+import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
 
 const Page = () => {
   // console.log
@@ -47,7 +48,14 @@ const Page = () => {
             setEmail(res.data.email);
           }
         })
-        .catch((e) => console.log(e));
+        .catch((e: any) => {
+          if (e.response.status == 401) {
+            console.log(e);
+            router.replace("/login");
+            localStorage.removeItem("access_token")
+            localStorage.removeItem("refresh")
+          }
+        });
     }
   }, [accessToken]);
   return (
@@ -60,7 +68,7 @@ const Page = () => {
           property="Original URL"
           value={data?.long_link as string}
           isLoading={isLoading}
-          />
+        />
 
         {/* <div className='col-start-4 col-span-3'> */}
 
@@ -90,30 +98,26 @@ const Page = () => {
           />
         </div>
         <div className="col-start-5 col-span-8 ">
-          <SubAnalytic
-            title="Views"
-            toolTipMessage="Visits count within current month"
-            special
-          >
-            <canvas id="starChart" width={250} height={250} />
-          </SubAnalytic>
-        </div>
-      </div>
-
-      <Subanalytics
+        <DateAnalytics 
+        isLoading={isLoading}
         date_analytics={
           data
             ? (data?.analytic.date_time_anaylytic as IDateTimeAnalytics)
             : ({} as IDateTimeAnalytics)
-        }
+        }/>
+        </div>
+      </div>
+
+      <Subanalytics
+        
         other_analytics={
           data
-          ? (data?.analytic.other_analytic as IOtherAnalytics)
-          : ({} as IOtherAnalytics)
+            ? (data?.analytic.other_analytic as IOtherAnalytics)
+            : ({} as IOtherAnalytics)
         }
         isLoading={isLoading}
-        />
-        {/* </div> */}
+      />
+      {/* </div> */}
     </section>
   );
 };
