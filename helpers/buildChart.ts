@@ -133,13 +133,13 @@ const buildChart = (config: IChartConfig, id: number) => {
         point: {
           pointStyle: "circle",
           backgroundColor: "green",
-          radius: 2,
+          radius: 3,
           borderWidth: 15,
           borderColor: "#E6F0FF"
         },
         line: {
           borderColor: '#0065FF',
-          borderWidth: 20
+          borderWidth: 22
         }
       },
       scales: buildScales(axes),

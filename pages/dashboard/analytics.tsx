@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import MiniCard from "../../components/MiniCard/MiniCard";
 import RouteGuard from "../../components/RouteGuard/RouteGuard";
 import SubAnalytic from "../../components/SubAnalytic/SubAnalytic";
@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import useFetchLink from "../../hooks/useFetchLink";
 import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
+import useCopyToClipboard from "../../hooks/useCopyToClipboard";
 
 const Page = () => {
   // console.log
@@ -35,6 +36,8 @@ const Page = () => {
   // console.log(data)
 
   // console.log(data)
+ 
+
   useLayoutEffect(() => {
     // console.log(user_id)
 
@@ -77,7 +80,7 @@ const Page = () => {
           value={data?.short_link as string}
           isLoading={isLoading}
           colored
-          underline
+          // underline
         />
         {/* </div> */}
         {/* <div className='col-start-7 col-span-2'> */}
@@ -98,7 +101,7 @@ const Page = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className="col-start-5 col-span-8 ">
+        <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
         <DateAnalytics 
         isLoading={isLoading}
         date_analytics={

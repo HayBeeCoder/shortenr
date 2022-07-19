@@ -183,10 +183,10 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       special
       should_flex
     >
-      <div className="px-4 h-[300px] md:h-[250px]  ">
+      <div className="px-4 min:w-[420px] h-[300px] md:h-[250px]  ">
         <canvas
           id="monthChart"
-          className=" md:h-full md:w-full"
+          className=" md:h-full w-full"
         ></canvas>
       </div>
     </SubAnalytic>

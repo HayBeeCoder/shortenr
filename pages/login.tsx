@@ -116,7 +116,7 @@ const Login = () => {
           {
             showError 
             &&
-            <p className='text-xs text-red-500 '>User doesn't exist!</p>
+            <p className='text-xs text-red-500 '>User doesn&apos;t exist!</p>
           
           }
           <Button classname='bg-[#0B1A30] text-white my-2 ' onClick={handleSubmit} >
