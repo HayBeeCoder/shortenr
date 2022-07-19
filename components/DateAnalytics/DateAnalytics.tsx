@@ -39,13 +39,14 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       let last_item = date_analytics.current_month.at(-1)
       let first_item = date_analytics.current_month[0];
       let day_of_last_item = getDayFromDate(last_item?.date as string)  // a string would be returnUrl
+      const length_of_month = dayjs(first_item.date).daysInMonth()
+      console.log(length_of_month)
 
 
 
       //using below daysInMonth method seems to not work for some dates, 
       //I gat my eyes on you though , we shall see
       //snaps finger
-      const length_of_month = dayjs(first_item.date).daysInMonth()
       let dayLabelsArray = []
       // const array_for_month = Array.from({length: length_of_month}, () => ({label: `Day ${first_day++}`,value: 0}))
       // const days_of_month = new Array(length_of_month).fill(((item,index) => `Day ${index + 1}`)())
@@ -54,6 +55,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
 
 
         }
+        console.log(dayLabelsArray)
       setDayLabels(dayLabelsArray)
 
       const views_of_month = new Array(day_of_last_item).fill(0)
@@ -73,16 +75,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     }
   }, [date_analytics]);
 
-    useEffect(() => {
-      if(dayLabel == null) return 
-      
-      if(date_analytics.current_month){
-       
-        
-
-        // console.log( "The created array is therefore: ", month)
-      }
-    }, [ dayLabel , date_analytics])
+  
 
 
     console.log("days:  " , dayLabel)
@@ -142,6 +135,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     const canvasElement = document.getElementById(
       "monthChart"
     ) as HTMLCanvasElement;
+    console.log("Day Label is: " , dayLabel)
     //   console.log(canvasElement)
     if (dayLabel && dayViewsCount) {
       console.log("oguntade abass omowale ")
@@ -172,7 +166,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       // } else setBrowsersDataExist(false);
     }
     // }
-  }, [dayViewsCount]);
+  }, [dayLabel,dayViewsCount,date_analytics]);
 
   useEffect(() => {
     monthChart();
@@ -180,19 +174,19 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     // return () => {
     //   second
     // }
-  }, [monthChart]);
+  }, [monthChart,date_analytics]);
 
   return (
     <SubAnalytic
-      title="Views"
+      title="Current Month Views"
       toolTipMessage="Visits count within current month"
       special
       should_flex
     >
-      <div className="px-4 h-[350px] md:h-[300px]  overflow-x-scroll ">
+      <div className="px-4 h-[300px] md:h-[250px]  ">
         <canvas
           id="monthChart"
-          className=" w-full md:h-full min-w-[500px]"
+          className=" md:h-full md:w-full"
         ></canvas>
       </div>
     </SubAnalytic>

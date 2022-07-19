@@ -1,7 +1,9 @@
 // import Chart from "chart.js";
 // import {Chart} from "chart.js"
+import { ScaleType } from "chart.js";
 import { ChartType, Scale, ScaleChartOptions, ScaleOptions } from "chart.js";
 import Chart from "chart.js/auto";
+import { endianness } from "os";
 interface extendWindow extends Window {
   charts: Chart<"pie" | "line", number[], string>[];
   chart: Chart<"pie", number[], string>;
@@ -36,22 +38,44 @@ const buildScales = (axes: boolean) => {
     x:   {
         ticks: {
           fontFamily: "Lato",
-          fontColor: "orange",
-          fontSize: 12,
-          color: 'red',
+          fontColor: "#091E42",
+          fontSize: 10,
+          color: '#B3B9C4',
+          tickLength: 30,
+          // padding: 0
+
+        },
+        title: {
+          text: "days in current month",
+          display: true,
+          align: 'end',
+          color: "#2B7FFF"
         },
         grid: {
-          // borderColor: 'blue'
+          // display: false
+          color: '#E6F0FF'
         }
+       
       },
-    
+      
     y: {
-        ticks: {
-          fontFamily: "Lato",
-          fontColor: "#f6f8fa",
-          fontSize: 12,
-          stepSize: 1
+      ticks: {
+        fontFamily: "Lato",
+          fontColor: "#091E42",
+          fontSize: 10,
+          color: '#B3B9C4',
+          stepSize: 1,
+          // padding: 0
+
         },
+        title: {
+        text: "views",
+          display: true,
+          align:  'end',
+          color: "#2B7FFF"
+
+        }
+        
       },
     
   };
@@ -77,7 +101,17 @@ const buildChart = (config: IChartConfig, id: number) => {
     axes,
     legend,
   } = config;
-  // if(window){
+  // ifwindow){
+    let legend_labels: any
+// console.log(labels)
+// console.log(data)
+// if(chartType == ("pie" as ChartType)){
+//   legend_labels =  {
+//     boxWidth: 10,
+//     boxHeight: 9,
+//     padding: 12,
+//   }
+// }else legend_labels = ''
 
   window.charts[id] = new Chart(canvasElement, {
     // window.charts[id] = new Chart(canvasElement, {
@@ -97,12 +131,15 @@ const buildChart = (config: IChartConfig, id: number) => {
     options: {
       elements:{
         point: {
-          backgroundColor: 'orange',
-          radius: 2
+          pointStyle: "circle",
+          backgroundColor: "green",
+          radius: 2,
+          borderWidth: 15,
+          borderColor: "#E6F0FF"
         },
         line: {
-          borderColor: 'blue',
-          borderWidth: 5
+          borderColor: '#0065FF',
+          borderWidth: 20
         }
       },
       scales: buildScales(axes),
@@ -111,13 +148,16 @@ const buildChart = (config: IChartConfig, id: number) => {
       responsive: chartType == "line" ? true : false ,
       plugins: {
         
+        
         legend: {
+        
           position: "bottom",
-          labels: {
+          labels:  axes ? ' ' : {
             boxWidth: 10,
             boxHeight: 9,
             padding: 12,
-          },
+          }
+         
         },
         tooltip: {
           // fon

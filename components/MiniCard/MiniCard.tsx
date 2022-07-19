@@ -6,6 +6,7 @@ interface IMiniCard {
     value: string,
     isLoading: boolean
     colored?: boolean
+    
 
 }
 
@@ -18,10 +19,20 @@ const MiniCard = ({ property, value, isLoading ,colored = false}: IMiniCard) => 
             {
                 isLoading ?
                     <Skeleton className='block w-full h-4' /> :
-                    <span className={` text-[14px] truncate tracking-wide ${ colored ? 'text-blue-600' : ''}`}>
+                    (
+                    colored ? 
+                    <span className='text-blue-600 underline'>
+
+                    <a href={value} target="_blank">
+                        {value}
+                    </a>
+                    </span>
+                     :
+                    <span className={` text-[14px] truncate tracking-wide `}>
 
                         {value}
                     </span>
+                    )
             }
         </div >
     )

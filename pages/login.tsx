@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -12,6 +12,7 @@ import { login } from '../Services/user.services'
 
 const Login = () => {
   const router = useRouter()
+  const [showError,setShowError] = useState(false)
   const { setState: { setAccessToken }, state: { accessToken } } = useAppContext()
 
   const [isLoggingIn, setIsLoggingIn] = useState(false)
@@ -39,7 +40,7 @@ const Login = () => {
           // console.log(tokens)
         // }
           // if(tokens){
-
+            setShowError(false)
             setAccessToken(tokens.access)
             
             axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`
@@ -53,7 +54,12 @@ const Login = () => {
           router.push(returnUrl);
           // console.log(accessToken)
         })
-        .catch(e => console.log(e))
+        .catch((e: any) => {
+          console.log(e)
+          if(e.response.status === 401){
+            setShowError(true)
+          }
+        })
         .finally(() => 
         {
           router.query.returnUrl = ''
@@ -105,6 +111,14 @@ const Login = () => {
             value={input.password}
 
           />
+          <div>
+
+          {
+            showError 
+            &&
+            <p className='text-xs text-red-500 '>User doesn't exist!</p>
+          
+          }
           <Button classname='bg-[#0B1A30] text-white my-2 ' onClick={handleSubmit} >
             {
               isLoggingIn
@@ -114,6 +128,7 @@ const Login = () => {
                 'Submit'
             }
           </Button>
+            </div>
 
 
           <p className='text-center text-sm'>Are you a new user ? {" "}

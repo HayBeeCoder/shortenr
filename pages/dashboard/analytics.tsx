@@ -77,6 +77,7 @@ const Page = () => {
           value={data?.short_link as string}
           isLoading={isLoading}
           colored
+          underline
         />
         {/* </div> */}
         {/* <div className='col-start-7 col-span-2'> */}
