@@ -145,7 +145,7 @@ const buildChart = (config: IChartConfig, id: number) => {
       scales: buildScales(axes),
       legend: buildLegend(legend),
       maintainAspectRatio:  chartType == "line" ? false : true ,
-      responsive: chartType == "line" ? true : false ,
+      responsive:true ,
       plugins: {
         
         
