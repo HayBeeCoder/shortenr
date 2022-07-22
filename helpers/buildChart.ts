@@ -87,6 +87,9 @@ const buildChart = (config: IChartConfig, id: number) => {
   
   
   if (!windowInitialized) {
+    if(JSON.stringify(window.charts) != '[]') {
+      window.charts.forEach(chart => chart.destroy)
+    }
     window.charts = [];
     windowInitialized = true;
   }
