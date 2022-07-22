@@ -23,6 +23,7 @@ function getMonthFromDate(date: string) {
 // const MONTHS_NO_OF_DAYS = [31,28]
 
 const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
+  const [error,setError] = useState('')
   const [dayLabel, setDayLabels] = useState<string[] | null>(null)
   const [dayViewsCount,setDayViewsCount] = useState<number[] | null>(null)
   // const [month, setMonth] = useState<Array<{ label: string; value: number }> | null >(null);
@@ -169,7 +170,12 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
   }, [dayLabel,dayViewsCount,date_analytics]);
 
   useEffect(() => {
-    monthChart();
+    try{
+
+      monthChart();
+    }catch(e: any){
+      setError(e)
+    }
 
     // return () => {
     //   second
@@ -177,6 +183,10 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
   }, [monthChart,date_analytics]);
 
   return (
+    <>
+    <div>
+      {error}
+    </div>
     <SubAnalytic
       title="Current Month Views"
       toolTipMessage="Visits count within current month"
@@ -184,7 +194,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       should_flex
     >
       <div className="px-4  h-[300px] md:h-[250px]  ">
-      {
+        {
             JSON.stringify(date_analytics.current_month) !== '[]' ?
 
         <canvas
@@ -198,6 +208,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       }
       </div>
     </SubAnalytic>
+        </>
   );
 };
 
