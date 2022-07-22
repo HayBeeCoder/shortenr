@@ -84,12 +84,14 @@ const buildScales = (axes: boolean) => {
 };
 
 const buildChart = (config: IChartConfig, id: number) => {
+  
+  
   if (!windowInitialized) {
     window.charts = [];
     windowInitialized = true;
   }
-  // console.log(window.charts)
-  // if(window.charts[id]) window.charts[id].destroy()
+  console.log(window.charts)
+    
   if (window.charts[id]) window.charts[id].destroy();
 
   const {
@@ -103,30 +105,30 @@ const buildChart = (config: IChartConfig, id: number) => {
   } = config;
   // ifwindow){
     let legend_labels: any
-// console.log(labels)
-// console.log(data)
-// if(chartType == ("pie" as ChartType)){
-//   legend_labels =  {
-//     boxWidth: 10,
-//     boxHeight: 9,
-//     padding: 12,
-//   }
-// }else legend_labels = ''
-
-  window.charts[id] = new Chart(canvasElement, {
-    // window.charts[id] = new Chart(canvasElement, {
-
-    type: chartType,
-    data: {
-      labels,
-      datasets: [
-        { 
-          data,
-          backgroundColor,
-          borderWidth: 1,
-        },
-      ],
-    },
+    // console.log(labels)
+    // console.log(data)
+    // if(chartType == ("pie" as ChartType)){
+      //   legend_labels =  {
+        //     boxWidth: 10,
+        //     boxHeight: 9,
+        //     padding: 12,
+        //   }
+        // }else legend_labels = ''
+        
+        window.charts[id] = new Chart(canvasElement, {
+          // window.charts[id] = new Chart(canvasElement, {
+            
+            type: chartType,
+            data: {
+              labels,
+              datasets: [
+                { 
+                  data,
+                  backgroundColor,
+                  borderWidth: 1,
+                },
+              ],
+            },
 
     options: {
       elements:{
@@ -157,7 +159,7 @@ const buildChart = (config: IChartConfig, id: number) => {
             boxHeight: 9,
             padding: 12,
           }
-         
+          
         },
         tooltip: {
           // fon
@@ -169,6 +171,7 @@ const buildChart = (config: IChartConfig, id: number) => {
     },
   });
   return window.charts[id];
+  
   // }
 };
 

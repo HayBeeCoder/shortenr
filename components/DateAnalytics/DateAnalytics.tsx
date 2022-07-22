@@ -135,10 +135,10 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     const canvasElement = document.getElementById(
       "monthChart"
     ) as HTMLCanvasElement;
-    console.log("Day Label is: " , dayLabel)
+    // console.log("Day Label is: " , dayLabel)
     //   console.log(canvasElement)
     if (dayLabel && dayViewsCount) {
-      console.log("oguntade abass omowale ")
+      // console.log("oguntade abass omowale ")
       // let does_real_values_exist = 
       // console.log(date_analytics.current_month);
       // const [labels, values] = processOtherAnalytics(
