@@ -170,7 +170,7 @@ const buildChart = (config: IChartConfig, id: number) => {
       },
     },
   });
-  return window.charts[id];
+  // return window.charts[id];
   
   // }
 };

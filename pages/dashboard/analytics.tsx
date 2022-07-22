@@ -116,14 +116,14 @@ const Page = () => {
           />
         </div>
         <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
-          <DateAnalytics
+          {/* <DateAnalytics
             isLoading={isLoading}
             date_analytics={
               data
                 ? (data?.analytic.date_time_anaylytic as IDateTimeAnalytics)
                 : ({} as IDateTimeAnalytics)
             }
-          />
+          /> */}
         </div>
       </div>
 
