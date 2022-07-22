@@ -88,7 +88,6 @@ axiosInstance.interceptors.request.use(async (req) => {
   // console.log(req)
 
   return req;
-
 });
 
 export default axiosInstance;

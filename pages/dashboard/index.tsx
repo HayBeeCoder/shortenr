@@ -1,177 +1,201 @@
-import axios, { AxiosError } from 'axios'
-import dayjs from 'dayjs'
-import jwtDecode from 'jwt-decode'
-import Link from 'next/link'
-import Router, { useRouter } from 'next/router'
-import React, { useCallback, useDebugValue, useEffect, useLayoutEffect, useState } from 'react'
-import { KeyedMutator, mutate } from 'swr'
-import Button from '../../components/Button'
-import Input from '../../components/Input'
-import RouteGuard from '../../components/RouteGuard/RouteGuard'
-import ShortenedUrlBanner from '../../components/ShortenedUrlBanner/ShortenedUrlBanner'
-import Skeleton from '../../components/Skeleton/Skeleton'
+import axios, { AxiosError } from "axios";
+import dayjs from "dayjs";
+import jwtDecode from "jwt-decode";
+import Link from "next/link";
+import Router, { useRouter } from "next/router";
+import React, {
+  useCallback,
+  useDebugValue,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+import { KeyedMutator, mutate } from "swr";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Loader from "../../components/Loader/Loader";
+import RouteGuard from "../../components/RouteGuard/RouteGuard";
+import ShortenedUrlBanner from "../../components/ShortenedUrlBanner/ShortenedUrlBanner";
+import Skeleton from "../../components/Skeleton/Skeleton";
 // import { mutate } from 'swr'
-import { useAppContext } from '../../context/state'
-import useFetchLinks from '../../hooks/useFetchLinks'
-import useFetchUser from '../../hooks/useFetchUser'
-import axiosInstance from '../../Services/axios.services'
+import { useAppContext } from "../../context/state";
+import useFetchLinks from "../../hooks/useFetchLinks";
+import useFetchUser from "../../hooks/useFetchUser";
+import axiosInstance from "../../Services/axios.services";
 
 interface ITableRow {
-  long_url: string,
-  short_url: string,
-  last_visited: string,
-  id: number,
-  mutate: KeyedMutator<IUserLinks>
+  long_url: string;
+  short_url: string;
+  last_visited: string;
+  id: number;
+  mutate: KeyedMutator<IUserLinks>;
   // setLink:  React.Dispatch<React.SetStateAction<IUserLink>>
 }
 
-
-
 const Dashboard = () => {
-  const router = useRouter()
-  const { state: { accessToken, email }, setState: { setEmail,setLink } } = useAppContext()
+  const router = useRouter();
+  const {
+    state: { accessToken, email },
+    setState: { setEmail, setLink },
+  } = useAppContext();
+  const [isShorteningInProgess, setIsShorteningInProgress] = useState(false);
   // console.log(accessToken)
-  const { user_id }: { user_id: string | null } = accessToken == ''  || !accessToken ? { user_id: null } : jwtDecode(accessToken)
+  const { user_id }: { user_id: string | null } =
+    accessToken == "" || !accessToken
+      ? { user_id: null }
+      : jwtDecode(accessToken);
 
-  const { data, isLoading, mutate,isError } = useFetchLinks(email)
-  console.log(isError)
+  const { data, isLoading, mutate, isError } = useFetchLinks(email);
+  console.log(isError);
   // console.log(data)
   useEffect(() => {
-      if(isError && isError.response.status == 401) {
-        console.log("isError oooooo")
-        localStorage.removeItem("access_token")
-        localStorage.removeItem("refresh")
-        router.replace('/login')
-      }
-  },[isError])
-  const [url, setUrl] = useState('')
-  const [shortenedUrl, setShortenedUrl] = useState('')
+    if (isError && isError.response.status == 401) {
+      console.log("isError oooooo");
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh");
+      router.replace("/login");
+    }
+  }, [isError]);
+  const [url, setUrl] = useState("");
+  const [shortenedUrl, setShortenedUrl] = useState("");
 
   const handleInput = (e: React.FormEvent) => {
-    setShortenedUrl('')
-    const { value } = e.target as HTMLInputElement
+    setShortenedUrl("");
+    const { value } = e.target as HTMLInputElement;
 
-    setUrl(value)
-  }
+    setUrl(value);
+  };
 
-
-  
-const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }: ITableRow) => {
-  const handleDelete = (id: number) => {
-    axiosInstance.delete(`links/${id}`)
-      .then(res => {
-        if (res.status == 204) {
-          mutate()
-        }
-      }).catch((e: AxiosError) => {
-
-        // console.log("error on deletion: ", e)
-        console.log( 'this is e: ' ,e)
-        if( e && e?.response?.status == 401){
-        router.replace('/login')   
-        localStorage.removeItem("access_token")
-        localStorage.removeItem("refresh")
-        }
-      }
-       )
-  }
-// console.log(last_visited , "sdafd")
-  return (
-    <tr className='border-b-[1px] border-b-[#D9D9D9]'>
-      <td className='pl-2'>{long_url}</td>
-      <td>{short_url}</td>
-      <td>{dayjs(last_visited).format("MMM D, YYYY")}</td>
-      <td className='flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2'>
-        <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block' onClick={() => handleDelete(id)}>Delete</button>
-        <button className='mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden' onClick={() => handleDelete(id)}>Del</button>
-        <Link href={`/dashboard/analytics?id=${id.toString()}`}  >
-        <button className='mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] ' onClick={() => setLink(data?.results.find(link => link.id == id) as IUserLink)}>View</button>
-        </Link>
-      </td>
-    </tr>
-  )
-},[data])
-
-
-
+  const TableRow = useCallback(
+    ({ long_url, short_url, last_visited, id, mutate }: ITableRow) => {
+      const handleDelete = (id: number) => {
+        axiosInstance
+          .delete(`links/${id}`)
+          .then((res) => {
+            if (res.status == 204) {
+              mutate();
+            }
+          })
+          .catch((e: AxiosError) => {
+            // console.log("error on deletion: ", e)
+            console.log("this is e: ", e);
+            if (e && e?.response?.status == 401) {
+              router.replace("/login");
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh");
+            }
+          });
+      };
+      console.log("last visited date is: ", last_visited);
+      return (
+        <tr className="border-b-[1px] border-b-[#D9D9D9]">
+          <td className="pl-2">{long_url}</td>
+          <td>{short_url}</td>
+          <td>
+            {last_visited ? dayjs(last_visited).format("MMM D, YYYY") : "nil"}
+          </td>
+          <td className="flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2">
+            <button
+              className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block"
+              onClick={() => handleDelete(id)}
+            >
+              Delete
+            </button>
+            <button
+              className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden"
+              onClick={() => handleDelete(id)}
+            >
+              Del
+            </button>
+            <Link href={`/dashboard/analytics?id=${id.toString()}`}>
+              <button
+                className="mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] "
+                onClick={() =>
+                  setLink(
+                    data?.results.find((link) => link.id == id) as IUserLink
+                  )
+                }
+              >
+                View
+              </button>
+            </Link>
+          </td>
+        </tr>
+      );
+    },
+    [data]
+  );
 
   const handleSubmit = () => {
     // console.log(url.trim().length)
     if (url.trim().length != 0) {
       const formData = {
-        long_link: url
-      }
-
-      axiosInstance.post('links/', formData)
-        .then(res => {
+        long_link: url,
+      };
+      setIsShorteningInProgress(true);
+      axiosInstance
+        .post("links/", formData)
+        .then((res) => {
           if (res.status == 200 || res.status == 201 || res.status == 208) {
             // console.log(res.data)
 
-            setShortenedUrl(res.data.short_link)
-            mutate()
+            setShortenedUrl(res.data.short_link);
+            mutate();
           }
         })
-        .catch(e => console.log('error in dashboard: ', e))
+        .catch((e) => console.log("error in dashboard: ", e))
+        .finally(() => setIsShorteningInProgress(false));
     }
-  }
-
-
+  };
 
   useLayoutEffect(() => {
     // console.log(user_id)
     // console.log(accessToken)
-    if (accessToken && accessToken != '' ) {
-      axiosInstance.get(`auth/users/${user_id}/`)
-        .then(res => {
+    if (accessToken && accessToken != "") {
+      axiosInstance
+        .get(`auth/users/${user_id}/`)
+        .then((res) => {
           if (res.status == 200) {
-            setEmail(res.data.email)
+            setEmail(res.data.email);
           }
         })
         .catch((e: any) => {
-          if(e.response.status == 401){
-            console.log("isLayouteffect error ooo")
-            router.replace('/login')
-            localStorage.removeItem("access_token")
-            localStorage.removeItem("refresh")
+          if (e.response.status == 401) {
+            console.log("isLayouteffect error ooo");
+            router.replace("/login");
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh");
           }
-        })
+        });
     }
-  }, [accessToken])
-
+  }, [accessToken]);
 
   return (
-    <section className=' min-h-screen px-2'>
-      <div className='w-full px-3 flex flex-col items-center'>
-        <div className='w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 '>
-        {/* <div> */}
+    <section className=" min-h-screen px-2">
+      <div className="w-full px-3 flex flex-col items-center">
+        <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 ">
+          {/* <div> */}
           <Input
-            className=''
-            handleChange={e => handleInput(e)}
-            labelFor='url'
-            label=''
-            type='text'
+            className=""
+            handleChange={(e) => handleInput(e)}
+            labelFor="url"
+            label=""
+            type="text"
             value={url}
             showRedBorder={false}
-
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
-
-
           />
           {/* <div className=' w-96'> */}
 
-          <Button classname=' bg-[#2B7FFF] md:w-96 py-4' onClick={handleSubmit}>
+          <Button classname=" bg-[#2B7FFF] md:w-96 py-0" onClick={handleSubmit} disabled={isShorteningInProgess}>
             Shorten URL
           </Button>
         </div>
-        {
-          shortenedUrl != ''
-
-          &&
+        {shortenedUrl != "" && !isShorteningInProgess && (
           // <div className='border-solid border-[1px] bg-[#FAFBFB] rounded-[8px]  px-2 md:px-4 pt-2 md:pt- py-1 w-full md:max-w-max relative md:flex items-center gap-2 max-w-lg mx-auto md:mx-w-none'>
           //   <p className='text-sm flex-grow md:inline-block mb-2 md:mb-0  font-semibold'>Here you go:</p>
-            
-          //   <div className='flex flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center'>
 
+          //   <div className='flex flex-col  md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center'>
 
           //   <p className='text-base p-2 bg-white  text-[#2B7FFF]'>{shortenedUrl}</p>
           //   <button className='inline-block  relative top-1/2 text-[#6B788E] hover:text-inherit p-2 self-end'>
@@ -181,25 +205,34 @@ const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }:
           //   </button>
           //   </div>
           // </div>
-          <ShortenedUrlBanner shortenedUrl={shortenedUrl}/>
-        }
+          <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
+        )}
+        {isShorteningInProgess && (
+          <div className="mt-3">
+            <Loader color="bg-[#0B1A30]" />
+          </div>
+        )}
       </div>
 
-      <div className='px-3 mt-10 py-5 flex justify-between'>
-        <p className='font-regular tracking-wide'>GENERATED LINKS</p>
+      <div className="px-3 mt-10 py-5 flex justify-between">
+        <p className="font-regular tracking-wide bg-[#0B1A30] text-[#F9F9FC] py-1 px-4">GENERATED LINKS</p>
 
-        <p>Total: {isLoading ? <Skeleton className='w-4 h-3 inline-block' /> : data?.count}</p>
+        <p className="text-sm">
+          Total:{" "}
+          {isLoading ? (
+            <Skeleton className="w-4 h-3 inline-block" />
+          ) : (
+            <span className="text-lg font-semibold">
+              {data?.count}
 
+            </span>
+          )}
+        </p>
       </div>
 
-
-      {
-        data && data.results.length > 0
-
-        &&
-        <div className='w-full  px-3 overflow-x-scroll lg:overflow-x-auto'>
-
-          <table className='w-full min-w-[600px] px-3 text-left' >
+      {data && data.results.length > 0 && (
+        <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto">
+          <table className="w-full min-w-[600px] px-3 text-left">
             <colgroup>
               {/* <col  className='w-[40/100] min-w-[300px]'/>
             <col  className=' '/>
@@ -218,9 +251,9 @@ const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }:
               <col span={4} />
               <col span={6} />
             </colgroup> */}
-            <thead className='bg-[#EBECEF] text-sm'>
-              <tr className='px-2'>
-                <th className='max-w-[4/10] pl-2 '>
+            <thead className="bg-[#EBECEF] text-sm">
+              <tr className="px-2">
+                <th className="max-w-[4/10] pl-2 ">
                   {/* <span className='text-white'>
 
                   -------------------------------
@@ -232,12 +265,8 @@ const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }:
                   </span> */}
                   {/* ------------------------------- */}
                 </th>
-                <th className=' '>
-
-                  Short Url
-
-                </th>
-                <th className='w-[1/10] '>
+                <th className=" ">Short Url</th>
+                <th className="w-[1/10] ">
                   {/* <span className="text-white">
 
                   ----------
@@ -247,51 +276,40 @@ const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }:
                   ----------
                   </span> */}
                 </th>
-                <th className='w-[2/10]  text-white pr-2' >
+                <th className="w-[2/10]  text-white pr-2">
                   {/* {"                            "} */}
                   {/* ------------------------------------------------ */}
                   {/* miscella */}
                 </th>
               </tr>
             </thead>
-            <tbody className='text-sm'>
-              {
-                data?.results?.map((link, index) => (
-
-                  <TableRow
-                    key={index}
-                    // setLink={setLink}
-                    id={link.id}
-                    long_url={link.long_link}
-                    short_url={link.short_link}
-                    last_visited={link.last_visited_date}
-                    mutate={mutate}
-                  />
-                ))
-              }
+            <tbody className="text-sm">
+              {data?.results?.map((link, index) => (
+                <TableRow
+                  key={index}
+                  // setLink={setLink}
+                  id={link.id}
+                  long_url={link.long_link}
+                  short_url={link.short_link}
+                  last_visited={link.last_visited_date}
+                  mutate={mutate}
+                />
+              ))}
             </tbody>
           </table>
-
         </div>
-      }
-      {
-        isLoading &&
-        <Skeleton  className='w-full h-36 '/>
-      }
-      {
-        data && data.results.length == 0 &&
-        <p className='text-center'>
+      )}
+      {isLoading && <Skeleton className="w-full h-36 " />}
+      {data && data.results.length == 0 && (
+        <p className="text-center">
           :( Seems you haven&apos;t generated a short link at all.
         </p>
-      }
-
-
+      )}
     </section>
-  )
-}
+  );
+};
 
-export default RouteGuard(Dashboard)
-
+export default RouteGuard(Dashboard);
 
 // export async function getStaticProps() {
 //   return {

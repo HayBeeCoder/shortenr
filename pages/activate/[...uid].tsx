@@ -11,6 +11,7 @@ const Index = ({ uid }: { uid: string[] }) => {
   const router = useRouter();
   const [isActivating, setIsActivating] = useState(true);
   const [alreadyActivated, setalreadyActivated] = useState(false);
+  const [isSomethingWrong, setIsSomethingWrong] = useState(false);
   // console.log(router.query)
   // const { params } = router.query as {params: string[]}
   // console.log(uid)/
@@ -29,10 +30,15 @@ const Index = ({ uid }: { uid: string[] }) => {
         if (response.status == 204 || response.status == 200) {
           setIsActivating(false);
           setalreadyActivated(true);
+          setIsSomethingWrong(false);
         }
       })
       .then(() => router.push("/login"))
       .catch((e) => {
+        // console.log(e)
+        if (e.response.status === 400) {
+          setIsSomethingWrong(true);
+        }
         if (e.response.status == 403) {
           setalreadyActivated(true);
           setIsActivating(false);
@@ -50,6 +56,8 @@ const Index = ({ uid }: { uid: string[] }) => {
           </>
           <p>Your account is getting activated. Please wait</p>
         </>
+      ) : isSomethingWrong ? (
+        <>Seems something went wrong while activating your account! :(</>
       ) : (
         <>
           <p>Your account has been activated successfully.</p>
@@ -68,17 +76,17 @@ const Index = ({ uid }: { uid: string[] }) => {
 
 export default Index;
 
-export const getServerSideProps = async ({ params }: any) => {
-  const { uid } = params;
-  // const formData = {
-  //     uid: uid[0],
-  //     token: uid[1]
-  // }
+// export const getServerSideProps = async ({ params }: any) => {
+//   const { uid } = params;
+//   // const formData = {
+//   //     uid: uid[0],
+//   //     token: uid[1]
+//   // }
 
-  // const  res = await axios.post( BASE_URL + "auth/" ,formData).then(res => res.data)
-  return {
-    props: {
-      uid,
-    },
-  };
-};
+//   // const  res = await axios.post( BASE_URL + "auth/" ,formData).then(res => res.data)
+//   return {
+//     props: {
+//       uid,
+//     },
+//   };
+// };

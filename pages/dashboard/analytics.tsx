@@ -14,6 +14,7 @@ import { GetServerSideProps } from "next";
 import useFetchLink from "../../hooks/useFetchLink";
 import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
+import Button from "../../components/Button";
 
 const Page = () => {
   // console.log
@@ -101,7 +102,13 @@ const Page = () => {
 
       {/* <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'> */}
 
-      <div className=" md:grid grid-cols-12 gap-3 mt-16">
+      <div className="text-center  flex justify-center mt-8"> 
+        <Button classname="bg-blue-600 px-16 w-max hover:opacity-70" onClick={() => mutate()}>
+          Refresh
+        </Button>
+      </div>
+
+      <div className=" md:grid grid-cols-12 gap-3 mt-8">
         <div className="col-start-1 col-span-4 w-full ">
           <ViewBanner
             view_count={data ? (data?.visit_count as number).toString() : ""}

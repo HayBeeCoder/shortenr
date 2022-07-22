@@ -18,7 +18,7 @@ import { format } from 'path'
 const Signup = () => {
   const router = useRouter()
   // const {data,isDone,isLoading,mutate} = useUser()
-  const {  setState: { setEmail } } = useAppContext()
+  const {  setState: { setConfirmationEmail } } = useAppContext()
   const [isLoading, setisLoading] = useState(false)
   const [serverResponse, setServerResponse] = useState('')
   const [showEmptyFieldError, setShowEmptyFieldError] = useState(false)
@@ -65,12 +65,13 @@ const Signup = () => {
         re_password: input.confirm_password
       }
 
+
       // try {
       // console.log(formDat)
       setisLoading(true)
       signup(formData)
         .then(() => {
-          setEmail(formData.email)
+          setConfirmationEmail(formData.email)
           router.push("/confirmation")
         })
         .catch((err: any) => {
