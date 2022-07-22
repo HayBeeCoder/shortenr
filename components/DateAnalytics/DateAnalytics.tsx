@@ -163,7 +163,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
           axes: true,
           legend: false,
         };
-        buildChart(config, 5);
+        // buildChart(config, 5);
       // } else setBrowsersDataExist(false);
     }
     // }
