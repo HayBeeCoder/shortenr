@@ -133,7 +133,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
   const monthChart = useCallback(() => {
     // if (!isLoading) {
     const canvasElement = document.getElementById(
-      "monthChart"
+      "dateChart"
     ) as HTMLCanvasElement;
     // console.log("Day Label is: " , dayLabel)
     //   console.log(canvasElement)
@@ -188,7 +188,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
             JSON.stringify(date_analytics.current_month) !== '[]' ?
 
         <canvas
-          id="monthChart"
+          id="dateChart"
           className=" md:h-full w-full"
         ></canvas>
         :
