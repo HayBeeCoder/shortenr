@@ -141,9 +141,9 @@ const Subanalytics = ({
   }, [other_analytics, isLoading]);
 // console.log(other_analytics)
   useEffect(() => {
-    browsersChart();
-    // operatingSystemChart();
-    // countriesChart();
+    browsersChart(); // this works
+    operatingSystemChart();
+    countriesChart();
     // console.log(browserChart)
   }, [browsersChart, operatingSystemChart, countriesChart]);
 
