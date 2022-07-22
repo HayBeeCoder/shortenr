@@ -92,7 +92,7 @@ const Dashboard = () => {
           <td className="pl-2">{long_url}</td>
           <td>{short_url}</td>
           <td>
-            {last_visited ? dayjs(last_visited).format("MMM D, YYYY") : "nil"}
+            {last_visited ? dayjs(last_visited).format("MMM D, YYYY") : "No visit(s) yet"}
           </td>
           <td className="flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2">
             <button
@@ -187,7 +187,7 @@ const Dashboard = () => {
           />
           {/* <div className=' w-96'> */}
 
-          <Button classname=" bg-[#2B7FFF] md:w-96 py-0" onClick={handleSubmit} disabled={isShorteningInProgess}>
+          <Button classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0" onClick={handleSubmit} disabled={isShorteningInProgess}>
             Shorten URL
           </Button>
         </div>
@@ -215,7 +215,7 @@ const Dashboard = () => {
       </div>
 
       <div className="px-3 mt-10 py-5 flex justify-between">
-        <p className="font-regular tracking-wide bg-[#0B1A30] text-[#F9F9FC] py-1 px-4">GENERATED LINKS</p>
+        <p className="font-semibold tracking-wide  text-[#0B1A30] py-1">GENERATED LINKS</p>
 
         <p className="text-sm">
           Total:{" "}

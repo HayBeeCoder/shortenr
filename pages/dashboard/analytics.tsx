@@ -115,7 +115,7 @@ const Page = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
+        {/* <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
           <DateAnalytics
             isLoading={isLoading}
             date_analytics={
@@ -124,18 +124,18 @@ const Page = () => {
                 : ({} as IDateTimeAnalytics)
             }
           />
-        </div>
+        </div> */}
       </div>
 
-      <Subanalytics
+      {/* <Subanalytics
         other_analytics={
           data
             ? (data?.analytic.other_analytic as IOtherAnalytics)
             : ({} as IOtherAnalytics)
         }
         isLoading={isLoading}
-      />
-
+      /> */}
+{/* 
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3">
         <div className="col-start-1 col-span-4">
 
@@ -150,7 +150,7 @@ const Page = () => {
             ></canvas> 
         </SubAnalytic>
           </div>
-      </div>
+      </div> */}
       {/* </div> */}
     </section>
   );
