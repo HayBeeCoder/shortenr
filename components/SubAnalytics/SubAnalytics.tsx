@@ -20,6 +20,7 @@ const Subanalytics = ({
   other_analytics,
   isLoading,
 }: IProps) => {
+  const [error,setError] = useState<any>([])
   const [doesBrowsersDataExist, setBrowsersDataExist] = useState(false);
   // const [doesReferralsExist, setReferralsExist] = useState(false);
   // const [doesDevicesExist, setDevicesExist] = useState(false);
@@ -56,7 +57,12 @@ const Subanalytics = ({
           axes,
           legend,
         };
-        buildChart(config, 0);
+        try{
+
+          buildChart(config, 0);
+        }catch(e){
+          error.push(e)
+        }
       }
       // } else setBrowsersDataExist(false);
     }
@@ -162,7 +168,7 @@ const Subanalytics = ({
         </SubAnalytic>
       </div>
 
-      <div className="md:col-start-5 md:col-span-4 ">
+      {/* <div className="md:col-start-5 md:col-span-4 ">
         <SubAnalytic
           title="Countries"
           toolTipMessage="Countries from which visitors accessed generated URL"
@@ -177,9 +183,9 @@ const Subanalytics = ({
             <p className="text-center text-sm italic">No data yet!</p>
           )}
         </SubAnalytic>
-      </div>
+      </div> */}
 
-      <div className="md:col-start-9 md:col-span-4 ">
+      {/* <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
           title="Operating System"
           toolTipMessage="Operating Systems of visitors to shortened link."
@@ -191,7 +197,7 @@ const Subanalytics = ({
             <p className="text-center text-sm italic">No data yet!</p>
           )}
         </SubAnalytic>
-      </div>
+      </div> */}
     </div>
   );
 };

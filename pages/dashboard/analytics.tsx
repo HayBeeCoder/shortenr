@@ -115,7 +115,7 @@ const Page = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
+        {/* <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
           <DateAnalytics
             isLoading={isLoading}
             date_analytics={
@@ -124,7 +124,7 @@ const Page = () => {
                 : ({} as IDateTimeAnalytics)
             }
           />
-        </div>
+        </div> */}
       </div>
 
       <Subanalytics
