@@ -197,10 +197,11 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
         {
             JSON.stringify(date_analytics.current_month) !== '[]' ?
 
-        <canvas
-          id="dateChart"
-          className=" md:h-full w-full"
-        ></canvas>
+        // <canvas
+        //   id="dateChart"
+        //   className=" md:h-full w-full"
+        // ></canvas>
+        <p> hello! </p>
         :
             
         <p className="text-center text-sm italic">No data yet!</p>
