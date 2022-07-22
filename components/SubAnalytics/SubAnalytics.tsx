@@ -142,7 +142,7 @@ const Subanalytics = ({
 // console.log(other_analytics)
   useEffect(() => {
     browsersChart();
-    operatingSystemChart();
+    // operatingSystemChart();
     countriesChart();
     // console.log(browserChart)
   }, [browsersChart, operatingSystemChart, countriesChart]);
