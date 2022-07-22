@@ -32,11 +32,16 @@ const Page = () => {
   // console.log("link Id: " , link)
   // console.log(email)
   // const { data, isLoading, mutate } = useFetchLinks(!!email.length ? email : null)
-  const { data, isLoading, mutate } = useFetchLink(link_id as string);
+  const { data, isLoading, mutate, isError } = useFetchLink(link_id as string);
   // console.log(data)
-
+  if (isError && isError.response.status === 403) {
+    // console.log(e);
+    console.log("Error is : ", isError);
+    router.replace("/login");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh");
+  }
   // console.log(data)
- 
 
   useLayoutEffect(() => {
     // console.log(user_id)
@@ -52,11 +57,11 @@ const Page = () => {
           }
         })
         .catch((e: any) => {
-          if (e.response.status == 401) {
+          if (e.response.status == 401 || e.response.status == 403) {
             console.log(e);
             router.replace("/login");
-            localStorage.removeItem("access_token")
-            localStorage.removeItem("refresh")
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh");
           }
         });
     }
@@ -66,11 +71,13 @@ const Page = () => {
       {/* bg-[#F9F9FC] */}
       {/* <div className="md:grid gap-y-5"> */}
 
-      <div className=" w-full md:block sm:w-max mx-auto ">
+      <div className=" w-full md:block sm:w-[400px] mx-auto ">
         <MiniCard
           property="Original URL"
           value={data?.long_link as string}
           isLoading={isLoading}
+          underline
+          truncate
         />
 
         {/* <div className='col-start-4 col-span-3'> */}
@@ -80,7 +87,7 @@ const Page = () => {
           value={data?.short_link as string}
           isLoading={isLoading}
           colored
-          // underline
+          underline
         />
         {/* </div> */}
         {/* <div className='col-start-7 col-span-2'> */}
@@ -102,18 +109,18 @@ const Page = () => {
           />
         </div>
         <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
-        <DateAnalytics 
-        isLoading={isLoading}
-        date_analytics={
-          data
-            ? (data?.analytic.date_time_anaylytic as IDateTimeAnalytics)
-            : ({} as IDateTimeAnalytics)
-        }/>
+          <DateAnalytics
+            isLoading={isLoading}
+            date_analytics={
+              data
+                ? (data?.analytic.date_time_anaylytic as IDateTimeAnalytics)
+                : ({} as IDateTimeAnalytics)
+            }
+          />
         </div>
       </div>
 
       <Subanalytics
-        
         other_analytics={
           data
             ? (data?.analytic.other_analytic as IOtherAnalytics)
@@ -121,6 +128,22 @@ const Page = () => {
         }
         isLoading={isLoading}
       />
+
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3">
+        <div className="col-start-1 col-span-4">
+
+        <SubAnalytic
+          toolTipMessage="Devices from which visitors accessed shortened link"
+          title="Devices"
+        >
+           <canvas
+              id="operatingSystemChart"
+              
+              className="mx-auto w-full aspect-square max-w-[400px]"
+            ></canvas> 
+        </SubAnalytic>
+          </div>
+      </div>
       {/* </div> */}
     </section>
   );

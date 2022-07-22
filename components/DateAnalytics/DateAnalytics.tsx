@@ -184,10 +184,18 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       should_flex
     >
       <div className="px-4  h-[300px] md:h-[250px]  ">
+      {
+            JSON.stringify(date_analytics.current_month) !== '[]' ?
+
         <canvas
           id="monthChart"
           className=" md:h-full w-full"
         ></canvas>
+        :
+            
+        <p className="text-center text-sm italic">No data yet!</p>
+
+      }
       </div>
     </SubAnalytic>
   );

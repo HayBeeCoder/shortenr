@@ -8,6 +8,7 @@ import useFetchUser from '../../hooks/useFetchUser'
 import { logout } from '../../Services/user.services'
 import Button from '../Button'
 import Logo from '../Logo'
+import Skeleton from '../Skeleton/Skeleton'
 
 interface ILayout {
   children: JSX.Element
@@ -63,9 +64,13 @@ const Layout: React.FC<ILayout> = ({ children }) => {
             Logged In as:
 
             </span>{"  "}
-             <span className='text-[#2B7FFF] text-[18px] '>
+            {
+              email === '' ?
+              <Skeleton  className='w-52 h-4'/> :
+              <span className='text-[#2B7FFF] text-[18px] '>
               {email}
             </span>
+            }
             </p>
             :
             ''

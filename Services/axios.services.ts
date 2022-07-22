@@ -1,6 +1,6 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios, { AxiosRequestHeaders, AxiosResponse } from "axios";
 import { useContext } from "react";
-import {BASE_URL} from "../constants"
+import { BASE_URL } from "../constants";
 // import { useAppContext } from "../context/state";
 
 //  const {state: {accessToken}} = useAppContext()
@@ -14,72 +14,81 @@ import {BASE_URL} from "../constants"
 // }
 // console.log(authToken)
 
-
 const axiosInstance = axios.create({
-    baseURL: BASE_URL,
-    // headers: {
-    //     Authorization: `Bearer ${accessToken}`
-    // }
+  baseURL: BASE_URL,
+  // headers: {
+  //     Authorization: `Bearer ${accessToken}`
+  // }
+});
 
-})
+axiosInstance.interceptors.request.use(async (req) => {
+  //Basically , what to do is :
+  // grab stored tokens locally
+  //they could  be absent
+  //they could have expired
+  //they could be present
+  //check for their validity
+  //if access token is still valid log the user in
+  //if valid, proceed with request else dispose them and
+  let authToken = localStorage.getItem("access_token")
+    ? JSON.parse(localStorage.getItem("access_token") as string)
+    : null;
+  let refreshToken = localStorage.getItem("refresh")
+    ? JSON.parse(localStorage.getItem("refresh") as string)
+    : null;
 
-axiosInstance.interceptors.request.use(async req =>{
-    let authToken = localStorage.getItem('access_token') ? JSON.parse(localStorage.getItem('access_token') as string) : null
-let refreshToken = localStorage.getItem('refresh') ? JSON.parse(localStorage.getItem('refresh') as string) : null
+  // if(isValid.status == 401) localStorage.removeItem("refresh")
 
-// if(isValid.status == 401) localStorage.removeItem("refresh")
+  // localStorage.setItem("isValid" , is)
+  // localStorage.removeItem("isValid")
 
-// localStorage.setItem("isValid" , is)
-// localStorage.removeItem("isValid")
-
-
-    if(authToken){
-        // console.log('I am inside an interceptor: ', isValid)
-        // const isrefreshValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
-        // const isrefreshValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}ass`})
-        // localStorage.setItem("isValid",JSON.stringify(isrefreshValid))
-        // console.log(isrefreshValid)
-        if(req.headers){
-            
-            req.headers.Authorization = `Bearer ${authToken}`
-        }
-        return req
+  if (authToken) {
+    try {
+      const accessTokenIsValid = await axios.post(
+        BASE_URL + "auth/jwt/verify/",
+        { token: `${authToken}` }
+      );
+      if (req.headers) {
+        req.headers.Authorization = `Bearer ${authToken}`;
+      }
+      return req;
+    } catch (error: any) {
+      if (error.response.status == 401) {
+        localStorage.removeItem("access_token");
+        // return req;
+      }
     }
-    if(
-        !localStorage.getItem('refresh')
-        ){
-            return req
-        }
-        try {
-            if(refreshToken){
-
-                const isValid = await axios.post(BASE_URL +'auth/jwt/verify/', {token: `${refreshToken}`})
-            }
-            
-        }catch(e: any){
-            if(e.response.status == 401){
-                localStorage.removeItem("refresh")
-                return req
-            }
-        }
-
-    const response = await axios.post(BASE_URL + 'auth/jwt/refresh' , {refresh: JSON.parse(localStorage.getItem("refresh") as string)})
-    // console.log(refresh)
-    localStorage.setItem("access_token", JSON.stringify(response.data.access))
-
-    if(req.headers){
-        
-        req.headers.Authorization = `Bearer ${response.data.access}`
+  }
+  if (!refreshToken) {
+    return req;
+  }
+  try {
+    if (refreshToken) {
+      const isValid = await axios.post(BASE_URL + "auth/jwt/verify/", {
+        token: `${refreshToken}`,
+      });
     }
+  } catch (e: any) {
+    if (e.response.status == 401) {
+      localStorage.removeItem("refresh");
+      return req;
+    }
+  }
 
-    // console.log(req)
+  const response = await axios.post(BASE_URL + "auth/jwt/refresh", {
+    refresh: JSON.parse(localStorage.getItem("refresh") as string),
+  });
+  // console.log(refresh)
+  localStorage.setItem("access_token", JSON.stringify(response.data.access));
 
-    return req
+  if (req.headers) {
+    req.headers.Authorization = `Bearer ${response.data.access}`;
+  }
 
+  // console.log(req)
 
-    
+  return req;
 
-    return req
-})
+});
 
-export default axiosInstance
+export default axiosInstance;

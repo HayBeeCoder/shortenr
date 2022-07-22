@@ -75,7 +75,7 @@ const TableRow = useCallback(({ long_url, short_url, last_visited, id, mutate }:
       }
        )
   }
-console.log(last_visited , "sdafd")
+// console.log(last_visited , "sdafd")
   return (
     <tr className='border-b-[1px] border-b-[#D9D9D9]'>
       <td className='pl-2'>{long_url}</td>
@@ -142,9 +142,10 @@ console.log(last_visited , "sdafd")
   return (
     <section className=' min-h-screen px-2'>
       <div className='w-full px-3 flex flex-col items-center'>
-        <div className='w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch '>
+        <div className='w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 '>
+        {/* <div> */}
           <Input
-            className='pr-2'
+            className=''
             handleChange={e => handleInput(e)}
             labelFor='url'
             label=''
@@ -152,13 +153,13 @@ console.log(last_visited , "sdafd")
             value={url}
             showRedBorder={false}
 
-            placeholder="Enter that long URL you've got"
+            placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
 
 
           />
           {/* <div className=' w-96'> */}
 
-          <Button classname=' bg-[#2B7FFF] md:w-96 self-stretch' onClick={handleSubmit}>
+          <Button classname=' bg-[#2B7FFF] md:w-96 py-4' onClick={handleSubmit}>
             Shorten URL
           </Button>
         </div>
@@ -272,6 +273,10 @@ console.log(last_visited , "sdafd")
           </table>
 
         </div>
+      }
+      {
+        isLoading &&
+        <Skeleton  className='w-full h-36 '/>
       }
       {
         data && data.results.length == 0 &&

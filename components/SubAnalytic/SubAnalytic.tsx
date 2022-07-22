@@ -51,7 +51,7 @@ const SubAnalytic = ({toolTipMessage, title, children ,special,should_flex}: IPr
             {/* <div className='my-1'> */}
             <div className={`w-full ${special ? "overflow-x-scroll md:overflow-x-auto" : ''}`}>
 
-                <div className={`${special ? "w-[1000px] " : "w-full"}`}>
+                <div className={`${special ? "w-[1000px] md:w-full" : "w-full"}`}>
 
             {children}
                 </div>

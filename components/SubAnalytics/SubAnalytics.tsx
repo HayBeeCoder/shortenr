@@ -63,15 +63,15 @@ const Subanalytics = ({
     // }
   }, [other_analytics]);
 
-  const referralsChart = useCallback(() => {
+  const operatingSystemChart = useCallback(() => {
     if (!isLoading) {
       const canvasElement = document.getElementById(
-        "referralsChart"
+        "operatingSystemChart"
       ) as HTMLCanvasElement;
 
-      if (other_analytics.Referer) {
+      if (other_analytics.OS) {
         const [labels, values] = processOtherAnalytics(
-          other_analytics.Referer
+          other_analytics.OS
         ) as [string[], number[]];
 
         if (labels && values) {
@@ -132,13 +132,13 @@ const Subanalytics = ({
       }
     }
   }, [other_analytics, isLoading]);
-console.log(other_analytics)
+// console.log(other_analytics)
   useEffect(() => {
     browsersChart();
-    referralsChart();
+    operatingSystemChart();
     countriesChart();
     // console.log(browserChart)
-  }, [browsersChart, referralsChart, countriesChart]);
+  }, [browsersChart, operatingSystemChart, countriesChart]);
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3 ">
@@ -181,14 +181,14 @@ console.log(other_analytics)
 
       <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
-          title="Referrers"
-          toolTipMessage="Sites visitors were before clicking generated URL"
+          title="Operating System"
+          toolTipMessage="Operating Systems of visitors to shortened link."
         >
           {
-          JSON.stringify(other_analytics.Referer) !== '{}' ? (
-            <canvas id="referralsChart"  className="mx-auto w-full aspect-square max-w-[400px]"></canvas>
+          JSON.stringify(other_analytics.OS) !== '{}' ? (
+            <canvas id="operatingSystemChart"  className="mx-auto w-full aspect-square max-w-[400px]"></canvas>
           ) : (
-            <p className="text-center text-sm italic">No referrers yet!</p>
+            <p className="text-center text-sm italic">No data yet!</p>
           )}
         </SubAnalytic>
       </div>
