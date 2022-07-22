@@ -5,6 +5,7 @@ import buildChart from "../../helpers/buildChart";
 import SubAnalytic from "../SubAnalytic/SubAnalytic";
 import { ChartType } from "chart.js";
 import { processOtherAnalytics } from "../../helpers/processOtherAnalytics";
+import { hostname } from "os";
 
 
 const COLORS = ["#0047B3", "#0065FF", "#6BA6FF", "#96C0FF", "#E6F0FF"];
@@ -148,6 +149,9 @@ const Subanalytics = ({
 
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3 ">
+      {/* <div>
+         {JSON.stringify(error) != '[]' JSON.stringify(error)}
+      </div> */}
       <div className="md:col-start-1 md:col-span-4">
         <SubAnalytic
           title="Browsers"
@@ -168,7 +172,7 @@ const Subanalytics = ({
         </SubAnalytic>
       </div>
 
-      {/* <div className="md:col-start-5 md:col-span-4 ">
+      <div className="md:col-start-5 md:col-span-4 ">
         <SubAnalytic
           title="Countries"
           toolTipMessage="Countries from which visitors accessed generated URL"
@@ -183,9 +187,9 @@ const Subanalytics = ({
             <p className="text-center text-sm italic">No data yet!</p>
           )}
         </SubAnalytic>
-      </div> */}
+      </div> 
 
-      {/* <div className="md:col-start-9 md:col-span-4 ">
+       <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
           title="Operating System"
           toolTipMessage="Operating Systems of visitors to shortened link."
@@ -197,7 +201,7 @@ const Subanalytics = ({
             <p className="text-center text-sm italic">No data yet!</p>
           )}
         </SubAnalytic>
-      </div> */}
+      </div>
     </div>
   );
 };

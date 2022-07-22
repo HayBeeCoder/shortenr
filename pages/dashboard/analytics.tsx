@@ -115,7 +115,7 @@ const Page = () => {
             isLoading={isLoading}
           />
         </div>
-        {/* <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
+        <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
           <DateAnalytics
             isLoading={isLoading}
             date_analytics={
@@ -124,7 +124,7 @@ const Page = () => {
                 : ({} as IDateTimeAnalytics)
             }
           />
-        </div> */}
+        </div>
       </div>
 
       <Subanalytics
@@ -139,7 +139,7 @@ const Page = () => {
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3">
         <div className="col-start-1 col-span-4">
 
-        <SubAnalytic
+        {/* <SubAnalytic
           toolTipMessage="Devices from which visitors accessed shortened link"
           title="Devices"
         >
@@ -148,7 +148,7 @@ const Page = () => {
               
               className="mx-auto w-full aspect-square max-w-[400px]"
             ></canvas> 
-        </SubAnalytic>
+        </SubAnalytic> */}
           </div>
       </div>
       {/* </div> */}
