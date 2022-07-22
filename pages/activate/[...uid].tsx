@@ -76,17 +76,12 @@ const Index = ({ uid }: { uid: string[] }) => {
 
 export default Index;
 
-// export const getServerSideProps = async ({ params }: any) => {
-//   const { uid } = params;
-//   // const formData = {
-//   //     uid: uid[0],
-//   //     token: uid[1]
-//   // }
+export const getServerSideProps = async ({ params }: any) => {
+  const { uid } = params;
 
-//   // const  res = await axios.post( BASE_URL + "auth/" ,formData).then(res => res.data)
-//   return {
-//     props: {
-//       uid,
-//     },
-//   };
-// };
+  return {
+    props: {
+      uid,
+    },
+  };
+};
