@@ -38,7 +38,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     if (date_analytics.current_month && date_analytics.current_month[0]) {
       let {current_month} = date_analytics
         console.log("Current Month: ",  date_analytics.current_month)
-      let last_item = date_analytics.current_month.at(-1)
+      let last_item = current_month[current_month.length - 1]
       let first_item = date_analytics.current_month[0];
       let day_of_last_item = getDayFromDate(last_item?.date as string)  // a string would be returnUrl
       const length_of_month = dayjs(first_item.date).daysInMonth()
