@@ -19,9 +19,7 @@ class MyDocument extends Document {
         <body className="font-Lato m-0 text-[#0B1A30] bg-[#F9F9FC]">
           <Main />
           <NextScript />
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></script>
-          {/* <Script src="https://cdn.jsdelivr.net/npm/eruda@2.5.0/eruda.min.js"></Script> */}
-          <script>eruda.init();</script>
+          
         </body>
         {/* <script src="//cdn.jsdelivr.net/npm/eruda"></script> */}
       </Html>
