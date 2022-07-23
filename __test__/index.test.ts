@@ -3,7 +3,8 @@ import { screen , render} from "@testing-library/react"
 
 describe("Homepage" , () => {
     it("should render an input element" , () => {
-        const component = render(<Home/>)
+        // const component = render();
+
         screen.debug()
     })
 
