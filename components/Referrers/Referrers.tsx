@@ -36,7 +36,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
             </>
           ))
         ) : (
-          <p>No referrers yet!</p>
+          <p className="text-center text-sm italic>No referrers yet!</p>
         )}
       </ul>
     </SubAnalytic>

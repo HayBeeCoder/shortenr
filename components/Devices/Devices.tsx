@@ -32,7 +32,7 @@ const Devices = ({devices_analytics} : IProps) => {
                 </>
               ))
             ) : (
-              <p>No devices yet!</p>
+              <p className="text-center text-sm italic">No devices yet!</p>
             )}
           </ul>
         </SubAnalytic>
