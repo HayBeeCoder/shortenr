@@ -23,40 +23,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
             <>
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
-                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
-                    {referrer[0]}
-                  </span>
-                  <span className="block ">
-                    {referrer[1]}
-                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
-                  </span>
-                </div>
-              </ListItem>
-              <ListItem key={index}>
-                <div className="flex items-center justify-between w-full gap-2">
-                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
-                    {referrer[0]}
-                  </span>
-                  <span className="block ">
-                    {referrer[1]}
-                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
-                  </span>
-                </div>
-              </ListItem>
-              <ListItem key={index}>
-                <div className="flex items-center justify-between w-full gap-2">
-                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
-                    {referrer[0]}
-                  </span>
-                  <span className="block ">
-                    {referrer[1]}
-                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
-                  </span>
-                </div>
-              </ListItem>
-              <ListItem key={index}>
-                <div className="flex items-center justify-between w-full gap-2">
-                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
+                  <span className=" block border-r-[1px]  w-[85%] ">
                     {referrer[0]}
                   </span>
                   <span className="block ">
@@ -66,9 +33,10 @@ const Referrers = ({ referrers_analytics }: IProps) => {
                 </div>
               </ListItem>
 
+              {/* start  */}
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
-                  <span className="  block border-r-[1px]  w-[85%] ">
+                  <span className=" block border-r-[1px]  w-[82%] pr-2 ">
                     {referrer[0]}
                   </span>
                   <span className="block ">
@@ -79,7 +47,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
               </ListItem>
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
-                  <span className="  block border-r-[1px]  w-[85%] ">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
                     {referrer[0]}
                   </span>
                   <span className="block ">
@@ -90,7 +58,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
               </ListItem>
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
-                  <span className="  block border-r-[1px]  w-[85%] ">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
                     {referrer[0]}
                   </span>
                   <span className="block ">
@@ -101,7 +69,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
               </ListItem>
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
-                  <span className="  block border-r-[1px]  w-[85%] ">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
                     {referrer[0]}
                   </span>
                   <span className="block ">
@@ -110,6 +78,84 @@ const Referrers = ({ referrers_analytics }: IProps) => {
                   </span>
                 </div>
               </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  w-[85%] pr-2 ">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              {/* end  */}
             </>
           ))
         ) : (

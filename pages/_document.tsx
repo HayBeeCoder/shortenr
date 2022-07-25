@@ -17,7 +17,7 @@ class MyDocument extends Document {
           />
         </Head>
         <body className="font-Lato m-0 text-[#0B1A30]  bg-body-bg bg-repeat bg-left-top bg-[length:200px_100px] -mb-96">
-          <div className="w-full h-full bg-[#F9F9FC]/90">
+          <div className="w-full h-full bg-[#F9F9FC]/90 -mb-96">
 
           <Main />
           <NextScript />

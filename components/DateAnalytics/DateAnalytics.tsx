@@ -185,7 +185,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       <div>{error}</div>
       <SubAnalytic
         title="Current Month Views"
-        toolTipMessage="Visits count within current month"
+        // toolTipMessage="Visits count within current month"
         special
         should_flex
       >

@@ -6,7 +6,7 @@ interface IProps {
 
 const ListItem: React.FC<IProps> = ({ children }) => {
     return (
-        <li className='flex gap-1 items-start'>
+        <li className='flex gap-1 items-center'>
             <span className='inline-block'>
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8" cy="8.5" r="5" fill="#E6F0FF" />
