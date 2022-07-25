@@ -16,7 +16,7 @@ const Referrers = ({ referrers_analytics }: IProps) => {
       title="Referrers"
       toolTipMessage="Sites from which visitors visited shortened URL"
     >
-      <ul className="flex flex-col gap-3 mt-3 overflow-y-scroll h-full scroll-shadows -mx-2 p-1 w-full  word-break">
+      <ul className="flex flex-col gap-3 mt-3 scroll-shadows -mx-2 p-1 w-full  word-break">
         {/* {JSON.stringify(total)} */}
         {JSON.stringify(referrers_analytics) != "{}" ? (
           Object.entries(referrers_analytics).map((referrer, index) => (
