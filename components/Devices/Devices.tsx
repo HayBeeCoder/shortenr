@@ -12,7 +12,7 @@ const Devices = ({devices_analytics} : IProps) => {
           title="Devices"
           toolTipMessage="Devices on which visitors accessed shortened URL"
         >
-          <ul className="flex flex-col gap-3 mt-3 overflow-y-scroll h-full scroll-shadows -mx-2 p-1 w-full  word-break">
+          <ul className="flex flex-col gap-3 mt-3 h-full overflow-y-scroll h-full scroll-shadows -mx-2 p-1 w-full  word-break">
             {/* {JSON.stringify(total)} */}
             {JSON.stringify(devices_analytics) != "{}" ? (
               Object.entries(devices_analytics).map((referrer, index) => (

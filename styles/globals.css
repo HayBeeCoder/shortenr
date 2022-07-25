@@ -43,7 +43,9 @@
     }
 
     .scroll-shadows {
-        max-height: 200px;
+        width: 100%;
+        padding-top: 50%;
+        max-height: 400px;
         overflow: auto;
       
         background:
