@@ -31,7 +31,7 @@ const SubAnalytic = ({toolTipMessage, title, children ,special,should_flex}: IPr
 
     return (
 
-        <div className={`py-7  w-full bg-[#FFF] rounded-md  aspect-square md:aspect-auto  ${should_flex ? "flex flex-col" : "px-5  "}`}>
+        <div className={`py-7  w-full bg-[#FFF] rounded-md  aspect-square   ${should_flex ? "flex flex-col aspect-auto" : "px-5  "}`}>
             <div className='flex justify-center gap-2 items-center  mb-3 relative flex-shrink-0'>
 
                 <span className={` absolute w-full bg-gray-700 bg-opacity-50 text-white -top-12 rounded-sm p-2 text-[14px] max-w-[350px] text-center ${showToolTip ? "block" : "hidden"}`} >
@@ -49,9 +49,9 @@ const SubAnalytic = ({toolTipMessage, title, children ,special,should_flex}: IPr
                 </button>
             </div>
             {/* <div className='my-1'> */}
-            <div className={`w-full ${special ? "overflow-x-scroll md:overflow-x-auto" : ''}`}>
+            <div className={`w-full h-full ${special ? "overflow-x-scroll md:overflow-x-auto" : ''}`}>
 
-                <div className={`${special ? "w-[1000px] md:w-full" : "w-full"}`}>
+                <div className={`h-full ${special ? "w-[1000px] md:w-full" : "w-full"}`}>
 
             {children}
                 </div>

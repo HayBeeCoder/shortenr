@@ -1,12 +1,12 @@
 import React from 'react'
 
 interface IProps {
-    children: string
+    children: JSX.Element | string
 }
 
 const ListItem: React.FC<IProps> = ({ children }) => {
     return (
-        <li className='flex gap-1 items-center'>
+        <li className='flex gap-1 items-start'>
             <span className='inline-block'>
                 <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8" cy="8.5" r="5" fill="#E6F0FF" />
@@ -17,7 +17,7 @@ const ListItem: React.FC<IProps> = ({ children }) => {
 
 
             </span>
-            <p className='text-[14px] font-regular'>
+            <p className='text-[14px] w-full font-regular '>
                 {children}
             </p>
 

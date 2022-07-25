@@ -4,6 +4,11 @@ interface IReferrer{
     [key: string]: number
   
 }
+
+interface IDevice {
+    // "PC": 2
+    [key: string]: number
+}
 interface IUser {
   email: string,
   password: string,
@@ -66,10 +71,7 @@ interface IOtherAnalytics{
     // "Windows 10": 2
     [key: string]: number
   },
-  Device: {
-    // "PC": 2
-    [key: string]: number
-  },
+  Device: IDevice,
   Referer: IReferrer,
   Country: {
     [key: string]: number

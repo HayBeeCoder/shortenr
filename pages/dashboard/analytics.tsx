@@ -16,6 +16,7 @@ import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
 import Button from "../../components/Button";
 import Referrers from "../../components/Referrers/Referrers";
+import Devices from "../../components/Devices/Devices";
 
 const Page = () => {
   // console.log
@@ -69,7 +70,7 @@ const Page = () => {
     }
   }, [accessToken]);
 
-// console.log(data?.analytic.other_analytic)
+  // console.log(data?.analytic.other_analytic)
 
   return (
     <section className="h-full  w-full  px-5 gap-2 my-5 pb-5">
@@ -106,8 +107,11 @@ const Page = () => {
 
       {/* <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'> */}
 
-      <div className="text-center  flex justify-center mt-8"> 
-        <Button classname="bg-blue-600 px-16 w-max hover:opacity-70" onClick={() => mutate()}>
+      <div className="text-center  flex justify-center mt-8">
+        <Button
+          classname="bg-blue-600 px-16 w-max hover:opacity-70"
+          onClick={() => mutate()}
+        >
           Refresh
         </Button>
       </div>
@@ -140,15 +144,25 @@ const Page = () => {
         isLoading={isLoading}
       />
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3">
-        <div className="col-start-1 col-span-4">
+      <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3 ">
+        <div className="col-start-1 col-span-1 md:col-span-4">
           <Referrers
-           referrers_analytics={
-            data ? (data.analytic.other_analytic.Referer as IReferrer)
-            : ({} as IReferrer)
-           }
+            referrers_analytics={
+              data
+                ? (data.analytic.other_analytic.Referer as IReferrer)
+                : ({} as IReferrer)
+            }
           />
-          {/* <DevicesList/> */}
+        </div>
+        <div className="col-start-1 md:col-start-5 md:col-span-4">
+          <Devices
+            devices_analytics={
+              data
+                ? (data.analytic.other_analytic.Device as IDevice)
+                : ({} as IDevice)
+            }
+          />
+        </div>
 
         {/* <SubAnalytic
           toolTipMessage="Devices from which visitors accessed shortened link"
@@ -160,7 +174,6 @@ const Page = () => {
               className="mx-auto w-full aspect-square max-w-[400px]"
             ></canvas> 
         </SubAnalytic> */}
-          </div>
       </div>
       {/* </div> */}
     </section>

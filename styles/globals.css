@@ -2,6 +2,7 @@
 
 
 @layer base {
+    
     .scroll-y-false{
         overflow-x: scroll;
         overflow-y: auto
@@ -36,6 +37,69 @@
         animation: move 500ms linear 0ms infinite;
         margin-right: 30px;
     }
+
+    .word-break{
+        word-break: break-word
+    }
+
+    .scroll-shadows {
+        max-height: 200px;
+        overflow: auto;
+      
+        background:
+          /* Shadow Cover TOP */
+          linear-gradient(
+            white 30%,
+            rgba(255, 255, 255, 0)
+          ) center top,
+          
+          /* Shadow Cover BOTTOM */
+          linear-gradient(
+            rgba(255, 255, 255, 0), 
+            white 70%
+          ) center bottom,
+          
+          /* Shadow TOP */
+          radial-gradient(
+            farthest-side at 50% 0,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0)
+          ) center top,
+          
+          /* Shadow BOTTOM */
+          radial-gradient(
+            farthest-side at 50% 100%,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0)
+          ) center bottom;
+        
+        background-repeat: no-repeat;
+        background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+        background-attachment: local, local, scroll, scroll;
+      }
+
+      .scroll-shadows {
+        --scrollbarBG: transparent;
+        --thumbBG: #90a4ae;
+      
+        scrollbar-width: thin;
+        scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+      }
+      .scroll-shadows::-webkit-scrollbar {
+        width: 4;
+      }
+      .scroll-shadows::-webkit-scrollbar-track {
+        background: var(--scrollbarBG);
+        width: 2px
+      }
+      .scroll-shadows::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG);
+        border-radius: 6px;
+        width: 2px;
+        border: 1px solid var(--scrollbarBG);
+      }
+      
+      
     @keyframes move {
         from {transform: translateX(0px)}
         to {transform: translateX(45px)}
