@@ -127,6 +127,11 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         )
       }
       {children}
+      
+
+
+
+      
     </div>
   );
 };
