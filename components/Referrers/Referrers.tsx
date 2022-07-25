@@ -7,6 +7,7 @@ interface IProps{
 }
 
 const Referrers = ({referrers_analytics} : IProps) => {
+  const total = Object.values(referrers_analytics).reduce((accumulator,value) => accumulator + value,0)
   return (
     <SubAnalytic 
         title='Referrers'
@@ -17,14 +18,13 @@ const Referrers = ({referrers_analytics} : IProps) => {
             {
               JSON.stringify(referrers_analytics) != '{}' ?
               Object.entries(referrers_analytics).map((referrer,index) => (
+
                 <ListItem key={index}>{referrer[0]}</ListItem>
               )):
               <p>
                 No referrers yet!
               </p>
             }
-          
-            
         </ul>
 
     </SubAnalytic>

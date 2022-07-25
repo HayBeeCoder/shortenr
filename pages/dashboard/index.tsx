@@ -196,7 +196,7 @@ const Dashboard = () => {
 
   return (
     <section className=" min-h-screen px-2">
-      <div className="w-full px-3 flex flex-col items-center">
+      <div className="w-full px-3 flex flex-col items-center my-14">
         <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 ">
           {/* <div> */}
           <Input
