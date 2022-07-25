@@ -57,7 +57,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
         (hideLogout ||
          pathname.includes('/')) &&
         !pathname.includes("/dashboard")  ?
-             " fixed top-0 w-screen" :
+             " fixed top-0 w-screen z-[1000]" :
                   " relative"} top-0  w-full px-2 py-3  flex justify-between gap-5 items-center`}>
         <Logo />
         {

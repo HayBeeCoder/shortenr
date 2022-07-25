@@ -5,10 +5,10 @@ import { useAppContext } from '../context/state'
 const Confirmation = () => {
     const { state: { confirmationEmail } } = useAppContext()
     return (
-        <div className='fixed top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 text-lg px-6 py-4  text-center' >
+        <div className='fixed z-[50] top-0 left-0 w-full text-lg px-6 py-4  text-center bg-[#F9F9FC]/90 h-screen flex justify-center items-center'  >
             {
                 confirmationEmail == '' ?
-                    <>
+                    <div>
                         <p>There is nothing to see here :).</p>
                         <p>Return to <Link href="/">
                         <span className='text-[#2b7fff] cursor-pointer'>
@@ -16,8 +16,8 @@ const Confirmation = () => {
                             </span>
                         </Link>
                         </p>
-                    </> :
-                    <>
+                    </div> :
+                    <div>
                         <p>
 
                             A mail has been sent to the email address{" "}
@@ -29,7 +29,7 @@ const Confirmation = () => {
 
                             Kindly click the link in the mail sent to activate your account.
                         </p>
-                    </>
+                    </div>
             }
 
 

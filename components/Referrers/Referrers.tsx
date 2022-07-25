@@ -16,11 +16,44 @@ const Referrers = ({ referrers_analytics }: IProps) => {
       title="Referrers"
       toolTipMessage="Sites from which visitors visited shortened URL"
     >
-      <ul className="flex flex-col gap-3 mt-3 scroll-shadows -mx-2 p-1 w-full  word-break">
+      <ul className="flex flex-col gap-3 mt-3  scroll-shadows -mx-2 p-1 w-full  word-break">
         {/* {JSON.stringify(total)} */}
         {JSON.stringify(referrers_analytics) != "{}" ? (
           Object.entries(referrers_analytics).map((referrer, index) => (
             <>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
+              <ListItem key={index}>
+                <div className="flex items-center justify-between w-full gap-2">
+                  <span className=" block border-r-[1px]  max-w-[85%] pr-2">
+                    {referrer[0]}
+                  </span>
+                  <span className="block ">
+                    {referrer[1]}
+                    {/* {`${Math.round((referrer[1] / total) * 100)}%`} */}
+                  </span>
+                </div>
+              </ListItem>
               <ListItem key={index}>
                 <div className="flex items-center justify-between w-full gap-2">
                   <span className=" block border-r-[1px]  max-w-[85%] pr-2">

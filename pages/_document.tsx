@@ -16,7 +16,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className="font-Lato m-0 text-[#0B1A30]  bg-body-bg bg-repeat bg-left-top bg-[length:200px_100px] -mb-28">
+        <body className="font-Lato m-0 text-[#0B1A30]  bg-body-bg bg-repeat bg-left-top bg-[length:200px_100px] -mb-96">
           <div className="w-full h-full bg-[#F9F9FC]/90">
 
           <Main />
