@@ -7,6 +7,7 @@ import { useAppContext } from "../../context/state";
 import useFetchUser from "../../hooks/useFetchUser";
 import { logout } from "../../Services/user.services";
 import Button from "../Button";
+import Footer from "../Footer/Footer";
 import Logo from "../Logo";
 import Menu from "../Menu/Menu";
 import Skeleton from "../Skeleton/Skeleton";
@@ -131,7 +132,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
 
 
 
-      
+     <Footer /> 
     </div>
   );
 };
