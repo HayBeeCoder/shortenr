@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               className=" text-base pr-3 border-[#C3C0C3]"
               labelFor="original_url"
               handleChange={handleInput}
-              placeholder="https://Enterthatlongurlandshortenit.com"
+              placeholder="https://enterthatlongurlandshortenit.com"
               showRedBorder={false}
               type="text"
               value={input}
