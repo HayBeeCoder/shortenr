@@ -5,7 +5,7 @@ import { useAppContext } from '../context/state'
 const Confirmation = () => {
     const { state: { confirmationEmail } } = useAppContext()
     return (
-        <div className='fixed z-[50] top-0 left-0 w-full text-lg px-6 py-4  text-center bg-[#F9F9FC]/90 h-screen flex justify-center items-center'  >
+        <div className='fixed z-[50] top-0 left-0 w-full h-screen text-lg px-6 py-4  text-center bg-[#F9F9FC]/90 flex justify-center items-center'  >
             {
                 confirmationEmail == '' ?
                     <div>

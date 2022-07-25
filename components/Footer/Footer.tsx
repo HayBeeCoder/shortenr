@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="text-sm text-center py-6">
+    <footer className="text-sm text-center py-6 fixed bottom-0 w-full left-0 z-[10000]">
       Powered By:{"   "}
       <Link href="https://planetscale.com/" passHref>
         <a
