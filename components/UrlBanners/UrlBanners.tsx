@@ -10,7 +10,7 @@ const UrlBanners = (props: IProps) => {
     <>
       {props.isURLVeryLong && (
         <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[8px]  px-6  py-2">
-          Sorry, Links longer than 255 characters can't be shortened yet.
+          Sorry, Links longer than 255 characters can&apos;t be shortened yet.
         </p>
       )}
       {!props.isURLValid && (
