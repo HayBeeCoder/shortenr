@@ -79,7 +79,7 @@ const Home: NextPage = () => {
             <ListItem>Copy that long URL</ListItem>
             <ListItem>Paste into the input box below</ListItem>
             <ListItem>Generate a short URL</ListItem>
-            <ListItem>Optionally, Track this URL by signing up :)</ListItem>
+            <ListItem>Optionally, Track shortened URL by signing up :)</ListItem>
           </ul>
           <div className="justify-self-stretch">
             <Input
