@@ -9,6 +9,9 @@ module.exports = {
       'Lato': ['Lato', "sans-serif"]
     },
     extend: {
+      backgroundImage: {
+        'body-bg': "url('../assets/svgs/bodybg.svg')"
+      },
       animation: {
         grow: 'grow 500ms linear 0s infinite',
       },

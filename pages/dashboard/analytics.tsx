@@ -15,6 +15,7 @@ import useFetchLink from "../../hooks/useFetchLink";
 import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
 import Button from "../../components/Button";
+import Referrers from "../../components/Referrers/Referrers";
 
 const Page = () => {
   // console.log
@@ -67,8 +68,11 @@ const Page = () => {
         });
     }
   }, [accessToken]);
+
+// console.log(data?.analytic.other_analytic)
+
   return (
-    <section className="  w-full  px-[20px] gap-2 my-5">
+    <section className="h-full  w-full  px-5 gap-2 my-5 pb-5">
       {/* bg-[#F9F9FC] */}
       {/* <div className="md:grid gap-y-5"> */}
 
@@ -115,7 +119,7 @@ const Page = () => {
             isLoading={isLoading}
           />
         </div>
-        <div className="col-start-5 col-span-8 overflow-x-scroll md:overflow-x-hidden">
+        <div className="col-start-5 col-span-8 scroll-y-false">
           <DateAnalytics
             isLoading={isLoading}
             date_analytics={
@@ -138,6 +142,13 @@ const Page = () => {
 
       <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-3 my-3">
         <div className="col-start-1 col-span-4">
+          <Referrers
+           referrers_analytics={
+            data ? (data.analytic.other_analytic.Referer as IReferrer)
+            : ({} as IReferrer)
+           }
+          />
+          {/* <DevicesList/> */}
 
         {/* <SubAnalytic
           toolTipMessage="Devices from which visitors accessed shortened link"

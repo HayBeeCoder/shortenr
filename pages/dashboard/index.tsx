@@ -17,8 +17,16 @@ import Loader from "../../components/Loader/Loader";
 import RouteGuard from "../../components/RouteGuard/RouteGuard";
 import ShortenedUrlBanner from "../../components/ShortenedUrlBanner/ShortenedUrlBanner";
 import Skeleton from "../../components/Skeleton/Skeleton";
+import UrlBanners from "../../components/UrlBanners/UrlBanners";
+import {
+  MAX_URL_CHARACTERS_POSSIBLE,
+  REGEX_URL,
+  REGEX_WHITESPACE,
+  SERVER_DOMAIN,
+} from "../../constants";
 // import { mutate } from 'swr'
 import { useAppContext } from "../../context/state";
+import { validateURL } from "../../helpers/validateURL";
 import useFetchLinks from "../../hooks/useFetchLinks";
 import useFetchUser from "../../hooks/useFetchUser";
 import axiosInstance from "../../Services/axios.services";
@@ -32,7 +40,11 @@ interface ITableRow {
   // setLink:  React.Dispatch<React.SetStateAction<IUserLink>>
 }
 
+// const isValidURL = REGEX_URL.test(input) && !input.includes(SERVER_DOMAIN) && Boolean(new URL(input))
+// setIsURLValid(isValidURL)
 const Dashboard = () => {
+  const [isURLVeryLong, setIsURLVeryLong] = useState(false);
+  const [isURLValid, setIsURLValid] = useState(true);
   const router = useRouter();
   const {
     state: { accessToken, email },
@@ -46,7 +58,7 @@ const Dashboard = () => {
       : jwtDecode(accessToken);
 
   const { data, isLoading, mutate, isError } = useFetchLinks(email);
-  console.log(isError);
+  // console.log(isError);
   // console.log(data)
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -62,6 +74,10 @@ const Dashboard = () => {
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
     const { value } = e.target as HTMLInputElement;
+
+    if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
+      setIsURLVeryLong(true);
+    } else setIsURLVeryLong(false);
 
     setUrl(value);
   };
@@ -86,13 +102,15 @@ const Dashboard = () => {
             }
           });
       };
-      console.log("last visited date is: ", last_visited);
+      // console.log("last visited date is: ", last_visited);
       return (
         <tr className="border-b-[1px] border-b-[#D9D9D9]">
           <td className="pl-2">{long_url}</td>
           <td>{short_url}</td>
           <td>
-            {last_visited ? dayjs(last_visited).format("MMM D, YYYY") : "No visit(s) yet"}
+            {last_visited
+              ? dayjs(last_visited).format("MMM D, YYYY")
+              : "No visit(s) yet"}
           </td>
           <td className="flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2">
             <button
@@ -128,7 +146,13 @@ const Dashboard = () => {
 
   const handleSubmit = () => {
     // console.log(url.trim().length)
-    if (url.trim().length != 0) {
+    const isValidURL = validateURL(url)
+      
+      console.log("is url valid:   ", isValidURL)
+      // setIsURLValid(isValidURL)
+    setIsURLValid(isValidURL);
+
+    if (url.trim().length != 0 && isValidURL && !isURLVeryLong) {
       const formData = {
         long_link: url,
       };
@@ -187,10 +211,15 @@ const Dashboard = () => {
           />
           {/* <div className=' w-96'> */}
 
-          <Button classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0" onClick={handleSubmit} disabled={isShorteningInProgess}>
+          <Button
+            classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0"
+            onClick={handleSubmit}
+            disabled={isShorteningInProgess}
+          >
             Shorten URL
           </Button>
         </div>
+        <UrlBanners isURLValid={ isURLValid} isURLVeryLong={isURLVeryLong} />
         {shortenedUrl != "" && !isShorteningInProgess && (
           // <div className='border-solid border-[1px] bg-[#FAFBFB] rounded-[8px]  px-2 md:px-4 pt-2 md:pt- py-1 w-full md:max-w-max relative md:flex items-center gap-2 max-w-lg mx-auto md:mx-w-none'>
           //   <p className='text-sm flex-grow md:inline-block mb-2 md:mb-0  font-semibold'>Here you go:</p>
@@ -215,17 +244,16 @@ const Dashboard = () => {
       </div>
 
       <div className="px-3 mt-10 py-5 flex justify-between">
-        <p className="font-semibold tracking-wide  text-[#0B1A30] py-1">GENERATED LINKS</p>
+        <p className="font-semibold tracking-wide  text-[#0B1A30] py-1">
+          GENERATED LINKS
+        </p>
 
         <p className="text-sm">
           Total:{" "}
           {isLoading ? (
             <Skeleton className="w-4 h-3 inline-block" />
           ) : (
-            <span className="text-lg font-semibold">
-              {data?.count}
-
-            </span>
+            <span className="text-lg font-semibold">{data?.count}</span>
           )}
         </p>
       </div>

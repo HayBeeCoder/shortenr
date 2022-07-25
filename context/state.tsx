@@ -12,11 +12,11 @@ interface IsetState {
     setConfirmationEmail: React.Dispatch<React.SetStateAction<string>>
 }
 type Tstate = { email: string, accessToken: string, refreshToken: string ,link: IUserLink | null , confirmationEmail: string}
-type AppProviderProps = { children: React.ReactNode, setToken: React.Dispatch<React.SetStateAction<string>> }
+type AppProviderProps = { children: React.ReactNode}
 
 const AppContext = createContext<{ state: Tstate, setState: IsetState } | undefined>(undefined)
 
-export function AppWrapper({ children, setToken }: AppProviderProps) {
+export function AppWrapper({ children }: AppProviderProps) {
     const [email, setEmail] = useState('')
     const [link, setLink] = useState<IUserLink | null>(null)
     // const [user,setUser] = useState('')

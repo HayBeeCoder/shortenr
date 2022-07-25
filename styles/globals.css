@@ -2,6 +2,10 @@
 
 
 @layer base {
+    .scroll-y-false{
+        overflow-x: scroll;
+        overflow-y: auto
+    }
     table{
 
         table-layout: fixed;

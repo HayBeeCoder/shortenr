@@ -1,5 +1,9 @@
 
-
+interface IReferrer{
+  
+    [key: string]: number
+  
+}
 interface IUser {
   email: string,
   password: string,
@@ -66,9 +70,7 @@ interface IOtherAnalytics{
     // "PC": 2
     [key: string]: number
   },
-  "Referer": {
-    [key: string]: number
-  },
+  Referer: IReferrer,
   Country: {
     [key: string]: number
 
@@ -95,4 +97,6 @@ interface IDateTimeAnalytics{
     "count__sum": number
   }[]
 }
+
+
 

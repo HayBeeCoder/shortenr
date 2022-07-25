@@ -38,9 +38,16 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       console.log("Current Month: ", date_analytics.current_month);
       let last_item = current_month[current_month.length - 1];
       let first_item = date_analytics.current_month[0];
+
+      //using below variable makes the chart stop at the last time a visitor visits the site
       let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
+      
+      //using below variable makes the chart stop at the current day
+      let today = new Date().getDate()
+      // console.log("Today's date is: " , today)
+
       const length_of_month = dayjs(first_item.date).daysInMonth();
-      console.log(length_of_month);
+      // console.log(length_of_month);
 
       //using below daysInMonth method seems to not work for some dates,
       //I gat my eyes on you though , we shall see
@@ -51,10 +58,11 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       while (day_count <= length_of_month) {
         dayLabelsArray.push(`Day ${day_count++}`);
       }
-      console.log(dayLabelsArray);
+      // console.log(dayLabelsArray);
       setDayLabels(dayLabelsArray);
-
-      const views_of_month = new Array(day_of_last_item).fill(0);
+      const number_of_view_days = today < day_of_last_item ? day_of_last_item : today
+      // const views_of_month = new Array(day_of_last_item).fill(0);
+      const views_of_month = new Array(number_of_view_days).fill(0);
       // const {current_month } = date_analytics
       for (let i = 0; i < current_month.length; i++) {
         let item = current_month[i];

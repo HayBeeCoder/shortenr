@@ -104,6 +104,7 @@ const Login = () => {
             label="Password"
             labelFor='password'
             handleChange={handleInput}
+            placeholder=""
             //   placeholder="https://Enterthatlongurlandshortenit.com"
             showRedBorder={false}
             type="password"

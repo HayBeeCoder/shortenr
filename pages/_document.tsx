@@ -16,9 +16,12 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className="font-Lato m-0 text-[#0B1A30] bg-[#F9F9FC]">
+        <body className="font-Lato m-0 text-[#0B1A30]   bg-body-bg bg-repeat bg-left-top bg-[200px_100px] -mb-28">
+          <div className="w-full h-full bg-[#F9F9FC]/90">
+
           <Main />
           <NextScript />
+          </div>
           
         </body>
         {/* <script src="//cdn.jsdelivr.net/npm/eruda"></script> */}

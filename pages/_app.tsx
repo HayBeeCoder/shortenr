@@ -31,9 +31,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* <Script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/2.5.0/eruda.min.js"></Script> */}
-      <Script src="https://cdn.jsdelivr.net/npm/eruda@2.5.0/eruda.min.js " strategy="beforeInteractive"></Script>
-      <Script strategy="afterInteractive" id="eruda-script">eruda.init();</Script>
-      <AppWrapper setToken={setToken}>
+      {/* <Script src="https://cdn.jsdelivr.net/npm/eruda@2.5.0/eruda.min.js " strategy="beforeInteractive"></Script> */}
+      {/* <Script strategy="afterInteractive" id="eruda-script">eruda.init();</Script> */}
+      <AppWrapper >
         {/* <RouteGuard> */}
 
         <Layout>
