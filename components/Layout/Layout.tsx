@@ -135,7 +135,7 @@ const Layout: React.FC<ILayout> = ({ children }) => {
 
 
 
-     <Footer fixed={pathname === "/dashboard" ? false : true }/> 
+     <Footer fixed={pathname.includes("/dashboard") ? false : true }/> 
     </div>
   );
 };
