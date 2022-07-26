@@ -198,7 +198,7 @@ const Dashboard = () => {
       {/* Table to show when data arrives  */}
       {data && data.results.length > 0 && (
         <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto min-h-[651px]">
-          <table className="w-full min-w-[600px] px-3 text-left">
+          <table className="w-full min-w-[900px] px-3 text-left">
             {/* <colgroup>
               <col span={1} className="w-[40%] " />
               <col span={1} className="w-[22%]" />

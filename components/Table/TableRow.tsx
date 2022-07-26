@@ -49,11 +49,19 @@ const TableRow = ({ link,data,mutate}: IProps) => {
                   ? dayjs(link.last_visited_date).format("MMM D, YYYY")
                   : "No visit(s) yet"}
               </td>
-              <td className="flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2">
+              <td className="  basis-16 pr-2 ">
+                <div className='flex flex-row-reverse gap-3 mr-0'>
+{/* 
+                <button
+                  className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00]  lg:hidden self-stretch"
+                  onClick={() => handleDelete(link.id)}
+                  >
+                  Del
+                </button> */}
                 <button
                   className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] "
                   onClick={() => handleDelete(link.id)}
-                >
+                  >
                   Delete
                 </button>
                 {/* <button
@@ -67,13 +75,14 @@ const TableRow = ({ link,data,mutate}: IProps) => {
                     className="mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] "
                     onClick={() =>
                       setLink(
-                        data?.results.find((item) =>item.id == link.id) as IUserLink
-                      )
-                    }
-                  >
-                    View Analytics
+                          data?.results.find((item) =>item.id == link.id) as IUserLink
+                          )
+                        }
+                        >
+                    Analytics
                   </button>
                 </Link>
+                      </div>
               </td>
             </tr>
           );
