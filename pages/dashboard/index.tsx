@@ -83,14 +83,15 @@ const Dashboard = () => {
 
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
+    const { value } = e.target as HTMLInputElement;
     let isValidURL;
     try {
-      isValidURL = validateURL(url);
+      isValidURL = validateURL(value);
+      console.log("is url valid: ?" , isValidURL)
     } catch (e) {
       isValidURL = false;
     }
 
-    const { value } = e.target as HTMLInputElement;
 
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
@@ -182,7 +183,7 @@ const Dashboard = () => {
         </div>
 
         {/* UrlBanner shows when user tries to shorten an invalid URL . */}
-        <UrlBanners isURLValid={isURLValid} isURLVeryLong={isURLVeryLong} />
+        <UrlBanners isURLValid={isURLValid} isURLVeryLong={isURLVeryLong} url={url}/>
         {shortenedUrl != "" && !isShorteningInProgess && (
           <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
         )}
