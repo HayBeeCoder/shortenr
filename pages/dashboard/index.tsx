@@ -37,8 +37,9 @@ import axiosInstance from "../../Services/axios.services";
 
 // const isValidURL = REGEX_URL.test(input) && !input.includes(SERVER_DOMAIN) && Boolean(new URL(input))
 // setIsURLValid(isValidURL)
+let shouldUpdateDateToShow = true
 const Dashboard = () => {
-  const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
+  // const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
   const router = useRouter();
@@ -56,6 +57,7 @@ const Dashboard = () => {
   const SLICE = data?.results.slice(0, ROW_PER_PAGE);
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
+  console.log("SLICE is: " , SLICE)
   console.log("data is:  ", data);
   console.log(data && data.results.length > 0);
   console.log("dataToShow is:  ", dataToShow);
@@ -65,11 +67,9 @@ const Dashboard = () => {
   useEffect(() => {
     if (shouldUpdateDateToShow) {
       setDataToShow(SLICE);
-      setShouldUpdateDateToShow(
-        (shouldUpdateDateToShow) => !shouldUpdateDateToShow
-      );
+      shouldUpdateDateToShow = false
     }
-  }, [data]);
+  }, [data,isLoading]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -84,24 +84,28 @@ const Dashboard = () => {
 
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
+    const isValidURL = validateURL(url);
     const { value } = e.target as HTMLInputElement;
 
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
     } else setIsURLVeryLong(false);
 
+    if(isValidURL) setIsURLValid(true)
+    else setIsURLValid(false)
+
     setUrl(value);
   };
 
   const handleSubmit = () => {
     // console.log(url.trim().length)
-    const isValidURL = validateURL(url);
+    // const isValidURL = validateURL(url);
 
-    console.log("is url valid:   ", isValidURL);
-    // setIsURLValid(isValidURL)
-    setIsURLValid(isValidURL);
+    // console.log("is url valid:   ", isValidURL);
+    // // setIsURLValid(isValidURL)
+    // setIsURLValid(isValidURL);
 
-    if (url.trim().length != 0 && isValidURL && !isURLVeryLong) {
+    if (url.trim().length != 0 && isURLValid && !isURLVeryLong) {
       const formData = {
         long_link: url,
       };
@@ -148,7 +152,7 @@ const Dashboard = () => {
       <div className="w-full px-3 flex flex-col items-center my-14">
         <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  ">
           <Input
-            className="rounded-[4px] h-[46px] md:h-auto"
+            className="rounded-[4px] h-[46px] "
             handleChange={(e) => handleInput(e)}
             labelFor="url"
             label=""
@@ -158,7 +162,7 @@ const Dashboard = () => {
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
           />
           <button
-            className="mini-btn text-[#fff]  border-[#2B7FFF] bg-[#2B7FFF]  py-3 w-full"
+            className="mini-btn text-[#fff]  border-[#2B7FFF] bg-[#2B7FFF]  py-3 md:px-10 flex-shrink-0"
             onClick={handleSubmit}
           >
             Generate short URL
