@@ -38,7 +38,7 @@ import axiosInstance from "../../Services/axios.services";
 // const isValidURL = REGEX_URL.test(input) && !input.includes(SERVER_DOMAIN) && Boolean(new URL(input))
 // setIsURLValid(isValidURL)
 const Dashboard = () => {
-  const [shouldUpdateDateToShow,setShouldUpdateDateToShow] = useState(true)
+  const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
   const router = useRouter();
@@ -53,23 +53,23 @@ const Dashboard = () => {
       ? { user_id: null }
       : jwtDecode(accessToken);
   const { data, isLoading, mutate, isError } = useFetchLinks(email);
-  const SLICE =  data?.results.slice(0, ROW_PER_PAGE) 
+  const SLICE = data?.results.slice(0, ROW_PER_PAGE);
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
-  console.log("data is:  " , data)
-  console.log((data && data.results.length > 0) )
-  console.log("dataToShow is:  " , dataToShow)
+  console.log("data is:  ", data);
+  console.log(data && data.results.length > 0);
+  console.log("dataToShow is:  ", dataToShow);
   // console.log(isError);
   // console.log(data)
 
   useEffect(() => {
-    if(shouldUpdateDateToShow){
-
-      setDataToShow(SLICE)
-      setShouldUpdateDateToShow(shouldUpdateDateToShow => !shouldUpdateDateToShow)
-
+    if (shouldUpdateDateToShow) {
+      setDataToShow(SLICE);
+      setShouldUpdateDateToShow(
+        (shouldUpdateDateToShow) => !shouldUpdateDateToShow
+      );
     }
-  } , [data])
+  }, [data]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -146,9 +146,9 @@ const Dashboard = () => {
   return (
     <section className=" min-h-screen px-2">
       <div className="w-full px-3 flex flex-col items-center my-14">
-        <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 ">
+        <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  ">
           <Input
-            className=""
+            className="rounded-[4px] h-[46px] md:h-auto"
             handleChange={(e) => handleInput(e)}
             labelFor="url"
             label=""
@@ -157,13 +157,19 @@ const Dashboard = () => {
             showRedBorder={false}
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
           />
-          <Button
+          <button
+            className="mini-btn text-[#fff]  border-[#2B7FFF] bg-[#2B7FFF]  py-3 w-full"
+            onClick={handleSubmit}
+          >
+            Generate short URL
+          </button>
+          {/* <Button
             classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0"
             onClick={handleSubmit}
             disabled={isShorteningInProgess}
           >
             Shorten URL
-          </Button>
+          </Button> */}
         </div>
 
         {/* UrlBanner shows when user tries to shorten an invalid URL . */}
@@ -222,7 +228,7 @@ const Dashboard = () => {
       {/* Pagination component goes here  */}
       {/* It shows only when there is data and the number of data is > 10 */}
       {data && data.results.length > 10 && (
-        <Pagination data={data} setDataToShow={setDataToShow}  />
+        <Pagination data={data} setDataToShow={setDataToShow} />
       )}
 
       {/* Table skeleton to show while data is loading  */}

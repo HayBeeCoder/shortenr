@@ -36,13 +36,13 @@ const handleEyesClick = (e: React.FormEvent) => {
   return (
     <label htmlFor={labelFor} className='text-left text-xs inline-block w-full'>
     {label}
-    <p className='text-left relative '>
+    <p className='text-left relative h-full'>
       <input
       id={labelFor}
       name= {labelFor}
        type={type}
         placeholder={placeholder}
-         className={`outline-none py-2 px-3 border-solid border-[1px]  rounded-md  block text-base w-full focus:outline-none focus:border-[#0b1a30] ${showRedBorder ? "border-red-400" : "border-secondary-600"} ${className}` }
+         className={`outline-none py-2 px-3 border-solid border-[1px]  rounded-md  block text-base w-full focus:outline-none focus:border-[#0b1a30] h-full ${showRedBorder ? "border-red-400" : "border-secondary-600"} ${className}` }
          onChange={e => handleChange(e)}
          value={value}/>
       
