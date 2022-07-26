@@ -37,7 +37,7 @@ import axiosInstance from "../../Services/axios.services";
 
 // const isValidURL = REGEX_URL.test(input) && !input.includes(SERVER_DOMAIN) && Boolean(new URL(input))
 // setIsURLValid(isValidURL)
-let shouldUpdateDateToShow = true
+// let shouldUpdateDateToShow = true
 const Dashboard = () => {
   // const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
@@ -57,7 +57,7 @@ const Dashboard = () => {
   const SLICE = data?.results.slice(0, ROW_PER_PAGE);
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
-  console.log("SLICE is: " , SLICE)
+  console.log("SLICE is: ", SLICE);
   console.log("data is:  ", data);
   console.log(data && data.results.length > 0);
   console.log("dataToShow is:  ", dataToShow);
@@ -65,11 +65,10 @@ const Dashboard = () => {
   // console.log(data)
 
   useEffect(() => {
-    if (shouldUpdateDateToShow) {
+    if (data && data.results.length > 0) {
       setDataToShow(SLICE);
-      shouldUpdateDateToShow = false
     }
-  }, [data,isLoading]);
+  }, [data, isLoading]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -84,15 +83,21 @@ const Dashboard = () => {
 
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
-    const isValidURL = validateURL(url);
+    let isValidURL;
+    try {
+      isValidURL = validateURL(url);
+    } catch (e) {
+      isValidURL = false;
+    }
+
     const { value } = e.target as HTMLInputElement;
 
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
     } else setIsURLVeryLong(false);
 
-    if(isValidURL) setIsURLValid(true)
-    else setIsURLValid(false)
+    if (isValidURL) setIsURLValid(true);
+    else setIsURLValid(false);
 
     setUrl(value);
   };
