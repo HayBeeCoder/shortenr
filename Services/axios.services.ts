@@ -48,15 +48,18 @@ axiosInstance.interceptors.request.use(async (req) => {
         BASE_URL + "auth/jwt/verify/",
         { token: `${authToken}` }
       );
+      console.log(accessTokenIsValid)
       if (req.headers) {
         req.headers.Authorization = `Bearer ${authToken}`;
       }
       return req;
     } catch (error: any) {
-      if (error.response.status == 401) {
-        localStorage.removeItem("access_token");
+
+      localStorage.removeItem("access_token");
+      // if (error.response.status == 401) {
+        console.log("daklsf;jak")
         // return req;
-      }
+      // }
     }
   }
   if (!refreshToken) {
@@ -70,6 +73,7 @@ axiosInstance.interceptors.request.use(async (req) => {
     }
   } catch (e: any) {
     if (e.response.status == 401) {
+
       localStorage.removeItem("refresh");
       return req;
     }

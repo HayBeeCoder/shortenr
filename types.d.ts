@@ -1,4 +1,13 @@
 
+interface ITableRow {
+  long_url: string;
+  short_url: string;
+  last_visited: string;
+  id: number;
+  mutate: KeyedMutator<IUserLinks>;
+  // setLink:  React.Dispatch<React.SetStateAction<IUserLink>>
+}
+
 interface IReferrer{
   
     [key: string]: number

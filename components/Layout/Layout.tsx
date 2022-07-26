@@ -127,12 +127,15 @@ const Layout: React.FC<ILayout> = ({ children }) => {
           ""
         )
       }
+      <div className="">
+
       {children}
       
+      </div>
 
 
 
-     <Footer /> 
+     <Footer fixed={pathname === "/dashboard" ? false : true }/> 
     </div>
   );
 };
