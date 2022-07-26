@@ -91,12 +91,12 @@ const Home: NextPage = () => {
               type="text"
               value={input}
             />
-            <Button
-              classname="bg-[#0B1A30] text-white my-2 "
+            <button
+              className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]'
               onClick={handleSubmit}
             >
               {isLoading ? <Loader /> : "Shorten URL"}
-            </Button>
+            </button>
            <UrlBanners isURLVeryLong={isURLVeryLong} isURLValid={isURLValid} />
             {shortenedUrl && !isURLVeryLong && isURLValid && (
               <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
