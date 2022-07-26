@@ -3,7 +3,7 @@ const BASE_URL = "https://shrtenr.herokuapp.com/v1/";
 const REGEX_EMAIL = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-const REGEX_URL = RegExp(/^(http(s?):\/\/)/g);
+const REGEX_URL = RegExp(/^(http(s?):\/\/)?(www.)?/);
 const SERVER_DOMAIN = "https://shortenr-api.herokuapp.com/";
 const MAX_URL_CHARACTERS_POSSIBLE = 255;
 const ROW_PER_PAGE = 10;
