@@ -51,17 +51,17 @@ const TableRow = ({ link,data,mutate}: IProps) => {
               </td>
               <td className="flex flex-col  lg:flex-row gap-2 items-stretch basis-16 pr-2">
                 <button
-                  className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] hidden md:block"
+                  className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] "
                   onClick={() => handleDelete(link.id)}
                 >
                   Delete
                 </button>
-                <button
+                {/* <button
                   className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden"
                   onClick={() => handleDelete(link.id)}
                 >
                   Del
-                </button>
+                </button> */}
                 <Link href={`/dashboard/analytics?id=${link.id.toString()}`}>
                   <button
                     className="mini-btn  border-[#2b7fff] bg-[#E6F0FF] text-[#2B7fff] "
@@ -71,7 +71,7 @@ const TableRow = ({ link,data,mutate}: IProps) => {
                       )
                     }
                   >
-                    View
+                    View Analytics
                   </button>
                 </Link>
               </td>
