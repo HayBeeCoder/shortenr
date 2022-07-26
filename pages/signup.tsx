@@ -110,7 +110,7 @@ const Signup = () => {
         <div className='justify-self-stretch space-y-5'>
           <div>
             <Input
-              className=" text-base pr-3 border-[#C3C0C3]"
+              className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
               label="Email"
               labelFor='email'
               handleChange={handleInput}
@@ -128,7 +128,7 @@ const Signup = () => {
           <div>
 
             <Input
-              className=" text-base pr-3 border-[#C3C0C3]"
+              className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
               label="Password"
               labelFor='password'
               handleChange={handleInput}
@@ -151,7 +151,7 @@ const Signup = () => {
           <div>
 
             <Input
-              className=" text-base pr-3 border-[#C3C0C3]"
+              className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
               label="Confirm password"
               labelFor='confirm_password'
               handleChange={handleInput}
@@ -178,14 +178,14 @@ const Signup = () => {
             }} >
 Submit
             </Button> */}
-            <Button classname='focus:outline-[#0b1a30] bg-[#0B1A30] text-white mb-2  mt-1' onClick={(e) => handleSubmit(e)} >
+            <button className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]' onClick={(e) => handleSubmit(e)} >
               {
                 isLoading ?
                   <Loader /> :
                   "Submit"
               }
 
-            </Button>
+            </button>
             <p className='text-center text-sm'>Already have an account ? {" "}
               <span className='font-bold underline underline-offset-2 '>
                 <Link href='/login'>

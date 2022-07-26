@@ -88,7 +88,7 @@ const Login = () => {
 
         <div className='justify-self-stretch space-y-5'>
           <Input
-            className=" text-base pr-3 border-[#C3C0C3]"
+            className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
             label="Email"
             labelFor='email'
             handleChange={handleInput}
@@ -100,7 +100,7 @@ const Login = () => {
 
           />
           <Input
-            className=" text-base pr-3 border-[#C3C0C3]"
+            className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
             label="Password"
             labelFor='password'
             handleChange={handleInput}
@@ -120,7 +120,7 @@ const Login = () => {
             <p className='text-xs text-red-500 '>User doesn&apos;t exist!</p>
           
           }
-          <Button classname='bg-[#0B1A30] text-white my-2 ' onClick={handleSubmit} >
+          <button className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]' onClick={handleSubmit} >
             {
               isLoggingIn
                 ?
@@ -128,7 +128,7 @@ const Login = () => {
                 :
                 'Submit'
             }
-          </Button>
+          </button>
             </div>
 
 

@@ -168,7 +168,7 @@ const Dashboard = () => {
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
           />
           <button
-            className="mini-btn text-[#fff]  border-[#2B7FFF] bg-[#2B7FFF]  py-3 md:px-10 flex-shrink-0"
+            className="mini-btn text-[#fff] py-3  border-[#2B7FFF] bg-[#2B7FFF]  md:px-10 flex-shrink-0"
             onClick={handleSubmit}
           >
             Generate short URL
