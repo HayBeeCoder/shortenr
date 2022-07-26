@@ -6,11 +6,12 @@ export const validateURL = (url: string): boolean => {
 
   returnValue =  REGEX_URL.test(url) &&
     !url.includes(SERVER_DOMAIN) &&
-    Boolean(new URL(url)) &&
+    // Boolean(new URL(url)) &&
     !REGEX_WHITESPACE.test(url);
     console.log('1', REGEX_URL.test(url) )
     console.log('2', !url.includes(SERVER_DOMAIN) )
     console.log('3', !REGEX_WHITESPACE.test(url))
+    console.log("regex test: ",!url.includes(SERVER_DOMAIN))
   }catch(e){
       returnValue = false
   }

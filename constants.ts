@@ -3,8 +3,9 @@ const BASE_URL = "https://shrtenr.herokuapp.com/v1/";
 const REGEX_EMAIL = RegExp(
   /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 );
-const REGEX_URL = RegExp(/^(http(s?):\/\/)?(www.)?/);
-const SERVER_DOMAIN = "https://shortenr-api.herokuapp.com/";
+const REGEX_URL = RegExp(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm);
+// const REGEX_URL = RegExp(/^(http(s?):\/\/)?(www.)?/);
+const SERVER_DOMAIN = "https://shortenr.herokuapp.com/";
 const MAX_URL_CHARACTERS_POSSIBLE = 255;
 const ROW_PER_PAGE = 10;
 //below regex matches a space character
