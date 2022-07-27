@@ -69,12 +69,13 @@ const Page = () => {
         });
       }
     }, [accessToken]);
-    console.log("date_created is: " , data?.date_created)
-    console.log("pre-parsed date_created is: " , data?.date_created as string)
-    console.log("parsed date_created is: " , dayjs(data?.date_created as string))
-    // console.log("date_created is: " , data?.date_created)
-
-  // console.log(data?.analytic.other_analytic)
+  //   console.log("date_created is: " , data?.date_created)
+  //   console.log("pre-parsed date_created is: " , data?.date_created as string)
+  //   console.log("parsed date_created is: " , dayjs(data?.date_created as string))
+  //   // console.log("date_created is: " , data?.date_created)
+  //   console.log(data?.date_created.split(' ')[0])
+  //   console.log(dayjs(data?.date_created.split(' ')[0]))
+  // // console.log(data?.analytic.other_analytic)
 
   return (
     <section className="h-full  w-full  px-5 gap-2 my-5 pb-5">
@@ -103,7 +104,7 @@ const Page = () => {
         {/* <div className='col-start-7 col-span-2'> */}
         <MiniCard
           property="Date Created"
-          value={dayjs(data?.date_created as string).format("MMM D, YYYY")}
+          value={dayjs(data?.date_created.split(' ')[0] as string).format("MMM D, YYYY")}
           isLoading={isLoading}
         />
         {/* </div> */}
