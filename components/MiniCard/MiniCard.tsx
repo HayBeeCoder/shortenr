@@ -47,7 +47,7 @@ const MiniCard = ({ property, value, isLoading , underline, truncate , colored =
                     <Skeleton className='block w-full h-4' /> :
                     (
                     underline ? 
-                    <p className={`${colored ? "text-blue-600" : ""} ${truncate ? " truncate" : ""} inline-block relative underline underline-offset-2 py-[6px]`} onClick={() =>handleClick()} >
+                    <p className={`${colored ? "text-blue-600" : ""} ${truncate ? " truncate" : ""} cursor-pointer inline-block relative underline underline-offset-2 py-[6px]`} onClick={() =>handleClick()} >
                      {showTooltip && <div className=' absolute  -top-[-0.1rem] bg-gray-400 text-[#fefefe] p-1 block text-[12px] w-[120px] right-0'>URL copied already</div>}
                    
 

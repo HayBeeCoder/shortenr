@@ -77,7 +77,7 @@ const Page = () => {
       {/* bg-[#F9F9FC] */}
       {/* <div className="md:grid gap-y-5"> */}
 
-      <div className=" w-full md:block sm:w-[400px] mx-auto ">
+      <div className=" w-full md:block sm:w-[450px] mx-auto ">
         <MiniCard
           property="Original URL"
           value={data?.long_link as string}
@@ -108,12 +108,12 @@ const Page = () => {
       {/* <div className='col-start-5 col-span-4  row-start-2 row-span-2 md:flex justify-around items-center'> */}
 
       <div className="text-center  flex justify-center mt-8">
-        <Button
-          classname="bg-blue-600 px-16 w-max hover:opacity-70"
+        <button
+          className=" my-2 mini-btn text-[#fff] py-3  h-[46px] bg-blue-600 px-16 w-max "
           onClick={() => mutate()}
         >
           Refresh
-        </Button>
+        </button>
       </div>
 
       <div className=" md:grid grid-cols-12 gap-3 mt-8">

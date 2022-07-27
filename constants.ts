@@ -11,6 +11,8 @@ const ROW_PER_PAGE = 10;
 //below regex matches a space character
 const REGEX_WHITESPACE = RegExp(/ /g);
 
+const TIME_ZONE = Intl.DateTimeFormat().resolvedOptions().timeZone
+
 export {
   BASE_URL,
   REGEX_EMAIL,
@@ -19,4 +21,5 @@ export {
   MAX_URL_CHARACTERS_POSSIBLE,
   REGEX_WHITESPACE,
   ROW_PER_PAGE,
+  TIME_ZONE
 };

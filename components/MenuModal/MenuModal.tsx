@@ -71,7 +71,7 @@ const MenuModal = ({ setIsModalActive }: IProps) => {
             className="bg-[#fff] p-4 w-[400px] rounded-[4px] "
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-sm mb-1">Enter you passsword</p>
+            <p className="text-sm mb-1">Enter your passsword</p>
             <Input
               className=" text-base mb-2 border-[#BD2C00] rounded-[4px] h-[46px]"
               labelFor=""

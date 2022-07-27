@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 // import { isModuleNamespaceObject } from 'util/types'
 import Button from '../components/Button'
 import Input from '../components/Input'
-import { BASE_URL, REGEX_EMAIL } from '../constants'
+import { BASE_URL, REGEX_EMAIL, TIME_ZONE } from '../constants'
 import { fieldValidator } from '../helpers/signUpValidator'
 import validateForm from '../helpers/validateForm'
 import useUser from '../hooks/useFetchLinks'
@@ -49,6 +49,7 @@ const Signup = () => {
     e.preventDefault()
     // console.log(12345678)
     // if
+    //  console.log("time-zone is : , " , TIME_ZONE)
     if (input.email == '' || input.confirm_password || input.password) setShowEmptyFieldError(true)
 
     // console.log(validateForm(error,input))
@@ -62,12 +63,10 @@ const Signup = () => {
       const formData = {
         email: input.email,
         password: input.password,
-        re_password: input.confirm_password
+        re_password: input.confirm_password,
+        timezone: TIME_ZONE
       }
 
-
-      // try {
-      // console.log(formDat)
       setisLoading(true)
       signup(formData)
         .then(() => {
