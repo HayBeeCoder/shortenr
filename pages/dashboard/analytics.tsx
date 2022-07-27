@@ -67,8 +67,9 @@ const Page = () => {
             localStorage.removeItem("refresh");
           }
         });
-    }
-  }, [accessToken]);
+      }
+    }, [accessToken]);
+    console.log("date_created is: " , data?.date_created)
 
   // console.log(data?.analytic.other_analytic)
 
