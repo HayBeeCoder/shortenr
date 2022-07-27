@@ -46,7 +46,7 @@ const TableRow = ({ link,data,mutate}: IProps) => {
               <td>{link.short_link}</td>
               <td>
                 {link.last_visited_date
-                  ? dayjs(link.last_visited_date).format("MMM D, YYYY")
+                  ? dayjs(link.last_visited_date.split(" ")[0]).format("MMM D, YYYY")
                   : "No visit(s) yet"}
               </td>
               <td className="  basis-16 pr-2 ">

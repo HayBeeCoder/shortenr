@@ -35,7 +35,7 @@ const SubAnalytic = ({
         should_flex ? "flex flex-col aspect-auto" : "px-5  "
       }`}
     >
-      <div className="flex justify-center gap-2 items-center  mb-3 relative flex-shrink-0">
+      <div className="flex justify-center gap-2 items-center  mb-3 relative flex-shrink-0 bg-orange-300">
           <p className="block font-bold text-center text-[18px]  ">{title}</p>
         {toolTipMessage && (
           <>
