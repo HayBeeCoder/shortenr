@@ -57,10 +57,10 @@ const Dashboard = () => {
   const SLICE = data?.results.slice(0, ROW_PER_PAGE);
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
-  console.log("SLICE is: ", SLICE);
-  console.log("data is:  ", data);
-  console.log(data && data.results.length > 0);
-  console.log("dataToShow is:  ", dataToShow);
+  // console.log("SLICE is: ", SLICE);
+  // console.log("data is:  ", data);
+  // console.log(data && data.results.length > 0);
+  // console.log("dataToShow is:  ", dataToShow);
   // console.log(isError);
   // console.log(data)
 
@@ -72,7 +72,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
-      console.log("isError oooooo");
+      // console.log("isError oooooo");
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh");
       router.replace("/login");
@@ -87,7 +87,7 @@ const Dashboard = () => {
     let isValidURL;
     try {
       isValidURL = validateURL(value);
-      console.log("is url valid: ?" , isValidURL)
+      // console.log("is url valid: ?" , isValidURL)
     } catch (e) {
       isValidURL = false;
     }
@@ -144,7 +144,7 @@ const Dashboard = () => {
         })
         .catch((e: any) => {
           if (e.response.status == 401) {
-            console.log("isLayouteffect error ooo");
+            console.log("isLayouteffect error.");
             router.replace("/login");
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh");

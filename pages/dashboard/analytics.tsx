@@ -70,6 +70,9 @@ const Page = () => {
       }
     }, [accessToken]);
     console.log("date_created is: " , data?.date_created)
+    console.log("pre-parsed date_created is: " , data?.date_created as string)
+    console.log("parsed date_created is: " , dayjs(data?.date_created as string))
+    // console.log("date_created is: " , data?.date_created)
 
   // console.log(data?.analytic.other_analytic)
 

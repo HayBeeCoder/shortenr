@@ -93,7 +93,7 @@ const buildChart = (config: IChartConfig, id: number) => {
     window.charts = [];
     windowInitialized = true;
   }
-  console.log(window.charts)
+  // console.log(window.charts)
     
   if (window.charts[id]) window.charts[id].destroy();
 
