@@ -16,13 +16,16 @@ export default function useFetchLinks(userEmail: string | null){
     console.log( "the data: " , data)
     if( data && (!duplicate || (JSON.stringify(duplicate) !== JSON.stringify(data)))){
         duplicate = data 
-        sorteddata = Object.assign({} , data)
+        // sorteddata ={...data}
+        sorteddata = JSON.parse(JSON.stringify(data))
+        console.log("issame",  sorteddata.results === data.results)
         console.log("sorted data is:  ", sorteddata)
         // console.log(sorteddata)
-        sorteddata?.results.sort(function(a,b){
+        
+       sorteddata?.results.sort(function(a: {id: number},b:{ id: number}){
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
-            return a.id - b.id;
+            return b.id - a.id;
         })
     }
   
@@ -31,6 +34,7 @@ export default function useFetchLinks(userEmail: string | null){
         data,
         isLoading: !error && !data,
         isError: error,
-        mutate
+        mutate,
+        sorteddata
     }
 }

@@ -4,12 +4,15 @@ import { ROW_PER_PAGE } from "../../constants";
 
 interface IProps {
   data: IUserLinks;
-  setDataToShow: React.Dispatch<React.SetStateAction<IUserLink[] | undefined>>;
+   setDataToShow: React.Dispatch<React.SetStateAction<IUserLink[] | undefined>>;
+   currentPage: number
+   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+
 }
 
-const Pagination = ({ data, setDataToShow }: IProps) => {
+const Pagination = ({ data, setDataToShow  , currentPage, setCurrentPage}: IProps) => {
   const MAX_NUMBER_OF_PAGES = Math.ceil(data.results.length / ROW_PER_PAGE);
-  const [currentPage, setCurrentPage] = useState(0);
+  // const [currentPage, setCurrentPage] = useState(0);
 
   const handleButtonClick = (direction: "left" | "right") => {
     if (direction == "left") {
@@ -24,6 +27,10 @@ const Pagination = ({ data, setDataToShow }: IProps) => {
       }
     }
   };
+
+  // useEffect(() => {
+  //   setCurrentPage(0)
+  // },[data])
 
   useEffect(() => {
     setDataToShow(

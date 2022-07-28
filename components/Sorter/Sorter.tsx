@@ -38,7 +38,7 @@ const Sorter = ({isOlderFirst, setIsOlderFirst}: IProps) => {
              className={`px-4 py-2 w-full text-sm ${isOlderFirst ? " bg-[#0b1a30] text-white " : ""}  `}
              onClick={() => setIsOlderFirst(true)}
             >
-                Older first
+                Newer first
             </button>
         </li>
         <li>
@@ -47,7 +47,7 @@ const Sorter = ({isOlderFirst, setIsOlderFirst}: IProps) => {
          onClick={() => setIsOlderFirst(false)}
          >
            
-                Newer first
+                Older first
             </button>
         </li>
       </ul>

@@ -18,6 +18,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import RouteGuard from "../../components/RouteGuard/RouteGuard";
 import ShortenedUrlBanner from "../../components/ShortenedUrlBanner/ShortenedUrlBanner";
 import Skeleton from "../../components/Skeleton/Skeleton";
+import Sorter from "../../components/Sorter/Sorter";
 import TableHeader from "../../components/Table/TableHeader";
 import TableRow from "../../components/Table/TableRow";
 import UrlBanners from "../../components/UrlBanners/UrlBanners";
@@ -40,6 +41,9 @@ import axiosInstance from "../../Services/axios.services";
 // let shouldUpdateDateToShow = true
 const Dashboard = () => {
   // const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const [isOlderFirst, setIsOlderFirst] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
   const router = useRouter();
@@ -53,9 +57,11 @@ const Dashboard = () => {
     accessToken == "" || !accessToken
       ? { user_id: null }
       : jwtDecode(accessToken);
-  const { data, isLoading, mutate, isError } = useFetchLinks(email);
-  const [dataLength, setDataLength] = useState< number | undefined> ( data?.results.length)
-  const SLICE = data?.results.slice(0, ROW_PER_PAGE);
+  const { data, isLoading, mutate, isError,sorteddata } = useFetchLinks(email);
+  const [dataLength, setDataLength] = useState<number | undefined>(
+    data?.results.length
+  );
+  const SLICE = isOlderFirst ?  sorteddata?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1)): data?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1))
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
   // console.log("SLICE is: ", SLICE);
@@ -67,11 +73,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (data && data.results.length > 0) {
+      setDataLength(data.results.length);
       setDataToShow(SLICE);
-      setDataLength(data.results.length)
     }
     // setDataLength()
-  }, [data, isLoading]);
+  }, [data, isLoading,isOlderFirst]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -95,7 +101,6 @@ const Dashboard = () => {
       isValidURL = false;
     }
 
-
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
     } else setIsURLVeryLong(false);
@@ -106,17 +111,17 @@ const Dashboard = () => {
     setUrl(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
     // console.log(url.trim().length)
     // const isValidURL = validateURL(url);
 
     // console.log("is url valid:   ", isValidURL);
     // // setIsURLValid(isValidURL)
     // setIsURLValid(isValidURL);
-    let r = (data as IUserLinks)?.results as IUserLink[]
+    let r = (data as IUserLinks)?.results as IUserLink[];
 
     if (url.trim().length != 0 && isURLValid && !isURLVeryLong) {
-      
       const formData = {
         long_link: url,
       };
@@ -128,7 +133,7 @@ const Dashboard = () => {
             // console.log(res.data)
 
             setShortenedUrl(res.data.short_link);
-            mutate({...(data as IUserLinks),results: [...r,res.data]});
+            mutate({ ...(data as IUserLinks), results: [...r, res.data] });
           }
         })
         .catch((e) => console.log("error in dashboard: ", e))
@@ -161,7 +166,11 @@ const Dashboard = () => {
   return (
     <section className=" min-h-screen px-2">
       <div className="w-full px-3 flex flex-col items-center my-14">
-        <div className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  ">
+          
+        <form
+        className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  "
+        action="" onSubmit={handleSubmit}>
+            
           <Input
             className="rounded-[4px] h-[46px] "
             handleChange={(e) => handleInput(e)}
@@ -171,10 +180,11 @@ const Dashboard = () => {
             value={url}
             showRedBorder={false}
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
-          />
+            />
           <button
             className="mini-btn text-[#fff] py-3  border-[#2B7FFF] bg-[#2B7FFF]  md:px-10 flex-shrink-0"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
+            type="submit"
           >
             Generate short URL
           </button>
@@ -182,13 +192,18 @@ const Dashboard = () => {
             classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0"
             onClick={handleSubmit}
             disabled={isShorteningInProgess}
-          >
-            Shorten URL
+            >
+          Shorten URL
+            </form>
           </Button> */}
-        </div>
+        </form>
 
         {/* UrlBanner shows when user tries to shorten an invalid URL . */}
-        <UrlBanners isURLValid={isURLValid} isURLVeryLong={isURLVeryLong} url={url}/>
+        <UrlBanners
+          isURLValid={isURLValid}
+          isURLVeryLong={isURLVeryLong}
+          url={url}
+        />
         {shortenedUrl != "" && !isShorteningInProgess && (
           <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
         )}
@@ -201,21 +216,26 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div className="px-3 mt-10 py-5 flex justify-between">
+      <div className="px-3 mt-10 py-5 flex justify-between items-center">
         <p className="font-semibold tracking-wide  text-[#0B1A30] py-1">
           GENERATED LINKS
         </p>
-
-        <p className="text-sm">
-          Total:{" "}
-          {isLoading ? (
-            <Skeleton className="w-4 h-3 inline-block" />
-          ) : (
-            <span className="text-lg font-semibold">{
-              dataLength as number
-            }</span>
-          )}
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="text-sm">
+            Total:{" "}
+            {isLoading ? (
+              <Skeleton className="w-4 h-3 inline-block" />
+            ) : (
+              <span className="text-lg font-semibold">
+                {dataLength as number}
+              </span>
+            )}
+          </p>
+          <Sorter
+            isOlderFirst={isOlderFirst}
+            setIsOlderFirst={setIsOlderFirst}
+          />
+        </div>
       </div>
 
       {/* Table to show when data arrives  */}
@@ -245,7 +265,13 @@ const Dashboard = () => {
       {/* Pagination component goes here  */}
       {/* It shows only when there is data and the number of data is > 10 */}
       {data && data.results.length > 10 && (
-        <Pagination data={data} setDataToShow={setDataToShow} />
+        <Pagination
+         data={isOlderFirst ?  sorteddata : data}
+          setDataToShow={setDataToShow} 
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          />
+
       )}
 
       {/* Table skeleton to show while data is loading  */}
