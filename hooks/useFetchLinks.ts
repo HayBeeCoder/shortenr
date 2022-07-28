@@ -13,20 +13,22 @@ export default function useFetchLinks(userEmail: string | null){
     // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
     let duplicate;
     const {data,error,mutate} = useSWR(userEmail ? `links/?owner=${userEmail}` : userEmail, fetcher)
-    // console.log(data)
-    if(!duplicate || (JSON.stringify(duplicate) !== JSON.stringify(data))){
+    console.log( "the data: " , data)
+    if( data && (!duplicate || (JSON.stringify(duplicate) !== JSON.stringify(data)))){
         duplicate = data 
-        sorteddata = data
+        sorteddata = Object.assign({} , data)
+        console.log("sorted data is:  ", sorteddata)
+        // console.log(sorteddata)
         sorteddata?.results.sort(function(a,b){
             // Turn your strings into dates, and then subtract them
             // to get a value that is either negative, positive, or zero.
-            return b.id - a.id;
+            return a.id - b.id;
         })
     }
   
 
     return {
-        data: sorteddata,
+        data,
         isLoading: !error && !data,
         isError: error,
         mutate
