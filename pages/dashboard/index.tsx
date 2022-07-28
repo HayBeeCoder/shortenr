@@ -63,6 +63,9 @@ const Dashboard = () => {
   );
   const SLICE = isOlderFirst ?  sorteddata?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1)): data?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1))
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
+  const [url, setUrl] = useState("");
+  const [shortenedUrl, setShortenedUrl] = useState("");
+
   // console.log()
   // console.log("SLICE is: ", SLICE);
   // console.log("data is:  ", data);
@@ -87,9 +90,7 @@ const Dashboard = () => {
       router.replace("/login");
     }
   }, [isError]);
-  const [url, setUrl] = useState("");
-  const [shortenedUrl, setShortenedUrl] = useState("");
-
+ 
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
     const { value } = e.target as HTMLInputElement;
