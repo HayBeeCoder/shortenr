@@ -10,7 +10,7 @@ import { hostname } from "os";
 
 // const COLORS = ["#0047B3", "#0065FF", "#6BA6FF", "#96C0FF", "#E6F0FF"];
 // const COLORS = ["#0047B3", "#FDBA74", "#6BA6FF", "#96C0FF", "#E6F0FF"];
-const COLORS = ["#0047B3", "#B18251", "#6BA6FF","#FDBA74",  "#E6F0FF"];
+const COLORS = ["#0047B3", "#B18251", "#6BA6FF","#FDBA74",  "#E6F0FF","#FEE3C6"];
 
 interface IProps {
   // date_analytics: IDateTimeAnalytics;
