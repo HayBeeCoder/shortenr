@@ -23,8 +23,8 @@ const TableRow = ({ link, data, mutate }: IProps) => {
   //     ({ long_url, short_url, last_visited, id, mutate }: ITableRow) => {
   const handleDelete = (id: number) => {
     axiosInstance
-      .delete(`links/${id}`)
-      .then((res) => {
+    .delete(`links/${id}`)
+    .then((res) => {
         if (res.status == 204) {
           mutate();
         }
@@ -38,7 +38,8 @@ const TableRow = ({ link, data, mutate }: IProps) => {
           localStorage.removeItem("refresh");
         }
       });
-  };
+    };
+    console.log("Link Id: " , link.id)
   // console.log("last visited date is: ", last_visited);
   return (
     <tr className="border-b-[1px] border-b-[#D9D9D9]">

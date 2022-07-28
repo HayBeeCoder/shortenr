@@ -9,9 +9,8 @@ import axiosInstance from "../Services/axios.services";
 export default function useFetchLinks(link_id: string | null){
     // console.log(axiosInstance.head)
     const fetcher: Fetcher<IUserLink,string | null> = (url: string ) => axiosInstance.get(url).then(res => res.data)
-    let compare
-    let sorteddata;
-    console.log(link_id)
+ 
+    // console.log(link_id)
     // const fetcher: Fetcher<string, User> = (id) => getUserById(id)
     let duplicate;
     const {data,error,mutate} = useSWR(link_id ? `links/${link_id}/` : link_id, fetcher)

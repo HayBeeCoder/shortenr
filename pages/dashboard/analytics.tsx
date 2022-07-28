@@ -1,20 +1,15 @@
 import jwtDecode from "jwt-decode";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 import MiniCard from "../../components/MiniCard/MiniCard";
 import RouteGuard from "../../components/RouteGuard/RouteGuard";
-import SubAnalytic from "../../components/SubAnalytic/SubAnalytic";
 import Subanalytics from "../../components/SubAnalytics/SubAnalytics";
 import ViewBanner from "../../components/ViewBanner/ViewBanner";
 import { useAppContext } from "../../context/state";
-import useFetchLinks from "../../hooks/useFetchLinks";
 import axiosInstance from "../../Services/axios.services";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
 import useFetchLink from "../../hooks/useFetchLink";
 import DateAnalytics from "../../components/DateAnalytics/DateAnalytics";
-import useCopyToClipboard from "../../hooks/useCopyToClipboard";
-import Button from "../../components/Button";
 import Referrers from "../../components/Referrers/Referrers";
 import Devices from "../../components/Devices/Devices";
 
@@ -124,7 +119,7 @@ const Page = () => {
       <div className=" md:grid grid-cols-12 gap-3 mt-8">
         <div className="col-start-1 col-span-4 w-full ">
           <ViewBanner
-            view_count={data ? (data?.visit_count as number).toString() : ""}
+            view_count={data && data.visit_count ? (data?.visit_count as number).toString() : ""}
             isLoading={isLoading}
           />
         </div>
