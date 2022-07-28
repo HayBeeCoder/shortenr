@@ -8,7 +8,7 @@ interface IProps {
 
 const ViewBanner = ({ isLoading, view_count }: IProps) => {
     return (
-        <div className='bg-[#fff] rounded-md  py-6 md:py-10 text-center mb-3 md:mb-0 max-w-[350px]  mx-auto md:max-w-none aspect-square md:aspect-auto md:h-full relative'>
+        <div className='bg-[#fff] rounded-md  py-6  text-center mb-3 md:mb-0 max-w-[350px]  mx-auto md:max-w-none aspect-square md:aspect-auto md:h-full relative'>
             <p className='text-[18px]  font-bold '>Total views count</p>
             {
                 isLoading ?

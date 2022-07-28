@@ -6,6 +6,7 @@ interface IProps {
   toolTipMessage?: string;
   special?: boolean;
   should_flex?: boolean;
+  data_exists?: boolean
 }
 
 const SubAnalytic = ({
@@ -14,6 +15,7 @@ const SubAnalytic = ({
   children,
   special,
   should_flex,
+  data_exists
 }: IProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
 
@@ -75,7 +77,7 @@ const SubAnalytic = ({
         }`}
       >
         <div
-          className={`h-full ${special ? "w-[1000px] md:w-full" : "w-full"}`}
+          className={`h-full ${special && data_exists ? "w-[1000px] md:w-full" : "w-full"}`}
         >
           {children}
         </div>

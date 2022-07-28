@@ -1,6 +1,7 @@
 import { ChartType } from "chart.js";
 import dayjs from "dayjs";
 import React, { useCallback, useEffect, useState } from "react";
+import { HOURS, HOUR_COUNTS } from "../../constants";
 import buildChart from "../../helpers/buildChart";
 import SubAnalytic from "../SubAnalytic/SubAnalytic";
 
@@ -24,6 +25,11 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
   const [error, setError] = useState("");
   const [dayLabel, setDayLabels] = useState<string[] | null>(null);
   const [dayViewsCount, setDayViewsCount] = useState<number[] | null>(null);
+
+  const [hourLabel, setHourLabels] = useState(HOURS)
+  const [hourCount, setHourCount] = useState()
+
+  
   // const [month, setMonth] = useState<Array<{ label: string; value: number }> | null >(null);
   // const [currentMonth, setCurrentMonth] = useState<any+>();
 
@@ -35,12 +41,12 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     // const month = getMonthFromDate(first_item.date)
     if (date_analytics.current_month && date_analytics.current_month[0]) {
       let { current_month } = date_analytics;
-      console.log("Current Month: ", date_analytics.current_month);
+      // console.log("Current Month: ", date_analytics.current_month);
       let last_item = current_month[current_month.length - 1];
       let first_item = date_analytics.current_month[0];
 
       //using below variable makes the chart stop at the last time a visitor visits the site
-      let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
+      // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
       
       //using below variable makes the chart stop at the current day
       let today = new Date().getDate()
@@ -60,7 +66,12 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       }
       // console.log(dayLabelsArray);
       setDayLabels(dayLabelsArray);
-      const number_of_view_days = today < day_of_last_item ? day_of_last_item : today
+
+
+      //
+      // const number_of_view_days = today < day_of_last_item ? day_of_last_item : today
+      const number_of_view_days = today
+
       // const views_of_month = new Array(day_of_last_item).fill(0);
       const views_of_month = new Array(number_of_view_days).fill(0);
       // const {current_month } = date_analytics
@@ -76,6 +87,26 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       }
       setDayViewsCount(views_of_month);
     }
+
+
+
+    //days logic 
+    //an array of objects containing particular hour ,
+
+    // if(date_analytics.today_by_hour && date_analytics.today_by_hour[0]){
+    //   let {today_by_hour} = date_analytics
+
+    //   const views_of_day = HOUR_COUNTS
+      
+    //   for(let i = 0 ; i < today_by_hour.length ; i++){
+    //     const item = today_by_hour[i]
+
+    //     views_of_day[i] = today_by_hour.
+    //   }
+
+    // }
+
+
   }, [date_analytics]);
 
   console.log("days:  ", dayLabel);
@@ -188,6 +219,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
         // toolTipMessage="Visits count within current month"
         special
         should_flex
+        data_exists={JSON.stringify(date_analytics.current_month) !== "[]"}
       >
         <div className="px-4  h-[300px] md:h-[250px]  ">
           {JSON.stringify(date_analytics.current_month) !== "[]" ? (

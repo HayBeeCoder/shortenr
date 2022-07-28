@@ -54,6 +54,7 @@ const Dashboard = () => {
       ? { user_id: null }
       : jwtDecode(accessToken);
   const { data, isLoading, mutate, isError } = useFetchLinks(email);
+  const [dataLength, setDataLength] = useState< number | undefined> ( data?.results.length)
   const SLICE = data?.results.slice(0, ROW_PER_PAGE);
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   // console.log()
@@ -67,7 +68,9 @@ const Dashboard = () => {
   useEffect(() => {
     if (data && data.results.length > 0) {
       setDataToShow(SLICE);
+      setDataLength(data.results.length)
     }
+    // setDataLength()
   }, [data, isLoading]);
 
   useEffect(() => {
@@ -110,8 +113,10 @@ const Dashboard = () => {
     // console.log("is url valid:   ", isValidURL);
     // // setIsURLValid(isValidURL)
     // setIsURLValid(isValidURL);
+    let r = (data as IUserLinks)?.results as IUserLink[]
 
     if (url.trim().length != 0 && isURLValid && !isURLVeryLong) {
+      
       const formData = {
         long_link: url,
       };
@@ -123,7 +128,7 @@ const Dashboard = () => {
             // console.log(res.data)
 
             setShortenedUrl(res.data.short_link);
-            mutate();
+            mutate({...(data as IUserLinks),results: [...r,res.data]});
           }
         })
         .catch((e) => console.log("error in dashboard: ", e))
@@ -206,7 +211,9 @@ const Dashboard = () => {
           {isLoading ? (
             <Skeleton className="w-4 h-3 inline-block" />
           ) : (
-            <span className="text-lg font-semibold">{data?.count}</span>
+            <span className="text-lg font-semibold">{
+              dataLength as number
+            }</span>
           )}
         </p>
       </div>
