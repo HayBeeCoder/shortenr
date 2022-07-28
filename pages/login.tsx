@@ -129,9 +129,6 @@ const Login = () => {
                 'Submit'
             }
           </button>
-            </div>
-
-
           <p className='text-center text-sm'>Are you a new user ? {" "}
             <span className='font-bold underline underline-offset-2 '>
               <Link href='/signup'>
@@ -140,6 +137,9 @@ const Login = () => {
               </Link>
             </span>
           </p>
+            </div>
+
+
         </div>
 
       </div>
