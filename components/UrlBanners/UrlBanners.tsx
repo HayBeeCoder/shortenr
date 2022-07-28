@@ -1,4 +1,5 @@
 import React from "react";
+import { MAX_URL_CHARACTERS_POSSIBLE } from "../../constants";
 
 interface IProps {
   isURLVeryLong: boolean;
@@ -10,12 +11,12 @@ const UrlBanners = (props: IProps) => {
   return (
     <>
       {props.isURLVeryLong && (
-        <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  text-sm px-6  py-2">
-          Sorry, Links longer than 255 characters can&apos;t be shortened yet.
+        <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  text-sm px-4  py-2 mb-2">
+          Sorry, Links longer than {MAX_URL_CHARACTERS_POSSIBLE} characters can&apos;t be shortened yet.
         </p>
       )}
       {!props.isURLValid && props.url && props.url?.length > 0 && (
-        <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  px-6 text-sm py-2">
+        <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  text-sm px-4 py-2 mb-2">
           Please , enter a valid URL!
         </p>
       )}

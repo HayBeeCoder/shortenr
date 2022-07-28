@@ -68,7 +68,8 @@ interface IChartConfig {
   data: number[],
   backgroundColor: string[];
   axes: boolean,
-  legend: boolean
+  legend: boolean,
+  selectedForDateTimeAnalytics?: number
 
 }
 interface IOtherAnalytics{
@@ -104,8 +105,8 @@ interface IDateTimeAnalytics{
 
   today_by_hour:
   {
-    "time__hour": number,
-    "count__sum": number
+    time__hour: number,
+    count__sum: number
   }[]
 }
 

@@ -21,6 +21,7 @@ let windowInitialized = false;
 // const lineChartType: ChartType = "line";
 // const pieChartType: ChartType = "pie";
 
+//The order of items in this array has to correspond with the order of array of labels and counts variable in DateAnalytics component
 
 const buildLegend = (legend: boolean) => {
   const legendConfig = {
@@ -33,7 +34,9 @@ const buildLegend = (legend: boolean) => {
   return legend ? legendConfig : null;
 };
 
-const buildScales = (axes: boolean) => {
+const buildScales = (axes: boolean , selectedForDateTimeAnalytics: number) => {
+  console.log('selelected date time anaalytics: ' , selectedForDateTimeAnalytics)
+  const Xaxes = ["hours in current day" , "days in current month"]
   const scales = {
     x:   {
         ticks: {
@@ -46,7 +49,7 @@ const buildScales = (axes: boolean) => {
 
         },
         title: {
-          text: "days in current month",
+          text: Xaxes[selectedForDateTimeAnalytics],
           display: true,
           align: 'end',
           color: "#2B7FFF"
@@ -105,6 +108,7 @@ const buildChart = (config: IChartConfig, id: number) => {
     backgroundColor,
     axes,
     legend,
+    selectedForDateTimeAnalytics
   } = config;
   // ifwindow){
     let legend_labels: any
@@ -147,7 +151,7 @@ const buildChart = (config: IChartConfig, id: number) => {
           borderWidth: 22
         }
       },
-      scales: buildScales(axes),
+      scales: buildScales(axes ,selectedForDateTimeAnalytics as number),
       legend: buildLegend(legend),
       maintainAspectRatio:  chartType == "line" ? false : true ,
       responsive:true ,

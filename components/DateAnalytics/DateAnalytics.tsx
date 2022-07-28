@@ -21,15 +21,22 @@ function getMonthFromDate(date: string) {
 //Each array entry represents the number of days in the corresponding index ( month )
 // const MONTHS_NO_OF_DAYS = [31,28]
 
+// The selected state inside DateAnalytics component
+//day chart == 0
+//week chart == 1
+//month chart == 2
+
 const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
   const [error, setError] = useState("");
   const [dayLabel, setDayLabels] = useState<string[] | null>(null);
   const [dayViewsCount, setDayViewsCount] = useState<number[] | null>(null);
+  const [selected, setSelected] = useState(0);
+  const [hourLabel, setHourLabels] = useState(HOURS);
+  const [hourCount, setHourCount] = useState<number[] | null>();
 
-  const [hourLabel, setHourLabels] = useState(HOURS)
-  const [hourCount, setHourCount] = useState()
+  const labels = [hourLabel, dayLabel];
+  const counts = [hourCount, dayViewsCount];
 
-  
   // const [month, setMonth] = useState<Array<{ label: string; value: number }> | null >(null);
   // const [currentMonth, setCurrentMonth] = useState<any+>();
 
@@ -47,9 +54,9 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
 
       //using below variable makes the chart stop at the last time a visitor visits the site
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
-      
+
       //using below variable makes the chart stop at the current day
-      let today = new Date().getDate()
+      let today = new Date().getDate();
       // console.log("Today's date is: " , today)
 
       const length_of_month = dayjs(first_item.date).daysInMonth();
@@ -67,10 +74,9 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       // console.log(dayLabelsArray);
       setDayLabels(dayLabelsArray);
 
-
       //
       // const number_of_view_days = today < day_of_last_item ? day_of_last_item : today
-      const number_of_view_days = today
+      const number_of_view_days = today;
 
       // const views_of_month = new Array(day_of_last_item).fill(0);
       const views_of_month = new Array(number_of_view_days).fill(0);
@@ -88,110 +94,50 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       setDayViewsCount(views_of_month);
     }
 
+    // console.log("Hours: ", date_analytics.today_by_hour);
 
-
-    //days logic 
+    //hours logic
     //an array of objects containing particular hour ,
+    const currentHour = dayjs().hour();
+    // console.log("Current Hour: " , currentHour)
+    if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
+      let { today_by_hour } = date_analytics;
 
-    // if(date_analytics.today_by_hour && date_analytics.today_by_hour[0]){
-    //   let {today_by_hour} = date_analytics
+      const views_of_day = new Array(currentHour).fill(0);
 
-    //   const views_of_day = HOUR_COUNTS
-      
-    //   for(let i = 0 ; i < today_by_hour.length ; i++){
-    //     const item = today_by_hour[i]
+      for (let i = 0; i < today_by_hour.length; i++) {
+        const item = today_by_hour[i];
 
-    //     views_of_day[i] = today_by_hour.
-    //   }
+        views_of_day[item.time__hour] = item.count__sum;
+      }
+      // console.log("views of day: " , views_of_day)
+      setHourCount(views_of_day);
+    }
 
-    // }
+    //days of week login
+  }, [date_analytics, selected]);
 
+  // console.log("days:  ", dayLabel);
+  // console.log("views:  ", dayViewsCount);
 
-  }, [date_analytics]);
-
-  console.log("days:  ", dayLabel);
-  console.log("views:  ", dayViewsCount);
-  // const [doesCountriesExist ] = useState(false);
-  // const [browsersData, setB] = useState(b);
-
-  //   useEffect(() => {
-  //     let first_day = 1
-  //     // console.log(date_analytics)
-  //     if(JSON.stringify(date_analytics) != "{}"  && date_analytics.current_month[0]){
-  //       const {current_month} = date_analytics
-  //       setCurrentMonth(current_month)
-  //       // setCurrentMonth(current_month/)
-  //       let number_of_days_in_current_month = dayjs(current_month[0].date).daysInMonth()
-  //       console.log(number_of_days_in_current_month)
-  //       setMonth(Array.from({length: number_of_days_in_current_month}, () => ({label: `Day ${first_day++}`,value: 0})))
-
-  //     console.log(dayjs(current_month[0].date).month())
-  //   }
-
-  // },[date_analytics])
-  // useEffect(()=> {
-  //   console.log('Na your month data be this: ', month)
-  //   function getDayFromDate(date: string){
-  //     return parseInt(date.slice(date.length - 2))
-  //   }
-  //   if(JSON.stringify(date_analytics) != "{}"  && date_analytics.current_month[0]){
-  //     const {current_month} = date_analytics
-  //     // setCurrentMonth(current_month)
-  //     const last_item_date = current_month.at(-1)?.date as string
-  //     const last_day_link_was_visited= getDayFromDate(last_item_date)
-  //     console.log("Last day of last date: ", last_day_link_was_visited)
-  //     // console.log( 'last item date: ' , last_item?.date)
-
-  //     // console.log('number of days in last date: ',dayjs(last_item?.date).day())
-  //     for(let i = 0; i < last_day_link_was_visited; i++){
-  //       // const {current_month} = date_analytics
-
-  //       console.log(currentMonth)
-  //       console.log(currentMonth[i])
-  //       const {count__sum , date} = current_month[i]
-  //       const day = getDayFromDate(date)
-  //       if(day )
-
-  //       //subtract 1 cos month array index is 1 less than the day it holds
-  //       if(month){
-  //         month[day - 1].value = count__sum
-  //       }
-  //     }
-
-  //   }
-
-  // },[date_analytics,month,currentMonth])
   const monthChart = useCallback(() => {
-    // if (!isLoading) {
     const canvasElement = document.getElementById(
       "dateChart"
     ) as HTMLCanvasElement;
-    // console.log("Day Label is: " , dayLabel)
-    //   console.log(canvasElement)
     if (dayLabel && dayViewsCount) {
-      // console.log("oguntade abass omowale ")
-      // let does_real_values_exist =
-      // console.log(date_analytics.current_month);
-      // const [labels, values] = processOtherAnalytics(
-      //   date_analytics.
-      // ) as [string[], number[]];
-
-      // if (labels && values) {
-      //   setBrowsersDataExist(true);
-      //   const backgroundColor = COLORS.slice(0, values.length + 1);
-
       const chartType: ChartType = "line";
-      // const axes = true;
-      //   const legend = true;
-      const config = {
+
+      const config: IChartConfig = {
         canvasElement,
         chartType,
-        labels: dayLabel,
-        data: dayViewsCount,
+        // labels: dayLabel,
+        // data: dayViewsCount,
+        labels: labels[selected] as string[],
+        data: counts[selected] as number[],
         backgroundColor: [],
-        borderColor: "green",
         axes: true,
         legend: false,
+        selectedForDateTimeAnalytics: selected,
       };
       buildChart(config, 5);
       // } else setBrowsersDataExist(false);
@@ -220,6 +166,8 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
         special
         should_flex
         data_exists={JSON.stringify(date_analytics.current_month) !== "[]"}
+        selected={selected}
+        setSelected={setSelected}
       >
         <div className="px-4  h-[300px] md:h-[250px]  ">
           {JSON.stringify(date_analytics.current_month) !== "[]" ? (

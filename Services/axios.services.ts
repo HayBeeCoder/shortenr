@@ -70,6 +70,7 @@ axiosInstance.interceptors.request.use(async (req) => {
       const isValid = await axios.post(BASE_URL + "auth/jwt/verify/", {
         token: `${refreshToken}`,
       });
+      console.log("isValid: " , isValid)
     }
   } catch (e: any) {
     if (e.response.status == 401) {
