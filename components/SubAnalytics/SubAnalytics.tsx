@@ -8,7 +8,9 @@ import { processOtherAnalytics } from "../../helpers/processOtherAnalytics";
 import { hostname } from "os";
 
 
-const COLORS = ["#0047B3", "#0065FF", "#6BA6FF", "#96C0FF", "#E6F0FF"];
+// const COLORS = ["#0047B3", "#0065FF", "#6BA6FF", "#96C0FF", "#E6F0FF"];
+// const COLORS = ["#0047B3", "#FDBA74", "#6BA6FF", "#96C0FF", "#E6F0FF"];
+const COLORS = ["#0047B3", "#B18251", "#6BA6FF","#FDBA74",  "#E6F0FF"];
 
 interface IProps {
   // date_analytics: IDateTimeAnalytics;
@@ -51,8 +53,8 @@ const Subanalytics = ({
         const config = {
           canvasElement,
           chartType,
-          labels,
-          data: values,
+          labels: values.length > COLORS.length ? labels.slice(0,COLORS.length) : labels,
+          data: values.length > COLORS.length ? values.slice(0,COLORS.length): values,
           backgroundColor,
           // borderColor,
           axes,
@@ -91,8 +93,8 @@ const Subanalytics = ({
           const config = {
             canvasElement,
             chartType,
-            labels,
-            data: values,
+            labels: values.length > COLORS.length ? labels.slice(0,COLORS.length) : labels,
+            data: values.length > COLORS.length ? values.slice(0,COLORS.length): values,
             backgroundColor,
             // borderColor,
             axes,
@@ -118,6 +120,10 @@ const Subanalytics = ({
 
         if (labels && values) {
           // setCountriesExist(true);
+          if(values.length > COLORS.length){
+
+
+          }
           const backgroundColor = COLORS.slice(0, values.length + 1);
 
           const chartType: ChartType = "doughnut";
@@ -126,8 +132,8 @@ const Subanalytics = ({
           const config = {
             canvasElement,
             chartType,
-            labels,
-            data: values,
+            labels: values.length > COLORS.length ? labels.slice(0,COLORS.length) : labels,
+            data: values.length > COLORS.length ? values.slice(0,COLORS.length): values,
             backgroundColor,
             // borderColor,
             axes,
