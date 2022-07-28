@@ -4,6 +4,7 @@ import { MAX_URL_CHARACTERS_POSSIBLE } from "../../constants";
 interface IProps {
   isURLVeryLong: boolean;
   isURLValid: boolean;
+  isURLShortened: boolean
   url?: string
 }
 
@@ -20,6 +21,13 @@ const UrlBanners = (props: IProps) => {
           Please , enter a valid URL!
         </p>
       )}
+      {
+        props.isURLShortened && (
+          <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  text-sm px-4 py-2 mb-2">
+          Seems this link has been shortened :(.
+        </p>
+        )
+      }
     </>
   );
 };

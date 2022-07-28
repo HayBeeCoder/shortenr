@@ -44,6 +44,7 @@ const Dashboard = () => {
   // const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const [isURLShortened, setIsURLShortened] = useState(false);
   const [isOlderFirst, setIsOlderFirst] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
@@ -57,11 +58,19 @@ const Dashboard = () => {
     accessToken == "" || !accessToken
       ? { user_id: null }
       : jwtDecode(accessToken);
-  const { data, isLoading, mutate, isError,sorteddata } = useFetchLinks(email);
+  const { data, isLoading, mutate, isError, sorteddata } = useFetchLinks(email);
   const [dataLength, setDataLength] = useState<number | undefined>(
     data?.results.length
   );
-  const SLICE = isOlderFirst ?  sorteddata?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1)): data?.results.slice(currentPage * ROW_PER_PAGE, ROW_PER_PAGE * (currentPage + 1))
+  const SLICE = isOlderFirst
+    ? sorteddata?.results.slice(
+        currentPage * ROW_PER_PAGE,
+        ROW_PER_PAGE * (currentPage + 1)
+      )
+    : data?.results.slice(
+        currentPage * ROW_PER_PAGE,
+        ROW_PER_PAGE * (currentPage + 1)
+      );
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   const [url, setUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
@@ -80,7 +89,7 @@ const Dashboard = () => {
       setDataToShow(SLICE);
     }
     // setDataLength()
-  }, [data, isLoading,isOlderFirst]);
+  }, [data, isLoading, isOlderFirst]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
@@ -90,39 +99,47 @@ const Dashboard = () => {
       router.replace("/login");
     }
   }, [isError]);
- 
+
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
     const { value } = e.target as HTMLInputElement;
-    let isValidURL;
-    try {
-      isValidURL = validateURL(value);
-      // console.log("is url valid: ?" , isValidURL)
-    } catch (e) {
-      isValidURL = false;
-    }
+    // let isValidURL;
+    // try {
+    const urlTests = validateURL(value);
+    // console.log("is url valid: ?" , isValidURL)
+    // } catch (e) {
+    // isValidURL = false;
 
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
     } else setIsURLVeryLong(false);
 
-    if (isValidURL) setIsURLValid(true);
+    if (urlTests.regex_test) setIsURLValid(true);
     else setIsURLValid(false);
+
+    console.log("regex_test: ", urlTests.regex_test);
+    console.log(
+      "url_contains_domain_test: ",
+      urlTests.url_contains_domain_test
+    );
+
+    if (urlTests.url_contains_domain_test) setIsURLShortened(true);
+    else setIsURLShortened(false);
 
     setUrl(value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // console.log(url.trim().length)
-    // const isValidURL = validateURL(url);
+    e.preventDefault();
 
-    // console.log("is url valid:   ", isValidURL);
-    // // setIsURLValid(isValidURL)
-    // setIsURLValid(isValidURL);
     let r = (data as IUserLinks)?.results as IUserLink[];
 
-    if (url.trim().length != 0 && isURLValid && !isURLVeryLong) {
+    if (
+      url.trim().length != 0 &&
+      isURLValid &&
+      !isURLVeryLong &&
+      !isURLShortened
+    ) {
       const formData = {
         long_link: url,
       };
@@ -143,8 +160,6 @@ const Dashboard = () => {
   };
 
   useLayoutEffect(() => {
-    // console.log(user_id)
-    // console.log(accessToken)
     if (accessToken && accessToken != "") {
       axiosInstance
         .get(`auth/users/${user_id}/`)
@@ -164,17 +179,14 @@ const Dashboard = () => {
     }
   }, [accessToken]);
 
-
-  
-
   return (
     <section className=" min-h-screen px-2">
       <div className="w-full px-3 flex flex-col items-center my-14">
-          
         <form
-        className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  "
-        action="" onSubmit={handleSubmit}>
-            
+          className="w-full bg flex flex-col md:flex-row gap-2 my-3 max-w-lg mx-auto md:max-w-5xl md:my-6 items-stretch  "
+          action=""
+          onSubmit={handleSubmit}
+        >
           <Input
             className="rounded-[4px] h-[46px] "
             handleChange={(e) => handleInput(e)}
@@ -184,7 +196,7 @@ const Dashboard = () => {
             value={url}
             showRedBorder={false}
             placeholder="https://enterthatlongurlyouhaveandgetitshortened.com"
-            />
+          />
           <button
             className="mini-btn text-[#fff] py-3  border-[#2B7FFF] bg-[#2B7FFF]  md:px-10 flex-shrink-0"
             // onClick={handleSubmit}
@@ -192,27 +204,19 @@ const Dashboard = () => {
           >
             Generate short URL
           </button>
-          {/* <Button
-            classname=" bg-[#2B7FFF] md:w-96 py-3 md:py-0"
-            onClick={handleSubmit}
-            disabled={isShorteningInProgess}
-            >
-          Shorten URL
-            </form>
-          </Button> */}
         </form>
 
-        {/* UrlBanner shows when user tries to shorten an invalid URL . */}
+        {/* UrlBanner shows when user tries to shorten an invalid URL/already shortened URL . */}
         <UrlBanners
           isURLValid={isURLValid}
           isURLVeryLong={isURLVeryLong}
           url={url}
+          isURLShortened={isURLShortened}
         />
         {shortenedUrl != "" && !isShorteningInProgess && (
           <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
         )}
 
-        {/* Flag to show when URL length is greater than 255 characters 09999p */}
         {isShorteningInProgess && (
           <div className="mt-3">
             <Loader color="bg-[#0B1A30]" />
@@ -236,10 +240,9 @@ const Dashboard = () => {
             )}
           </p>
           <Sorter
-          isLoading={isLoading}
+            isLoading={isLoading}
             isOlderFirst={isOlderFirst}
             setIsOlderFirst={setIsOlderFirst}
-          
           />
         </div>
       </div>
@@ -248,21 +251,11 @@ const Dashboard = () => {
       {data && data.results.length > 0 && (
         <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto min-h-[651px]">
           <table className="w-full min-w-[900px] px-3 text-left">
-            {/* <colgroup>
-              <col span={1} className="w-[40%] " />
-              <col span={1} className="w-[22%]" />
-              <col span={1} className="w-[13%]" />
-              <col span={1} className="w-[15%]" />
-             
-            </colgroup> */}
             <TableHeader />
             <tbody className="text-sm">
               {dataToShow?.map((link, index) => (
                 <TableRow link={link} data={data} mutate={mutate} key={index} />
               ))}
-              {/* {data?.results?.map((link, index) => (
-                <TableRow link={link} data={data} mutate={mutate} />
-              ))} */}
             </tbody>
           </table>
         </div>
@@ -272,12 +265,11 @@ const Dashboard = () => {
       {/* It shows only when there is data and the number of data is > 10 */}
       {data && data.results.length > 10 && (
         <Pagination
-         data={isOlderFirst ?  sorteddata : data}
-          setDataToShow={setDataToShow} 
+          data={isOlderFirst ? sorteddata : data}
+          setDataToShow={setDataToShow}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          />
-
+        />
       )}
 
       {/* Table skeleton to show while data is loading  */}
