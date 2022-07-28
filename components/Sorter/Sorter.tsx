@@ -3,13 +3,17 @@ import React, { useState } from "react";
 interface IProps{
     isOlderFirst: boolean,
     setIsOlderFirst: React.Dispatch<React.SetStateAction<boolean>>
+    isLoading: boolean
 }
 
-const Sorter = ({isOlderFirst, setIsOlderFirst}: IProps) => {
+const Sorter = ({isOlderFirst, setIsOlderFirst , isLoading}: IProps) => {
     const [isModalVisible, setIsModalVisible] = useState(false)
   return (
     <div className="inline-block relative">
-      <button className="bg-[#fff] rounded-[4px] p-[5px] hover:scale-105 " onClick={() => setIsModalVisible((value: boolean) =>  !value)}>
+      <button
+       className="bg-[#fff] rounded-[4px] p-[5px] hover:scale-105 " onClick={() => setIsModalVisible((value: boolean) =>  !value)}
+       disabled={isLoading}
+      >
         <svg
           width="28"
           height="28"

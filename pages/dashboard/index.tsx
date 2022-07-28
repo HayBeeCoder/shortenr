@@ -232,6 +232,7 @@ const Dashboard = () => {
             )}
           </p>
           <Sorter
+          isLoading={isLoading}
             isOlderFirst={isOlderFirst}
             setIsOlderFirst={setIsOlderFirst}
           />
