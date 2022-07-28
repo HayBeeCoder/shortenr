@@ -198,7 +198,7 @@ const Subanalytics = ({
        <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
           title="Operating System"
-          toolTipMessage="Top 6 operating systems of visitor's device."
+          toolTipMessage="Top 6 operating systems on visitor's device."
         >
           {
           JSON.stringify(other_analytics.OS) !== '{}' ? (
