@@ -4,14 +4,35 @@ interface IProps{
     isOlderFirst: boolean,
     setIsOlderFirst: React.Dispatch<React.SetStateAction<boolean>>
     isLoading: boolean
+    // isModalVisible: boolean
+    // setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Sorter = ({isOlderFirst, setIsOlderFirst , isLoading}: IProps) => {
-    const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const handleClick = (e: React.FormEvent) => {
+    e.stopPropagation()
+    const listener = function (){
+      // const [isModalVisible, setIsModalVisible] = useState(false)
+      if(isModalVisible){
+        setIsModalVisible((v: boolean) => false)
+      }
+    }
+    document.body.addEventListener("click" , listener)
+    setIsModalVisible((value: boolean) =>  !value)
+  }
+
+  const handleOptionClick = (e: React.FormEvent,isOlderFirst: boolean) => {
+    e.stopPropagation()
+    setIsOlderFirst(isOlderFirst)
+  }
   return (
     <div className="inline-block relative">
       <button
-       className="bg-[#fff] rounded-[4px] p-[5px] hover:scale-105 " onClick={() => setIsModalVisible((value: boolean) =>  !value)}
+       className="bg-[#fff] rounded-[4px] p-[5px] hover:scale-105 "
+      //  onClick={() => setIsModalVisible((value: boolean) =>  !value)}
+        onClick={(e) => handleClick(e)}
        disabled={isLoading}
       >
         <svg
@@ -40,7 +61,7 @@ const Sorter = ({isOlderFirst, setIsOlderFirst , isLoading}: IProps) => {
         <li >
             <button
              className={`px-4 py-2 w-full text-sm ${isOlderFirst ? " bg-[#0b1a30] text-white " : ""}  `}
-             onClick={() => setIsOlderFirst(true)}
+             onClick={(e) => handleOptionClick(e,true)}
             >
                 Newer first
             </button>
@@ -48,7 +69,7 @@ const Sorter = ({isOlderFirst, setIsOlderFirst , isLoading}: IProps) => {
         <li>
             <button
          className={`px-4 py-2 w-full text-sm ${isOlderFirst ? "" :"  bg-[#0b1a30] text-white " }  `}
-         onClick={() => setIsOlderFirst(false)}
+         onClick={(e) => handleOptionClick(e,false)}
          >
            
                 Older first
