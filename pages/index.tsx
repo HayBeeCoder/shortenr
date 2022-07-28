@@ -23,15 +23,42 @@ const Home: NextPage = () => {
     const { value } = e.target as HTMLInputElement;
 
     setShortenedUrl(null);
-    if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
-      setIsURLVeryLong(true);
-    } else setIsURLVeryLong(false);
-    setInput(value);
+     // sdfa 
+
+     setShortenedUrl("");
+     let isValidURL;
+     try {
+       isValidURL = validateURL(value);
+       // console.log("is url valid: ?" , isValidURL)
+     } catch (e) {
+       isValidURL = false;
+     }
+ 
+ 
+     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
+       setIsURLVeryLong(true);
+     } else setIsURLVeryLong(false);
+ 
+     if (isValidURL) setIsURLValid(true);
+     else setIsURLValid(false);
+ 
+     setInput(value);
+ 
+ 
+     // sdaf 
+
+
+    // if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
+    //   setIsURLVeryLong(true);
+    // } else setIsURLVeryLong(false);
+    // setInput(value);
   };
 
   // console.log("email" , email)
   
   const handleSubmit = () => {
+
+   
     
     const formData = {
       long_link: input,
@@ -95,9 +122,11 @@ const Home: NextPage = () => {
               className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]'
               onClick={handleSubmit}
             >
-              {isLoading ? <Loader /> : "Shorten URL"}
+              {isLoading ? <Loader /> : "Generate short URL"}
             </button>
-           <UrlBanners isURLVeryLong={isURLVeryLong} isURLValid={isURLValid} />
+           {/* <UrlBanners isURLVeryLong={isURLVeryLong} isURLValid={isURLValid} /> */}
+           <UrlBanners isURLValid={isURLValid} isURLVeryLong={isURLVeryLong} url={input}/>
+      
             {shortenedUrl && !isURLVeryLong && isURLValid && (
               <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
             )}

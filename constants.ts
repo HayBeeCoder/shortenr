@@ -13,7 +13,7 @@ const REGEX_URL = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-
 // const REGEX_URL = RegExp(/^(http(s?):\/\/)?(www.)?/);
 const SERVER_DOMAIN = "https://shrtenr.herokuapp.com/";
 // const FRONTEND_DOMAIN = "shortenr.ver"
-const MAX_URL_CHARACTERS_POSSIBLE = 1000;
+const MAX_URL_CHARACTERS_POSSIBLE = 100;
 const ROW_PER_PAGE = 10;
 //below regex matches a space character
 const REGEX_WHITESPACE = RegExp(/ /g);
