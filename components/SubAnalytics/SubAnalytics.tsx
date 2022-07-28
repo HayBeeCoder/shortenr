@@ -161,7 +161,7 @@ const Subanalytics = ({
       <div className="md:col-start-1 md:col-span-4">
         <SubAnalytic
           title="Browsers"
-          toolTipMessage="Top 5 Browsers that visited generated URL"
+          toolTipMessage="Top 6 Browsers used by visitors"
         >
           {
             JSON.stringify(other_analytics.Browser) !== '{}' ?
@@ -181,7 +181,7 @@ const Subanalytics = ({
       <div className="md:col-start-5 md:col-span-4 ">
         <SubAnalytic
           title="Countries"
-          toolTipMessage="Countries from which visitors accessed generated URL"
+          toolTipMessage="Top 6 countries where visitors reside"
         >
           {
           JSON.stringify(other_analytics.Country) !== "{}" ? (
@@ -198,7 +198,7 @@ const Subanalytics = ({
        <div className="md:col-start-9 md:col-span-4 ">
         <SubAnalytic
           title="Operating System"
-          toolTipMessage="Operating Systems of visitors to shortened link."
+          toolTipMessage="Top 6 operating systems of visitor's device."
         >
           {
           JSON.stringify(other_analytics.OS) !== '{}' ? (
