@@ -119,14 +119,16 @@ const DateAnalytics = ({ date_analytics, isLoading ,serverOffset}: IProps) => {
     if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
       let { today_by_hour } = date_analytics;
 
-      const views_of_day = new Array(currentHour).fill(0);
+      const views_of_day = new Array(currentHour + DIFFERENCE_BETWEEN_OFFSET).fill(0);
 
       for (let i = 0; i < today_by_hour.length; i++) {
         const item = today_by_hour[i];
-        let real__hour = item.time__hour - DIFFERENCE_BETWEEN_OFFSET
-      
+        // let real__hour = item.time__hour - DIFFERENCE_BETWEEN_OFFSET
+      // if(item.time__hour + 1 == 24){
+      //   views_of_day[0] 
+      // }
 
-        views_of_day[real__hour] = item.count__sum;
+        views_of_day[item.time__hour + 1] = item.count__sum;
       }
       // console.log("views of day: " , views_of_day)
       setHourCount(views_of_day);

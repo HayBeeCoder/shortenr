@@ -48,7 +48,7 @@ const Home: NextPage = () => {
     const formData = {
       long_link: input,
     };
-   
+
     if (input.trim() != "" && !isURLVeryLong && isURLValid && !isURLShortened) {
       setIsLoading(true);
       axios
@@ -70,7 +70,7 @@ const Home: NextPage = () => {
       </Head>
 
       <section className="flex items-center justify-center  h-screen">
-        <div className="w-11/12 max-w-[600px] mx-auto flex flex-col gap-4 ">
+        <div className="w-11/12 max-w-[600px] mx-auto flex flex-col gap-10 ">
           <h1 className="font-bold text-[24px] text-center">
             A simple URL shortener{" "}
             <span className="text-[#2B7FFF] block">and more...</span>
@@ -80,8 +80,39 @@ const Home: NextPage = () => {
             <ListItem>Paste into the input box below</ListItem>
             <ListItem>Generate a short URL</ListItem>
             <ListItem>
-              Optionally, Track shortened URL by signing up :)
+              <>
+                Sign up to track{" "}
+                <span className="text-[#2B7FFF]">
+                  short URL&apos;s analytics
+                </span>{" "}
+                :)
+              </>
             </ListItem>
+            <div>
+              <ListItem>
+                <>You are able to track:</>
+              </ListItem>
+            </div>
+            <div className="pl-6 text-[14px] mt-1">
+              <ListItem isMiniListItem>
+                Number of visits to short URL
+              </ListItem>
+              <ListItem isMiniListItem>
+                Browsers used by visitors
+              </ListItem>
+              <ListItem isMiniListItem>
+                Operating systems installed on visitors' devices
+              </ListItem>
+              <ListItem isMiniListItem>
+                Sites from which visitors visited short URL
+              </ListItem>
+              <ListItem isMiniListItem>
+                Short URL view count per hour in a day
+              </ListItem>
+              <ListItem isMiniListItem>
+                Short URL view count per day in a month
+              </ListItem>
+            </div>
           </ul>
           <div className="justify-self-stretch">
             <Input
