@@ -8,6 +8,8 @@ import SubAnalytic from "../SubAnalytic/SubAnalytic";
 interface IProps {
   date_analytics: IDateTimeAnalytics;
   isLoading: boolean;
+  serverOffset: string
+  // serverOffset: number
 }
 
 function getDayFromDate(date: string) {
@@ -17,6 +19,8 @@ function getMonthFromDate(date: string) {
   return parseInt(date.slice(6, 8));
 }
 
+
+// function convertMinuteToHour(minute)
 //Each index of array signifies the month with January being 0 and December 11
 //Each array entry represents the number of days in the corresponding index ( month )
 // const MONTHS_NO_OF_DAYS = [31,28]
@@ -26,7 +30,8 @@ function getMonthFromDate(date: string) {
 //week chart == 1
 //month chart == 2
 
-const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
+const DateAnalytics = ({ date_analytics, isLoading ,serverOffset}: IProps) => {
+  console.log("in server: " , serverOffset)
   const [error, setError] = useState("");
   const [dayLabel, setDayLabels] = useState<string[] | null>(null);
   const [dayViewsCount, setDayViewsCount] = useState<number[] | null>(null);
@@ -98,10 +103,18 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
 
     //hours logic
     //an array of objects containing particular hour ,
-    const currentHour = dayjs().hour();
-    const timezone = new Date().getTimezoneOffset()
-    console.log("users current hour: ", dayjs().hour());
-    console.log('timezone offset: ' , timezone)
+    console.log()
+    const OFFSET_IN_MINUTES = new Date().getTimezoneOffset()
+    const LOCAL_OFFSET = (OFFSET_IN_MINUTES / 60)
+    const SERVER_OFFSET = parseInt(serverOffset)
+    const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET
+    const currentHour = dayjs().hour() ;
+    
+    console.log("local offset" , LOCAL_OFFSET)
+    console.log("server offset: " , SERVER_OFFSET)
+    // console.log("time zone in hour: " , LOCAL_OFFSET)
+    // console.log("users current hour: ", dayjs().hour());
+    // console.log('timezone offset: ' , OFFSET_IN_MINUTES)
     // console.log("Current Hour: " , currentHour)
     if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
       let { today_by_hour } = date_analytics;
@@ -110,8 +123,10 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
 
       for (let i = 0; i < today_by_hour.length; i++) {
         const item = today_by_hour[i];
+        let real__hour = item.time__hour - DIFFERENCE_BETWEEN_OFFSET
+      
 
-        views_of_day[item.time__hour] = item.count__sum;
+        views_of_day[real__hour] = item.count__sum;
       }
       // console.log("views of day: " , views_of_day)
       setHourCount(views_of_day);

@@ -138,7 +138,7 @@ const Dashboard = () => {
       !isURLShortened
     ) {
       const formData = {
-        long_link: url,
+        long_link: url.trim(),
       };
       setIsShorteningInProgress(true);
       axiosInstance

@@ -21,6 +21,7 @@ import Devices from "../../components/Devices/Devices";
 const Page = () => {
   // console.log
   // const {data} = use
+  
   const router = useRouter();
   // console.log(router.asPath)
   const link_id = router.query.id;
@@ -30,6 +31,7 @@ const Page = () => {
     state: { email, accessToken, link },
     setState: { setEmail },
   } = useAppContext();
+  // const [timeZoneInServer , setTimeZoneInServer] = useState()
   // console.log(typeof link_id)
   // const user
   // console.log("link Id: " , link)
@@ -69,6 +71,11 @@ const Page = () => {
         });
       }
     }, [accessToken]);
+
+  const index_of_last_semicolon_in_date_created = data?.date_created.lastIndexOf(":") as number
+
+
+   
   //   console.log("date_created is: " , data?.date_created)
   //   console.log("pre-parsed date_created is: " , data?.date_created as string)
   //   console.log("parsed date_created is: " , dayjs(data?.date_created as string))
@@ -136,6 +143,9 @@ const Page = () => {
                 ? (data?.analytic.date_time_anaylytic as IDateTimeAnalytics)
                 : ({} as IDateTimeAnalytics)
             }
+            serverOffset={data?.date_created ? 
+              data.date_created.slice(index_of_last_semicolon_in_date_created  - 2 , index_of_last_semicolon_in_date_created)
+              :  ''} 
           />
         </div>
       </div>
