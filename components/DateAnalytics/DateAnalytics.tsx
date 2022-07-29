@@ -99,6 +99,7 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     //hours logic
     //an array of objects containing particular hour ,
     const currentHour = dayjs().hour();
+    console.log("users current hour: ", dayjs().hour());
     // console.log("Current Hour: " , currentHour)
     if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
       let { today_by_hour } = date_analytics;
@@ -125,6 +126,11 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
       "dateChart"
     ) as HTMLCanvasElement;
     if (dayLabel && dayViewsCount) {
+      console.log("hour count: ", hourCount);
+      console.log("hout label count", hourLabel);
+
+      console.log("day count: ", dayViewsCount);
+      console.log("day label count: ", dayLabel);
       const chartType: ChartType = "line";
 
       const config: IChartConfig = {

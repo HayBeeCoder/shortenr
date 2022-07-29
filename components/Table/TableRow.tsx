@@ -50,12 +50,13 @@ const TableRow = ({ link, data, mutate }: IProps) => {
           : "No visit(s) yet"}
       </td>
       <td className="  basis-16 pr-2 ">
-        <div className="flex flex-row-reverse gap-3 mr-0">
+        <div className="flex flex-col-reverse items-stretch md:items-center justify-end w-28 md:w-auto  md:flex-row-reverse gap-3 mr-0">
           {/* 
                 <button
                   className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00]  lg:hidden self-stretch"
                   onClick={() => handleDelete(link.id)}
                   >
+
                   Del
                 </button> */}
           <button

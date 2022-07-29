@@ -246,8 +246,17 @@ const Dashboard = () => {
 
       {/* Table to show when data arrives  */}
       {data && data.results.length > 0 && (
+        <div >
+          <p className="text-sm text-center mb-2">
+            <span className="font-bold">
+
+            Note:
+            </span>
+           The table below can be scrolled rightwards.</p>
+
         <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto min-h-[651px]">
-          <table className="w-full min-w-[900px] px-3 text-left">
+          <table className="w-full min-w-[650px] px-3 text-left">
+          {/* <table className="w-full min-w-[800px] px-3 text-left"> */}
             <TableHeader />
             <tbody className="text-sm">
               {dataToShow?.map((link, index) => (
@@ -256,6 +265,7 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
+      </div>
       )}
 
       {/* Pagination component goes here  */}

@@ -18,6 +18,11 @@
         /* border-bottom: 1px  #D9D9D9 solid;+++ */
         /* /* padding: 10px 0;+,,,,, */
     }
+    td{
+      /* display: inline-flex; */
+      vertical-align: top
+    }
+
     td,th{
         /* @apply py-[10px] pl-[0] pr-[30px] ['word-break': break-all]; */
         padding: 10px 30px 10px 0;
