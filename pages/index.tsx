@@ -87,11 +87,7 @@ const Home: NextPage = () => {
                 :)
               </>
             </ListItem>
-            <div>
-              <ListItem>
-                <>You are able to track:</>
-              </ListItem>
-            </div>
+           
             
           </ul>
           <div className="justify-self-stretch">
