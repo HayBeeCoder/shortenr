@@ -75,7 +75,7 @@ const Signup = () => {
         })
         .catch((err: any) => {
 
-          console.log(err)
+          // console.log(err)
 
           if (err.response && err.response.status == 400) {
 

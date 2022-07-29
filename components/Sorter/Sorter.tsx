@@ -15,7 +15,7 @@ const Sorter = ({ isOlderFirst, setIsOlderFirst, isLoading }: IProps) => {
     const listener = function () {
       // const [isModalVisible, setIsModalVisible] = useState(false)
       if (isModalVisible) {
-        console.log("modal dey")
+        // console.log("modal dey")
         setIsModalVisible((v: boolean) => false);
       }
     };

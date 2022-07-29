@@ -35,7 +35,7 @@ const buildLegend = (legend: boolean) => {
 };
 
 const buildScales = (axes: boolean , selectedForDateTimeAnalytics: number) => {
-  console.log('selelected date time anaalytics: ' , selectedForDateTimeAnalytics)
+  // console.log('selelected date time anaalytics: ' , selectedForDateTimeAnalytics)
   const Xaxes = ["hours in current day" , "days in current month"]
   const scales = {
     x:   {

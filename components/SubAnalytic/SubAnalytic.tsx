@@ -40,7 +40,7 @@ const SubAnalytic = ({
   });
 
   const handleClick = () => {
-    console.log("IsSpecialModalvisible: ", isSpecialModalVisible);
+    // console.log("IsSpecialModalvisible: ", isSpecialModalVisible);
     if(isSpecialModalVisible) setIsSpecialModalvisible(false) 
     if(!isSpecialModalVisible) setIsSpecialModalvisible(true) 
     // setIsSpecialModalvisible((isSpecialModalVisible) => !isSpecialModalVisible);

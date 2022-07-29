@@ -57,7 +57,7 @@ axiosInstance.interceptors.request.use(async (req) => {
 
       localStorage.removeItem("access_token");
       // if (error.response.status == 401) {
-        console.log("daklsf;jak")
+        // console.log("daklsf;jak")
         // return req;
       // }
     }
@@ -70,7 +70,7 @@ axiosInstance.interceptors.request.use(async (req) => {
       const isValid = await axios.post(BASE_URL + "auth/jwt/verify/", {
         token: `${refreshToken}`,
       });
-      console.log("isValid: " , isValid)
+      // console.log("isValid: " , isValid)
     }
   } catch (e: any) {
     if (e.response.status == 401) {

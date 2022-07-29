@@ -30,7 +30,7 @@ const MenuModal = ({ setIsModalActive }: IProps) => {
   };
 
   const handleFinalDelete = () => {
-    console.log("E don cast las las")
+    // console.log("E don cast las las")
     const formData = { current_password: password };
     
     if (password.trim() != "") {
@@ -38,7 +38,7 @@ const MenuModal = ({ setIsModalActive }: IProps) => {
       axiosInstance
         .delete(`auth/users/${user_id}`, { data: formData })
         .then((res) => {
-          console.log("response is: ", res);
+          // console.log("response is: ", res);
           if (res.status == 204 || res.status == 200) {
             router.push("/");
             logout();

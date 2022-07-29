@@ -103,15 +103,18 @@ const DateAnalytics = ({ date_analytics, isLoading ,serverOffset}: IProps) => {
 
     //hours logic
     //an array of objects containing particular hour ,
-    console.log()
+  
+
+    //all these need consideration when there is a need  to display per hour/per day views based on users' local timezone
+    // rather than the one in the server( currently in use )
     const OFFSET_IN_MINUTES = new Date().getTimezoneOffset()
     const LOCAL_OFFSET = (OFFSET_IN_MINUTES / 60)
     const SERVER_OFFSET = parseInt(serverOffset)
     const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET
     const currentHour = dayjs().hour() ;
     
-    console.log("local offset" , LOCAL_OFFSET)
-    console.log("server offset: " , SERVER_OFFSET)
+    // console.log("local offset" , LOCAL_OFFSET)
+    // console.log("server offset: " , SERVER_OFFSET)
     // console.log("time zone in hour: " , LOCAL_OFFSET)
     // console.log("users current hour: ", dayjs().hour());
     // console.log('timezone offset: ' , OFFSET_IN_MINUTES)
@@ -123,14 +126,9 @@ const DateAnalytics = ({ date_analytics, isLoading ,serverOffset}: IProps) => {
 
       for (let i = 0; i < today_by_hour.length; i++) {
         const item = today_by_hour[i];
-        // let real__hour = item.time__hour - DIFFERENCE_BETWEEN_OFFSET
-      // if(item.time__hour + 1 == 24){
-      //   views_of_day[0] 
-      // }
-
         views_of_day[item.time__hour + 1] = item.count__sum;
       }
-      // console.log("views of day: " , views_of_day)
+
       setHourCount(views_of_day);
     }
 
@@ -145,11 +143,11 @@ const DateAnalytics = ({ date_analytics, isLoading ,serverOffset}: IProps) => {
       "dateChart"
     ) as HTMLCanvasElement;
     if (dayLabel && dayViewsCount) {
-      console.log("hour count: ", hourCount);
-      console.log("hout label count", hourLabel);
+      // console.log("hour count: ", hourCount);
+      // console.log("hout label count", hourLabel);
 
-      console.log("day count: ", dayViewsCount);
-      console.log("day label count: ", dayLabel);
+      // console.log("day count: ", dayViewsCount);
+      // console.log("day label count: ", dayLabel);
       const chartType: ChartType = "line";
 
       const config: IChartConfig = {

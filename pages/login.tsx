@@ -44,9 +44,9 @@ const Login = () => {
             setAccessToken(tokens.access)
             
             axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${tokens.access}`
-            console.log("beforereturnUrl")
+            // console.log("beforereturnUrl")
             let returnUrl = (router.query.returnUrl as string) || '/dashboard';
-            console.log("returnUrl")
+            // console.log("returnUrl")
             if(returnUrl.includes("/dashboard")){
               returnUrl = "/dashboard"
             }

@@ -41,7 +41,7 @@ const Pagination = ({ data, setDataToShow  , currentPage, setCurrentPage}: IProp
     );
   }, [currentPage]);
 
-  console.log("new page number is: ", currentPage);
+  // console.log("new page number is: ", currentPage);
   return (
     <div className="flex gap-3 justify-center py-2 mt-16 items-center">
       {/* {JSON.stringify(MAX_NUMBER_OF_PAGES)} */}

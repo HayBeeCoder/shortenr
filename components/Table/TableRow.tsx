@@ -31,7 +31,7 @@ const TableRow = ({ link, data, mutate }: IProps) => {
       })
       .catch((e: AxiosError) => {
         // console.log("error on deletion: ", e)
-        console.log("this is e: ", e);
+        // console.log("this is e: ", e);
         if (e && e?.response?.status == 401) {
           router.replace("/login");
           localStorage.removeItem("access_token");
