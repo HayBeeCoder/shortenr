@@ -1,22 +1,23 @@
-// const BASE_URL = " http://127.0.0.1:8000/v1/"
 const BASE_URL = "https://shrtenr.herokuapp.com/v1/";
-// const REGEX_EMAIL = /^(([^<>()[].,;:s@"]+(.[^<>()[].,;:s@"]+)*)|(".+"))@(([^<>()[].,;:s@"]+.)+[^<>()[].,;:s@"]{2,})$/i
-const REGEX_EMAIL =  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-// const REGEX_URL = new RegExp(
-//   "^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+)*.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$",
-//   "g"
-// );
-// const REGEX_URL = /^(http:\/\/www.|https:\/\/www.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm
-const REGEX_URL = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm
-// const REGEX_URL = RegExp(/^(http(s?):\/\/)?(www.)?/);
+
+const REGEX_EMAIL =
+  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+// Source for regex url:  https://www.regextester.com/93652
+const REGEX_URL =
+  /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
+
 const SERVER_DOMAIN = "https://shrtenr.herokuapp.com";
-// const FRONTEND_DOMAIN = "shortenr.ver"
+
 const MAX_URL_CHARACTERS_POSSIBLE = 1000;
+
 const ROW_PER_PAGE = 10;
+
 //below regex matches a space character
 const REGEX_WHITESPACE = RegExp(/ /g);
 
 const TIME_ZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 const HOURS = [
   "00",
   "01",
@@ -44,7 +45,7 @@ const HOURS = [
   "23",
 ];
 
-const HOUR_COUNTS = new Array(24).fill(0);
+// const HOUR_COUNTS = new Array(24).fill(0);
 
 export {
   BASE_URL,
@@ -56,5 +57,4 @@ export {
   ROW_PER_PAGE,
   TIME_ZONE,
   HOURS,
-  HOUR_COUNTS,
 };

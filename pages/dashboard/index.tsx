@@ -125,8 +125,17 @@ const Dashboard = () => {
           if (res.status == 200 || res.status == 201 || res.status == 208) {
             // console.log(res.data)
             console.log("res on successful shortening: " , res.data);
+
+            console.log(res.data.short_link)
             setShortenedUrl(res.data.short_link);
-            mutate({ ...(data as IUserLinks), results: [...r, res.data] });
+
+            const doesShortenedUrlExist = data?.results.some(link => link.short_link == res.data.short_link )
+            console.log("Does shortenedURl Exist: " , doesShortenedUrlExist)
+            if(!doesShortenedUrlExist){
+              mutate({ ...(data as IUserLinks), results: [...r, res.data] });
+            }
+
+            console.log("after mutating")
           }
         })
         .catch((e) => console.log("error in dashboard: ", e))
