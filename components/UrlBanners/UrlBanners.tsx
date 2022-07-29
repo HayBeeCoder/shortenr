@@ -24,7 +24,7 @@ const UrlBanners = (props: IProps) => {
       {
         props.isURLShortened && (
           <p className="border-solid border-[1px] bg-[#fefefe] text-center  rounded-[4px]  text-sm px-4 py-2 mb-2">
-          Seems this link has been shortened :(.
+          Seems this is a short link :(.
         </p>
         )
       }

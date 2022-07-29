@@ -117,11 +117,8 @@ const Dashboard = () => {
     if (urlTests.regex_test) setIsURLValid(true);
     else setIsURLValid(false);
 
-    console.log("regex_test: ", urlTests.regex_test);
-    console.log(
-      "url_contains_domain_test: ",
-      urlTests.url_contains_domain_test
-    );
+    // console.log("regex_test: ", urlTests.regex_test);
+   
 
     if (urlTests.url_contains_domain_test) setIsURLShortened(true);
     else setIsURLShortened(false);
