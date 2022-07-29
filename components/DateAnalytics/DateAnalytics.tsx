@@ -99,7 +99,9 @@ const DateAnalytics = ({ date_analytics, isLoading }: IProps) => {
     //hours logic
     //an array of objects containing particular hour ,
     const currentHour = dayjs().hour();
+    const timezone = new Date().getTimezoneOffset()
     console.log("users current hour: ", dayjs().hour());
+    console.log('timezone offset: ' , timezone)
     // console.log("Current Hour: " , currentHour)
     if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
       let { today_by_hour } = date_analytics;
