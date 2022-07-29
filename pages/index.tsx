@@ -70,8 +70,8 @@ const Home: NextPage = () => {
       </Head>
 
       <section className="flex items-center justify-center  h-screen">
-        <div className="w-11/12 max-w-[600px] mx-auto flex flex-col gap-10 ">
-          <h1 className="font-bold text-[24px] text-center">
+        <div className="w-11/12 max-w-[600px] mx-auto flex flex-col gap-8 ">
+          <h1 className="font-bold text-[32px] md:text-[42px] text-center leading-tight">
             A simple URL shortener{" "}
             <span className="text-[#2B7FFF] block">and more...</span>
           </h1>
@@ -82,9 +82,8 @@ const Home: NextPage = () => {
             <ListItem>
               <>
                 Sign up to track{" "}
-                <span className="text-[#2B7FFF]">
+               
                   short URL&apos;s analytics
-                </span>{" "}
                 :)
               </>
             </ListItem>
@@ -93,26 +92,7 @@ const Home: NextPage = () => {
                 <>You are able to track:</>
               </ListItem>
             </div>
-            <div className="pl-6 text-[14px] mt-1">
-              <ListItem isMiniListItem>
-                Number of visits to short URL
-              </ListItem>
-              <ListItem isMiniListItem>
-                Browsers used by visitors
-              </ListItem>
-              <ListItem isMiniListItem>
-                Operating systems installed on visitors&apos; devices
-              </ListItem>
-              <ListItem isMiniListItem>
-                Sites from which visitors visited short URL
-              </ListItem>
-              <ListItem isMiniListItem>
-                Short URL view count per hour in a day
-              </ListItem>
-              <ListItem isMiniListItem>
-                Short URL view count per day in a month
-              </ListItem>
-            </div>
+            
           </ul>
           <div className="justify-self-stretch">
             <Input

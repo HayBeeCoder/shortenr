@@ -24,13 +24,14 @@ const Dashboard = () => {
   const [isOlderFirst, setIsOlderFirst] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
+  const [isShorteningInProgess, setIsShorteningInProgress] = useState(false);
+  const [url, setUrl] = useState("");
+  const [shortenedUrl, setShortenedUrl] = useState("");
 
   const {
     state: { accessToken, email },
     setState: { setEmail },
   } = useAppContext();
-
-  const [isShorteningInProgess, setIsShorteningInProgress] = useState(false);
 
   const { user_id }: { user_id: string | null } =
     accessToken == "" || !accessToken
@@ -54,16 +55,6 @@ const Dashboard = () => {
       );
 
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
-  const [url, setUrl] = useState("");
-  const [shortenedUrl, setShortenedUrl] = useState("");
-
-  // console.log()
-  // console.log("SLICE is: ", SLICE);
-  // console.log("data is:  ", data);
-  // console.log(data && data.results.length > 0);
-  // console.log("dataToShow is:  ", dataToShow);
-  // console.log(isError);
-  // console.log(data)
 
   useEffect(() => {
     if (data && data.results.length > 0) {
@@ -115,27 +106,18 @@ const Dashboard = () => {
       };
       setIsShorteningInProgress(true);
 
-      console.log(formData)
-
-      console.log("Before the request was made")
       axiosInstance
         .post("links/", formData)
         .then((res) => {
-          console.log("On server response")
           if (res.status == 200 || res.status == 201 || res.status == 208) {
-            // console.log(res.data)
-            console.log("res on successful shortening: " , res.data);
-
-            console.log(res.data.short_link)
             setShortenedUrl(res.data.short_link);
+            const doesShortenedUrlExist = data?.results.some(
+              (link) => link.short_link == res.data.short_link
+            );
 
-            const doesShortenedUrlExist = data?.results.some(link => link.short_link == res.data.short_link )
-            console.log("Does shortenedURl Exist: " , doesShortenedUrlExist)
-            if(!doesShortenedUrlExist){
+            if (!doesShortenedUrlExist) {
               mutate({ ...(data as IUserLinks), results: [...r, res.data] });
             }
-
-            console.log("after mutating")
           }
         })
         .catch((e) => console.log("error in dashboard: ", e))
@@ -154,7 +136,6 @@ const Dashboard = () => {
         })
         .catch((e: any) => {
           if (e.response.status == 401) {
-            console.log("isLayouteffect error.");
             router.replace("/login");
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh");
@@ -183,7 +164,6 @@ const Dashboard = () => {
           />
           <button
             className="mini-btn text-[#fff] py-3  border-[#2B7FFF] bg-[#2B7FFF]  md:px-10 flex-shrink-0"
-            // onClick={handleSubmit}
             type="submit"
           >
             Generate short URL
@@ -283,11 +263,3 @@ const Dashboard = () => {
 };
 
 export default RouteGuard(Dashboard);
-
-// export async function getStaticProps() {
-//   return {
-//     props: {
-//       protected: true,
-//     },
-//   }
-// }
