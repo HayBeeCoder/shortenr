@@ -101,7 +101,7 @@ const Home: NextPage = () => {
                 Browsers used by visitors
               </ListItem>
               <ListItem isMiniListItem>
-                Operating systems installed on visitors' devices
+                Operating systems installed on visitors&apos; devices
               </ListItem>
               <ListItem isMiniListItem>
                 Sites from which visitors visited short URL
