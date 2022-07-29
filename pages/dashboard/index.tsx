@@ -1,17 +1,6 @@
-import axios, { AxiosError } from "axios";
-import dayjs from "dayjs";
 import jwtDecode from "jwt-decode";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, {
-  useCallback,
-  useDebugValue,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
-import { KeyedMutator, mutate } from "swr";
-import Button from "../../components/Button";
+import { useRouter } from "next/router";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Input from "../../components/Input";
 import Loader from "../../components/Loader/Loader";
 import Pagination from "../../components/Pagination/Pagination";
@@ -22,46 +11,38 @@ import Sorter from "../../components/Sorter/Sorter";
 import TableHeader from "../../components/Table/TableHeader";
 import TableRow from "../../components/Table/TableRow";
 import UrlBanners from "../../components/UrlBanners/UrlBanners";
-import {
-  MAX_URL_CHARACTERS_POSSIBLE,
-  REGEX_URL,
-  REGEX_WHITESPACE,
-  ROW_PER_PAGE,
-  SERVER_DOMAIN,
-} from "../../constants";
-// import { mutate } from 'swr'
+import { MAX_URL_CHARACTERS_POSSIBLE, ROW_PER_PAGE } from "../../constants";
 import { useAppContext } from "../../context/state";
 import { validateURL } from "../../helpers/validateURL";
 import useFetchLinks from "../../hooks/useFetchLinks";
-import useFetchUser from "../../hooks/useFetchUser";
 import axiosInstance from "../../Services/axios.services";
 
-// const isValidURL = REGEX_URL.test(input) && !input.includes(SERVER_DOMAIN) && Boolean(new URL(input))
-// setIsURLValid(isValidURL)
-// let shouldUpdateDateToShow = true
 const Dashboard = () => {
   const router = useRouter();
-  // const [shouldUpdateDateToShow, setShouldUpdateDateToShow] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
   const [isURLShortened, setIsURLShortened] = useState(false);
   const [isOlderFirst, setIsOlderFirst] = useState(true);
   const [isURLVeryLong, setIsURLVeryLong] = useState(false);
   const [isURLValid, setIsURLValid] = useState(true);
+
   const {
     state: { accessToken, email },
-    setState: { setEmail, setLink },
+    setState: { setEmail },
   } = useAppContext();
+
   const [isShorteningInProgess, setIsShorteningInProgress] = useState(false);
-  // console.log(accessToken)
+
   const { user_id }: { user_id: string | null } =
     accessToken == "" || !accessToken
       ? { user_id: null }
       : jwtDecode(accessToken);
+
   const { data, isLoading, mutate, isError, sorteddata } = useFetchLinks(email);
+
   const [dataLength, setDataLength] = useState<number | undefined>(
     data?.results.length
   );
+
   const SLICE = isOlderFirst
     ? sorteddata?.results.slice(
         currentPage * ROW_PER_PAGE,
@@ -71,6 +52,7 @@ const Dashboard = () => {
         currentPage * ROW_PER_PAGE,
         ROW_PER_PAGE * (currentPage + 1)
       );
+
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
   const [url, setUrl] = useState("");
   const [shortenedUrl, setShortenedUrl] = useState("");
@@ -88,12 +70,10 @@ const Dashboard = () => {
       setDataLength(data.results.length);
       setDataToShow(SLICE);
     }
-    // setDataLength()
   }, [data, isLoading, isOlderFirst]);
 
   useEffect(() => {
     if (isError && isError.response.status == 401) {
-      // console.log("isError oooooo");
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh");
       router.replace("/login");
@@ -103,12 +83,8 @@ const Dashboard = () => {
   const handleInput = (e: React.FormEvent) => {
     setShortenedUrl("");
     const { value } = e.target as HTMLInputElement;
-    // let isValidURL;
-    // try {
+
     const urlTests = validateURL(value);
-    // console.log("is url valid: ?" , isValidURL)
-    // } catch (e) {
-    // isValidURL = false;
 
     if (value.length > MAX_URL_CHARACTERS_POSSIBLE) {
       setIsURLVeryLong(true);
@@ -116,9 +92,6 @@ const Dashboard = () => {
 
     if (urlTests.regex_test) setIsURLValid(true);
     else setIsURLValid(false);
-
-    // console.log("regex_test: ", urlTests.regex_test);
-   
 
     if (urlTests.url_contains_domain_test) setIsURLShortened(true);
     else setIsURLShortened(false);
@@ -141,12 +114,17 @@ const Dashboard = () => {
         long_link: url.trim(),
       };
       setIsShorteningInProgress(true);
+
+      console.log(formData)
+
+      console.log("Before the request was made")
       axiosInstance
         .post("links/", formData)
         .then((res) => {
+          console.log("On server response")
           if (res.status == 200 || res.status == 201 || res.status == 208) {
             // console.log(res.data)
-
+            console.log("res on successful shortening: " , res.data);
             setShortenedUrl(res.data.short_link);
             mutate({ ...(data as IUserLinks), results: [...r, res.data] });
           }
@@ -246,26 +224,29 @@ const Dashboard = () => {
 
       {/* Table to show when data arrives  */}
       {data && data.results.length > 0 && (
-        <div >
+        <div>
           <p className="text-sm text-center mb-2">
-            <span className="font-bold">
+            <span className="font-bold">Note:</span>
+            The table below can be scrolled rightwards.
+          </p>
 
-            Note:
-            </span>
-           The table below can be scrolled rightwards.</p>
-
-        <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto min-h-[651px]">
-          <table className="w-full min-w-[650px] px-3 text-left">
-          {/* <table className="w-full min-w-[800px] px-3 text-left"> */}
-            <TableHeader />
-            <tbody className="text-sm">
-              {dataToShow?.map((link, index) => (
-                <TableRow link={link} data={data} mutate={mutate} key={index} />
-              ))}
-            </tbody>
-          </table>
+          <div className="w-full  px-3 overflow-x-scroll lg:overflow-x-auto min-h-[651px]">
+            <table className="w-full min-w-[650px] px-3 text-left">
+              {/* <table className="w-full min-w-[800px] px-3 text-left"> */}
+              <TableHeader />
+              <tbody className="text-sm">
+                {dataToShow?.map((link, index) => (
+                  <TableRow
+                    link={link}
+                    data={data}
+                    mutate={mutate}
+                    key={index}
+                  />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
       )}
 
       {/* Pagination component goes here  */}
