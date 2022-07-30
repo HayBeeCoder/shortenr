@@ -26,6 +26,14 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
   const labels = [hourLabel, dayLabel];
   const counts = [hourCount, dayViewsCount];
 
+
+  const OFFSET_IN_MINUTES = new Date().getTimezoneOffset();
+  const LOCAL_OFFSET = OFFSET_IN_MINUTES / 60;
+  const SERVER_OFFSET = parseInt(serverOffset);
+  const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
+  const currentHour = dayjs().hour();
+
+
   useEffect(() => {
     let day_count = 1;
 
@@ -33,12 +41,17 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       let { current_month } = date_analytics;
       // let last_item = current_month[current_month.length - 1];
       let first_item = date_analytics.current_month[0];
-
+      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET 
       //using below variable makes the chart stop at the last time a visitor visits the site
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
 
       //using below variable makes the chart stop at the current day
+      
       let today = new Date().getDate();
+      console.log("today is: " , today)
+      if(newHour < 0) today = today - 1
+      else today = today + 1
+    
 
       const length_of_month = dayjs(first_item.date).daysInMonth();
       //using below daysInMonth method seems to not work for some dates,
@@ -77,11 +90,11 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
     //all these need consideration when there is a need  to display per hour/per day views based on users' local timezone
     // rather than the one in the server( currently in use )
-    const OFFSET_IN_MINUTES = new Date().getTimezoneOffset();
-    const LOCAL_OFFSET = OFFSET_IN_MINUTES / 60;
-    const SERVER_OFFSET = parseInt(serverOffset);
-    const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
-    const currentHour = dayjs().hour();
+    // const OFFSET_IN_MINUTES = new Date().getTimezoneOffset();
+    // const LOCAL_OFFSET = OFFSET_IN_MINUTES / 60;
+    // const SERVER_OFFSET = parseInt(serverOffset);
+    // const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
+    // const currentHour = dayjs().hour();
 
       console.log("Local offset: " , LOCAL_OFFSET)
       console.log("server offset: " , SERVER_OFFSET)
