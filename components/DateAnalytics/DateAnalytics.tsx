@@ -98,7 +98,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
       for (let i = 0; i < today_by_hour.length; i++) {
         const item = today_by_hour[i];
-        views_of_day[item.time__hour + 1] = item.count__sum;
+        views_of_day[item.time__hour ] = item.count__sum;
       }
 
       setHourCount(views_of_day);
@@ -109,6 +109,8 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
   // console.log("days:  ", dayLabel);
   // console.log("views:  ", dayViewsCount);
+  // console.log("Hour value : " , hourCount )
+  // console.log("Hour label : " , hourLabel )
 
   const monthChart = useCallback(() => {
     const canvasElement = document.getElementById(
