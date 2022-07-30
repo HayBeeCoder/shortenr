@@ -49,8 +49,10 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       
       let today = new Date().getDate();
       console.log("today is: " , today)
+      console.log("todate is: " , new Date())
       if(newHour < 0) today = today - 1
-      else today = today + 1
+      else if(newHour >= 24) today = today + 1
+    
     
 
       const length_of_month = dayjs(first_item.date).daysInMonth();
@@ -65,10 +67,12 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
       setDayLabels(dayLabelsArray);
 
-      const number_of_view_days = today;
+      // const number_of_view_days = today;
 
       // const views_of_month = new Array(day_of_last_item).fill(0);
-      const views_of_month = new Array(number_of_view_days).fill(0);
+      console.log("immediate today: " , today)
+      const views_of_month = new Array(today).fill(0);
+      console.log("month length: " , views_of_month.length)
       // const {current_month } = date_analytics
       for (let i = 0; i < current_month.length; i++) {
         let item = current_month[i];
@@ -134,8 +138,8 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
   // console.log("days:  ", dayLabel);
   // console.log("views:  ", dayViewsCount);
-  console.log("Hour value : " , hourCount )
-  console.log("Hour label : " , hourLabel )
+  console.log("Day value : " , dayViewsCount )
+  console.log("Day label : " , dayLabel )
 
   const monthChart = useCallback(() => {
     const canvasElement = document.getElementById(
