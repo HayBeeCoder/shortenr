@@ -57,7 +57,7 @@ const Dashboard = () => {
   const [dataToShow, setDataToShow] = useState<IUserLink[] | undefined>(SLICE);
 
   useEffect(() => {
-    if (data && data.results.length > 0) {
+    if (data && data.results.length >= 0) {
       setDataLength(data.results.length);
       setDataToShow(SLICE);
     }
