@@ -113,6 +113,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       console.log(" current hour: " , currentHour)
       let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET 
       if (newHour < 0) newHour = 24 + newHour
+      if( newHour >= 24) newHour = newHour - 24
 
       console.log("new hour: " , newHour)
       const views_of_day = new Array(

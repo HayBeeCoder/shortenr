@@ -63,7 +63,7 @@ console.log(data?.date_created)
         })
         .catch((e: any) => {
           if (e.response.status == 401 || e.response.status == 403) {
-            console.log(e);
+            // console.log(e);
             router.replace("/login");
             localStorage.removeItem("access_token");
             localStorage.removeItem("refresh");

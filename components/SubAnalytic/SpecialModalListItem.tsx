@@ -9,11 +9,14 @@ interface IProps{
 
 const SpecialModalListItem = ({isSelected,setSelected, index,children}: IProps) => {
     
-
+const handleClick = ( e: React.FormEvent) => {
+  e.stopPropagation()
+  setSelected(index)
+}
 
 
   return (
-        <li><button className= {`px-4 py-2 w-full ${isSelected ? "bg-[#0B1A30] text-white" : "" }`} onClick={() => setSelected(index)}>{children}</button></li>
+        <li><button className= {`px-4 py-2 w-full ${isSelected ? "bg-[#0B1A30] text-white" : "" }`} onClick={(e) => handleClick(e)}>{children}</button></li>
   )
 }
 

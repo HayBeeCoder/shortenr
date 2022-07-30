@@ -27,7 +27,7 @@ const SubAnalytic = ({
   const [showToolTip, setShowToolTip] = useState(false);
   const [isSpecialModalVisible, setIsSpecialModalvisible] = useState(false);
 
-  useEffect(() => {});
+  // useEffect(() => {});
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -39,12 +39,27 @@ const SubAnalytic = ({
     return () => clearInterval(timeout);
   });
 
-  const handleClick = () => {
+  const handleClick = (e: React.FormEvent) => {
+    e.stopPropagation()
+    const listener = function() {
+      if(isSpecialModalVisible){
+        setIsSpecialModalvisible((value: boolean) => false)
+      }
+    }
     // console.log("IsSpecialModalvisible: ", isSpecialModalVisible);
-    if(isSpecialModalVisible) setIsSpecialModalvisible(false) 
-    if(!isSpecialModalVisible) setIsSpecialModalvisible(true) 
+    // if(isSpecialModalVisible) setIsSpecialModalvisible(false) 
+    // if(!isSpecialModalVisible) setIsSpecialModalvisible(true) 
     // setIsSpecialModalvisible((isSpecialModalVisible) => !isSpecialModalVisible);
+    document.body.addEventListener("click" , listener)
+    setIsSpecialModalvisible((value: boolean) => !value)
   };
+
+  useEffect(() => {
+    const listener = () => setIsSpecialModalvisible((v: boolean) => false);
+    document.body.addEventListener("click", listener);
+    return () => document.body.removeEventListener("click", listener);
+
+}, []);
 
   return (
     <div
@@ -59,7 +74,7 @@ const SubAnalytic = ({
           <div className="w-[250px] relative shadow">
             <button
               className="font-bold text-center text-[18px] w-full gap-5 flex justify-between items-center px-4"
-              onClick={() => handleClick()}
+              onClick={(e) => handleClick(e)}
             >
               <span className="">{SPECIAL_HEADER_OPTIONS[selected as number]}</span>
               <span className="">
