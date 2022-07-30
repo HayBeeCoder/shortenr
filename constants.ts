@@ -11,6 +11,8 @@ const SERVER_DOMAIN = "https://shrtenr.herokuapp.com";
 
 const MAX_URL_CHARACTERS_POSSIBLE = 1000;
 
+const Y_AXIS_LENGTH = 10
+
 const ROW_PER_PAGE = 10;
 
 //below regex matches a space character
@@ -57,4 +59,5 @@ export {
   ROW_PER_PAGE,
   TIME_ZONE,
   HOURS,
+  Y_AXIS_LENGTH
 };

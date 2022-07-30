@@ -186,7 +186,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
         selected={selected}
         setSelected={setSelected}
       >
-        <div className="px-4  h-[300px] md:h-[250px]  ">
+        <div className="px-4  h-[350px] md:h-[250px]  ">
           {JSON.stringify(date_analytics.current_month) !== "[]" ? (
             <canvas id="dateChart" className=" md:h-full w-full"></canvas>
           ) : (
