@@ -47,7 +47,7 @@ const Page = () => {
     localStorage.removeItem("refresh");
   }
   // console.log(data)
-
+console.log(data?.date_created)
   useLayoutEffect(() => {
     // console.log(user_id)
 
@@ -144,7 +144,7 @@ const Page = () => {
                 : ({} as IDateTimeAnalytics)
             }
             serverOffset={data?.date_created ? 
-              data.date_created.slice(index_of_last_semicolon_in_date_created  - 2 , index_of_last_semicolon_in_date_created)
+              data.date_created.slice(index_of_last_semicolon_in_date_created  - 3 , index_of_last_semicolon_in_date_created)
               :  ''} 
           />
         </div>

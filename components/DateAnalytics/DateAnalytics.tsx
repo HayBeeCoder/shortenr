@@ -83,18 +83,29 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
     const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
     const currentHour = dayjs().hour();
 
+      console.log("Local offset: " , LOCAL_OFFSET)
+      console.log("server offset: " , SERVER_OFFSET)
+      console.log("difference: " , DIFFERENCE_BETWEEN_OFFSET)
     // console.log("local offset" , LOCAL_OFFSET)
     // console.log("server offset: " , SERVER_OFFSET)
     // console.log("time zone in hour: " , LOCAL_OFFSET)
     // console.log("users current hour: ", dayjs().hour());
     // console.log('timezone offset: ' , OFFSET_IN_MINUTES)
     // console.log("Current Hour: " , currentHour)
+    // console.log(date)
+    
+    console.log("date_analytics" , date_analytics)
     if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
       let { today_by_hour } = date_analytics;
+      console.log(" current hour: " , currentHour)
+      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET 
+      if (newHour < 0) newHour = 24 + newHour
 
+      console.log("new hour: " , newHour)
       const views_of_day = new Array(
-        currentHour + DIFFERENCE_BETWEEN_OFFSET
+        newHour
       ).fill(0);
+
 
       for (let i = 0; i < today_by_hour.length; i++) {
         const item = today_by_hour[i];
@@ -109,18 +120,15 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
   // console.log("days:  ", dayLabel);
   // console.log("views:  ", dayViewsCount);
-  // console.log("Hour value : " , hourCount )
-  // console.log("Hour label : " , hourLabel )
+  console.log("Hour value : " , hourCount )
+  console.log("Hour label : " , hourLabel )
 
   const monthChart = useCallback(() => {
     const canvasElement = document.getElementById(
       "dateChart"
     ) as HTMLCanvasElement;
     if (dayLabel && dayViewsCount) {
-      // console.log("hour count: ", hourCount);
-      // console.log("hout label count", hourLabel);
-
-      // console.log("day count: ", dayViewsCount);
+     
       // console.log("day label count: ", dayLabel);
       const chartType: ChartType = "line";
 
@@ -149,9 +157,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       setError(e);
     }
 
-    // return () => {
-    //   second
-    // }
+  
   }, [monthChart, date_analytics]);
 
   return (
