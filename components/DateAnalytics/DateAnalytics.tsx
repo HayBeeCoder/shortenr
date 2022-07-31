@@ -120,8 +120,8 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       if (newHour >= 24) newHour = newHour - 24;
        console.log("diff: " , DIFFERENCE_BETWEEN_OFFSET)   
        console.log("current: " , currentHour )
-      // console.log("new hour: " , newHour)
-      const views_of_day = new Array(newHour).fill(0);
+       console.log("new hour: " , newHour)
+      const views_of_day = new Array(newHour + 1).fill(0);
       // console.log(newHour);
       // console.log("views array at initial creation :  ", views_of_day);
       // console.log("today by hour", today_by_hour);
