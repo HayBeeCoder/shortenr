@@ -41,13 +41,13 @@ const Page = () => {
   // console.log(data)
   if (isError && isError.response.status === 403) {
     // console.log(e);
-    console.log("Error is : ", isError);
+    // console.log("Error is : ", isError);
     router.replace("/login");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh");
   }
   // console.log(data)
-console.log(data?.date_created)
+// console.log(data?.date_created)
   useLayoutEffect(() => {
     // console.log(user_id)
 

@@ -42,6 +42,11 @@ const buildScales = (
 ) => {
   // console.log('selelected date time anaalytics: ' , selectedForDateTimeAnalytics)
   const Xaxes = ["hours in current day", "days in current month"];
+  let stepSize = getYaxisStepsize(Math.max(...data));
+  if (stepSize == 0) {
+    stepSize = 1;
+  }
+
   const scales = {
     x: {
       ticks: {
@@ -65,15 +70,15 @@ const buildScales = (
     },
 
     y: {
-      // suggestedMin: Math.(Math.max(...data)),
+      //  suggestedMin: 0,
       // suggestedMax: Math.ceil(Math.max(...data)),
-
+      min: 0,
       ticks: {
         fontFamily: "Lato",
         fontColor: "#091E42",
         fontSize: 10,
         color: "#B3B9C4",
-        stepSize: getYaxisStepsize(Math.max(...data)),
+        stepSize,
         // padding: 0
       },
       title: {
@@ -142,7 +147,7 @@ const buildChart = (config: IChartConfig, id: number) => {
         point: {
           pointStyle: "circle",
           backgroundColor: "green",
-          radius: 3,
+          radius: 5,
           borderWidth: 15,
           borderColor: "#E6F0FF",
         },

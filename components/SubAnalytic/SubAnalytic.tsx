@@ -60,7 +60,7 @@ const SubAnalytic = ({
     return () => document.body.removeEventListener("click", listener);
 
 }, []);
-
+// console.log("Oguntade Omowale")
   return (
     <div
       className={`py-7  w-full bg-[#FFF] rounded-md  aspect-square   ${

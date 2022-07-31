@@ -26,13 +26,11 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
   const labels = [hourLabel, dayLabel];
   const counts = [hourCount, dayViewsCount];
 
-
   const OFFSET_IN_MINUTES = new Date().getTimezoneOffset();
   const LOCAL_OFFSET = OFFSET_IN_MINUTES / 60;
   const SERVER_OFFSET = parseInt(serverOffset);
   const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
   const currentHour = dayjs().hour();
-
 
   useEffect(() => {
     let day_count = 1;
@@ -41,19 +39,17 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       let { current_month } = date_analytics;
       // let last_item = current_month[current_month.length - 1];
       let first_item = date_analytics.current_month[0];
-      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET 
+      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
       //using below variable makes the chart stop at the last time a visitor visits the site
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
 
       //using below variable makes the chart stop at the current day
-      
+
       let today = new Date().getDate();
-      console.log("today is: " , today)
-      console.log("todate is: " , new Date())
-      if(newHour < 0) today = today - 1
-      else if(newHour >= 24) today = today + 1
-    
-    
+      // console.log("today is: " , today)
+      // console.log("todate is: " , new Date())
+      if (newHour < 0) today = today - 1;
+      else if (newHour >= 24) today = today + 1;
 
       const length_of_month = dayjs(first_item.date).daysInMonth();
       //using below daysInMonth method seems to not work for some dates,
@@ -70,9 +66,9 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       // const number_of_view_days = today;
 
       // const views_of_month = new Array(day_of_last_item).fill(0);
-      console.log("immediate today: " , today)
+      // console.log("immediate today: " , today)
       const views_of_month = new Array(today).fill(0);
-      console.log("month length: " , views_of_month.length)
+      // console.log("month length: " , views_of_month.length)
       // const {current_month } = date_analytics
       for (let i = 0; i < current_month.length; i++) {
         let item = current_month[i];
@@ -100,9 +96,9 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
     // const DIFFERENCE_BETWEEN_OFFSET = LOCAL_OFFSET + SERVER_OFFSET;
     // const currentHour = dayjs().hour();
 
-      console.log("Local offset: " , LOCAL_OFFSET)
-      console.log("server offset: " , SERVER_OFFSET)
-      console.log("difference: " , DIFFERENCE_BETWEEN_OFFSET)
+    // console.log("Local offset: " , LOCAL_OFFSET)
+    // console.log("server offset: " , SERVER_OFFSET)
+    // console.log("difference: " , DIFFERENCE_BETWEEN_OFFSET)
     // console.log("local offset" , LOCAL_OFFSET)
     // console.log("server offset: " , SERVER_OFFSET)
     // console.log("time zone in hour: " , LOCAL_OFFSET)
@@ -110,24 +106,26 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
     // console.log('timezone offset: ' , OFFSET_IN_MINUTES)
     // console.log("Current Hour: " , currentHour)
     // console.log(date)
-    
-    console.log("date_analytics" , date_analytics)
-    if (date_analytics.today_by_hour && date_analytics.today_by_hour[0]) {
+    console.log("error in dataanalytics: ", date_analytics);
+    // console.log("date_analytics" , date_analytics)
+    if (date_analytics.today_by_hour) {
       let { today_by_hour } = date_analytics;
-      console.log(" current hour: " , currentHour)
-      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET 
-      if (newHour < 0) newHour = 24 + newHour
-      if( newHour >= 24) newHour = newHour - 24
+      // console.log(" current hour: " , currentHour)
+      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
+      if (newHour < 0) newHour = 24 + newHour;
+      if (newHour >= 24) newHour = newHour - 24;
 
-      console.log("new hour: " , newHour)
-      const views_of_day = new Array(
-        newHour
-      ).fill(0);
+      // console.log("new hour: " , newHour)
+      const views_of_day = new Array(newHour).fill(0);
+      console.log(newHour);
+      console.log("views array at initial creation :  ", views_of_day);
+      console.log("today by hour", today_by_hour);
 
-
-      for (let i = 0; i < today_by_hour.length; i++) {
-        const item = today_by_hour[i];
-        views_of_day[item.time__hour ] = item.count__sum;
+      if (today_by_hour.length != 0) {
+        for (let i = 0; i < today_by_hour.length; i++) {
+          const item = today_by_hour[i];
+          views_of_day[item.time__hour] = item.count__sum;
+        }
       }
 
       setHourCount(views_of_day);
@@ -138,15 +136,14 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
   // console.log("days:  ", dayLabel);
   // console.log("views:  ", dayViewsCount);
-  console.log("Day value : " , dayViewsCount )
-  console.log("Day label : " , dayLabel )
+  // console.log("Day value : " , dayViewsCount )
+  // console.log("Day label : " , dayLabel )
 
   const monthChart = useCallback(() => {
     const canvasElement = document.getElementById(
       "dateChart"
     ) as HTMLCanvasElement;
     if (dayLabel && dayViewsCount) {
-     
       // console.log("day label count: ", dayLabel);
       const chartType: ChartType = "line";
 
@@ -174,13 +171,12 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
     } catch (e: any) {
       setError(e);
     }
-
-  
   }, [monthChart, date_analytics]);
-
+  console.log(hourLabel);
+  console.log(hourCount);
   return (
     <>
-      <div>{error}</div>
+      {/* <div>{error}</div> */}
       <SubAnalytic
         title="Current Month Views"
         // toolTipMessage="Visits count within current month"

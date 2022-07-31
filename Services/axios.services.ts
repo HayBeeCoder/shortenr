@@ -48,7 +48,7 @@ axiosInstance.interceptors.request.use(async (req) => {
         BASE_URL + "auth/jwt/verify/",
         { token: `${authToken}` }
       );
-      console.log(accessTokenIsValid)
+      // console.log(accessTokenIsValid)
       if (req.headers) {
         req.headers.Authorization = `Bearer ${authToken}`;
       }

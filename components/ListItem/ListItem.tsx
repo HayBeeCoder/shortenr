@@ -32,13 +32,13 @@ const ListItem: React.FC<IProps> = ({ children, isMiniListItem }) => {
           </svg>
         )}
       </span>
-      <p
+      <div
         className={` ${
           isMiniListItem ? "text-[14px]" : "text-[16px]"
         } w-full font-regular`}
       >
         {children}
-      </p>
+      </div>
     </li>
   );
 };

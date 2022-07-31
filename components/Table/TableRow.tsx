@@ -2,10 +2,11 @@ import { AxiosError } from "axios";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { KeyedMutator } from "swr";
 import { useAppContext } from "../../context/state";
 import axiosInstance from "../../Services/axios.services";
+import Loader from "../Loader/Loader";
 
 interface IProps {
   data: IUserLinks | undefined;
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const TableRow = ({ link, data, mutate }: IProps) => {
+  const [isDeleting,setIsDeleting] = useState(false)
   const {
     setState: { setLink },
   } = useAppContext();
@@ -22,11 +24,18 @@ const TableRow = ({ link, data, mutate }: IProps) => {
   // const TableRow = useCallback(
   //     ({ long_url, short_url, last_visited, id, mutate }: ITableRow) => {
   const handleDelete = (id: number) => {
+
+    setIsDeleting(true)
     axiosInstance
       .delete(`links/${id}`)
       .then((res) => {
         if (res.status == 204) {
-          mutate();
+          // console.log(res)
+          const filterate = data?.results.filter(link => link.id !== id) as IUserLink[]
+          console.log('filterate is: ', filterate)
+          // mutate({...(data as IUserLinks),results:[...filterate]});
+          mutate()
+          // setIsDeleting(false)
         }
       })
       .catch((e: AxiosError) => {
@@ -37,7 +46,7 @@ const TableRow = ({ link, data, mutate }: IProps) => {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh");
         }
-      });
+      }).finally(() => setIsDeleting(false));
   };
   // console.log("last visited date is: ", last_visited);
   return (
@@ -63,7 +72,7 @@ const TableRow = ({ link, data, mutate }: IProps) => {
             className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] "
             onClick={() => handleDelete(link.id)}
           >
-            Delete
+             { isDeleting ? <Loader color="bg-[#BD2C00]"/> :  "Delete" }
           </button>
           {/* <button
                   className="mini-btn bg-[#F8EAE6] text-[#BD2C00] border-[#bd2c00] md:hidden"
