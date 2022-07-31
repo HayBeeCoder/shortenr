@@ -146,6 +146,9 @@ const Page = () => {
             serverOffset={data?.date_created ? 
               data.date_created.slice(index_of_last_semicolon_in_date_created  - 3 , index_of_last_semicolon_in_date_created)
               :  ''} 
+              user_current_day={data?.user_current_day as string}
+              user_current_month={data?.user_current_month as string}
+              user_current_date={data?.user_current_date as string}
           />
         </div>
       </div>

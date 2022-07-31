@@ -52,8 +52,9 @@ interface IUserLink {
     // "this_week_by_day": [],
     other_analytic: IOtherAnalytics
   },
-
-
+  user_current_month: string,
+  user_current_day: string,
+  user_current_date: string
 }
 
 type CurrentMonth = {

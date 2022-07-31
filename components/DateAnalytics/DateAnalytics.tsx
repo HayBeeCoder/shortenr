@@ -11,13 +11,16 @@ interface IProps {
   date_analytics: IDateTimeAnalytics;
   isLoading: boolean;
   serverOffset: string;
+  user_current_day: string,
+  user_current_month: string
+  user_current_date: string
 }
 
 function getDayFromDate(date: string) {
   return parseInt(date.slice(date.length - 2));
 }
 
-const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
+const DateAnalytics = ({ date_analytics, isLoading, serverOffset,user_current_day,user_current_date }: IProps) => {
   const [error, setError] = useState("");
   const [dayLabel, setDayLabels] = useState<string[] | null>(null);
   const [dayViewsCount, setDayViewsCount] = useState<number[] | null>(null);
@@ -54,18 +57,22 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
       let today = new Date().getDate();
       console.log("today is : " , today)
-      let currentDate = dayjs().format().slice(0,10)
+      // let currentDate = dayjs().format().slice(0,10)
       // console.log("current d: " , currentDate)
       // console.log("today is: " , today)
       // console.log("todate is: " , new Date())
-      if (newHour < 0) today = today - 1;
-      else if (newHour >= 24) today = today + 1;
+      // if (newHour < 0) today = today - 1;
+      // else if (newHour >= 24) today = today + 1;
+// console.log(user_current_da)
+      today = parseInt(user_current_date.slice(8))
       let length_of_month: number
 
-      if(JSON.stringify(date_analytics.current_month) == '[]'){
-            length_of_month = dayjs(currentDate).daysInMonth()
-      }else  length_of_month = dayjs(first_item.date).daysInMonth();
+      // if(JSON.stringify(date_analytics.current_month) == '[]'){
+      //       length_of_month = dayjs(currentDate).daysInMonth()
+      // }else  length_of_month = dayjs(first_item.date).daysInMonth();
 
+      // // length_of_month = 
+      length_of_month  = dayjs(user_current_date).daysInMonth()
 
       //using below daysInMonth method seems to not work for some dates,
       //I gat my eyes on you though , we shall see
