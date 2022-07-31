@@ -1,4 +1,5 @@
 import { ChartType } from "chart.js";
+import { Console } from "console";
 import dayjs from "dayjs";
 import React, { useCallback, useEffect, useState } from "react";
 import { isCompositeComponent } from "react-dom/test-utils";
@@ -46,15 +47,18 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
       //using below variable makes the chart stop at the current day
 
+      console.log("offseT: " , DIFFERENCE_BETWEEN_OFFSET)
+
       let today = new Date().getDate();
+      console.log("today is : " , today)
       let currentDate = dayjs().format().slice(0,10)
       // console.log("current d: " , currentDate)
       // console.log("today is: " , today)
       // console.log("todate is: " , new Date())
       if (newHour < 0) today = today - 1;
       else if (newHour >= 24) today = today + 1;
-
       let length_of_month: number
+
       if(JSON.stringify(date_analytics.current_month) == '[]'){
             length_of_month = dayjs(currentDate).daysInMonth()
       }else  length_of_month = dayjs(first_item.date).daysInMonth();
@@ -75,7 +79,9 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
 
       // const views_of_month = new Array(day_of_last_item).fill(0);
       // console.log("immediate today: " , today)
+      console.log(today)
       const views_of_month = new Array(today).fill(0);
+      console.log(views_of_month)
       // console.log("month length: " , views_of_month.length)
       // const {current_month } = date_analytics
       if(current_month.length != 0) {
