@@ -14,8 +14,9 @@ const ViewBanner = ({ isLoading, view_count }: IProps) => {
                 isLoading ?
                     <Skeleton className='w-32 aspect-square absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' /> :
 
-                    <p className='font-bold text-5xl text-[#2B7FFF] px-9 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                    <p className='font-bold text-6xl text-[#2B7FFF] px-9 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                         {view_count}
+                        {/* 10000 */}
                     </p>
             }
 

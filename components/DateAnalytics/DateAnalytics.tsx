@@ -43,20 +43,20 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset,user_current_da
     if (date_analytics.current_month  ) {
       let { current_month } = date_analytics;
       // let last_item = current_month[current_month.length - 1];
-      let first_item = current_month[0];
-      let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
+      // let first_item = current_month[0];
+      // let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
       //using below variable makes the chart stop at the last time a visitor visits the site
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
 
       //using below variable makes the chart stop at the current day
-      console.log("current hour :" , currentHour)
-      console.log("new hour :" , newHour)
-      console.log("local: " , LOCAL_OFFSET)
-      console.log("server: " , SERVER_OFFSET)
-      console.log("offseT: " , DIFFERENCE_BETWEEN_OFFSET)
+      // console.log("current hour :" , currentHour)
+      // console.log("new hour :" , newHour)
+      // console.log("local: " , LOCAL_OFFSET)
+      // console.log("server: " , SERVER_OFFSET)
+      // console.log("offseT: " , DIFFERENCE_BETWEEN_OFFSET)
 
       let today = new Date().getDate();
-      console.log("today is : " , today)
+      // console.log("today is : " , today)
       // let currentDate = dayjs().format().slice(0,10)
       // console.log("current d: " , currentDate)
       // console.log("today is: " , today)
@@ -89,9 +89,9 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset,user_current_da
 
       // const views_of_month = new Array(day_of_last_item).fill(0);
       // console.log("immediate today: " , today)
-      console.log(today)
+      // console.log(today)
       const views_of_month = new Array(today).fill(0);
-      console.log(views_of_month)
+      // console.log(views_of_month)
       // console.log("month length: " , views_of_month.length)
       // const {current_month } = date_analytics
       if(current_month.length != 0) {
