@@ -36,7 +36,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
   useEffect(() => {
     let day_count = 1;
 
-    if (date_analytics.current_month ) {
+    if (date_analytics.current_month  ) {
       let { current_month } = date_analytics;
       // let last_item = current_month[current_month.length - 1];
       let first_item = current_month[0];
@@ -47,12 +47,19 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       //using below variable makes the chart stop at the current day
 
       let today = new Date().getDate();
+      let currentDate = dayjs().format().slice(0,10)
+      // console.log("current d: " , currentDate)
       // console.log("today is: " , today)
       // console.log("todate is: " , new Date())
       if (newHour < 0) today = today - 1;
       else if (newHour >= 24) today = today + 1;
 
-      const length_of_month = dayjs(first_item.date).daysInMonth();
+      let length_of_month: number
+      if(JSON.stringify(date_analytics.current_month) == '[]'){
+            length_of_month = dayjs(currentDate).daysInMonth()
+      }else  length_of_month = dayjs(first_item.date).daysInMonth();
+
+
       //using below daysInMonth method seems to not work for some dates,
       //I gat my eyes on you though , we shall see
       //snaps finger
@@ -118,9 +125,9 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
       if (newHour < 0) newHour = 24 + newHour;
       if (newHour >= 24) newHour = newHour - 24;
-       console.log("diff: " , DIFFERENCE_BETWEEN_OFFSET)   
-       console.log("current: " , currentHour )
-       console.log("new hour: " , newHour)
+      //  console.log("diff: " , DIFFERENCE_BETWEEN_OFFSET)   
+      //  console.log("current: " , currentHour )
+      //  console.log("new h?our: " , newHour)
       const views_of_day = new Array(newHour + 1).fill(0);
       // console.log(newHour);
       // console.log("views array at initial creation :  ", views_of_day);

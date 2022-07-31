@@ -16,7 +16,7 @@ const Devices = ({devices_analytics} : IProps) => {
             {/* {JSON.stringify(total)} */}
             {JSON.stringify(devices_analytics) != "{}" ? (
               Object.entries(devices_analytics).map((referrer, index) => (
-                <>
+                // <>
                 <ListItem key={index}>
                   <div className="flex items-center justify-between w-full gap-2">
                     <span className="  block border-r-[1px]  w-[85%] ">
@@ -29,7 +29,7 @@ const Devices = ({devices_analytics} : IProps) => {
                   </div>
                 </ListItem>
                
-                </>
+                // </>
               ))
             ) : (
               <p className="text-center text-sm italic">No devices yet!</p>
