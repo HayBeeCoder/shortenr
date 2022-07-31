@@ -12,8 +12,9 @@ const Footer = ({ fixed }: IProps) => {
         fixed ? "fixed" : "relative"
       } bottom-0 w-full left-0 z-[10000]`}
     >
-      Powered By:{"   "}
-      <Link href="https://planetscale.com/" passHref>
+      {/* Powered By:{"   "} */}
+      powered by {" "}
+            <Link href="https://planetscale.com/" passHref> 
         <a
           className="underline underline-offset-2 text-[#2B7FFF] "
           target="_blank"
@@ -21,7 +22,9 @@ const Footer = ({ fixed }: IProps) => {
           Planetscale
         </a>
       </Link>{" "}
-      &{"  "}
+      for
+      {"  "}
+      Planetscale x{" "}
       <Link href="https://hashnode.com/" passHref>
         <a
           className="underline underline-offset-2 text-[#2B7FFF]"
@@ -30,6 +33,17 @@ const Footer = ({ fixed }: IProps) => {
           Hashnode
         </a>
       </Link>
+      {" "} 
+     
+      <Link href="https://townhall.hashnode.com/planetscale-hackathon?source=newsletter" passHref>
+        <a
+          className="underline underline-offset-2 text-[#2B7FFF]"
+          target="_blank"
+        >
+          Hackhaton.
+        </a>
+      </Link>
+      
     </footer>
   );
 };

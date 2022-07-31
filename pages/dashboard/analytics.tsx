@@ -121,7 +121,7 @@ const Page = () => {
 
       <div className="text-center  flex justify-center mt-8">
         <button
-          className=" my-2 mini-btn text-[#fff] py-3  h-[46px] bg-blue-600 px-16 w-max "
+          className=" my-2 mini-btn text-[#fff] py-3  h-[46px] bg-blue-600 px-16 w-max hover:opacity-50"
           onClick={() => mutate()}
         >
           Refresh
