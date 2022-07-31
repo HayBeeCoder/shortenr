@@ -1,6 +1,7 @@
 import { ChartType } from "chart.js";
 import dayjs from "dayjs";
 import React, { useCallback, useEffect, useState } from "react";
+import { isCompositeComponent } from "react-dom/test-utils";
 import { HOURS } from "../../constants";
 import buildChart from "../../helpers/buildChart";
 import SubAnalytic from "../SubAnalytic/SubAnalytic";
@@ -35,10 +36,10 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
   useEffect(() => {
     let day_count = 1;
 
-    if (date_analytics.current_month && date_analytics.current_month[0]) {
+    if (date_analytics.current_month ) {
       let { current_month } = date_analytics;
       // let last_item = current_month[current_month.length - 1];
-      let first_item = date_analytics.current_month[0];
+      let first_item = current_month[0];
       let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
       //using below variable makes the chart stop at the last time a visitor visits the site
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
@@ -70,17 +71,20 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       const views_of_month = new Array(today).fill(0);
       // console.log("month length: " , views_of_month.length)
       // const {current_month } = date_analytics
-      for (let i = 0; i < current_month.length; i++) {
-        let item = current_month[i];
-        const day = getDayFromDate(item.date);
-        // console.log("the day is : " , day)
-        // setDayViewsCount((dayViewsCount) => {
-        // let a = dayViewsCount as number[]
-        views_of_month[day - 1] = item.count__sum;
-        // return a
-        // } )
-      }
-      setDayViewsCount(views_of_month);
+      if(current_month.length != 0) {
+
+        for (let i = 0; i < current_month.length; i++) {
+          let item = current_month[i];
+          const day = getDayFromDate(item.date);
+          // console.log("the day is : " , day)
+          // setDayViewsCount((dayViewsCount) => {
+            // let a = dayViewsCount as number[]
+            views_of_month[day - 1] = item.count__sum;
+            // return a
+            // } )
+          }
+        }
+          setDayViewsCount(views_of_month);
     }
 
     // console.log("Hours: ", date_analytics.today_by_hour);
@@ -106,7 +110,7 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
     // console.log('timezone offset: ' , OFFSET_IN_MINUTES)
     // console.log("Current Hour: " , currentHour)
     // console.log(date)
-    console.log("error in dataanalytics: ", date_analytics);
+    // console.log("error in dataanalytics: ", date_analytics);
     // console.log("date_analytics" , date_analytics)
     if (date_analytics.today_by_hour) {
       let { today_by_hour } = date_analytics;
@@ -114,12 +118,13 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       let newHour = currentHour + DIFFERENCE_BETWEEN_OFFSET;
       if (newHour < 0) newHour = 24 + newHour;
       if (newHour >= 24) newHour = newHour - 24;
-
+       console.log("diff: " , DIFFERENCE_BETWEEN_OFFSET)   
+       console.log("current: " , currentHour )
       // console.log("new hour: " , newHour)
       const views_of_day = new Array(newHour).fill(0);
-      console.log(newHour);
-      console.log("views array at initial creation :  ", views_of_day);
-      console.log("today by hour", today_by_hour);
+      // console.log(newHour);
+      // console.log("views array at initial creation :  ", views_of_day);
+      // console.log("today by hour", today_by_hour);
 
       if (today_by_hour.length != 0) {
         for (let i = 0; i < today_by_hour.length; i++) {
@@ -172,8 +177,8 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       setError(e);
     }
   }, [monthChart, date_analytics]);
-  console.log(hourLabel);
-  console.log(hourCount);
+  // console.log(hourLabel);
+  // console.log(hourCount);
   return (
     <>
       {/* <div>{error}</div> */}
