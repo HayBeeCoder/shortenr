@@ -46,7 +46,8 @@ const DateAnalytics = ({ date_analytics, isLoading, serverOffset }: IProps) => {
       // let day_of_last_item = getDayFromDate(last_item?.date as string); // a string would be returnUrl
 
       //using below variable makes the chart stop at the current day
-
+      console.log("local: " , LOCAL_OFFSET)
+      console.log("server: " , SERVER_OFFSET)
       console.log("offseT: " , DIFFERENCE_BETWEEN_OFFSET)
 
       let today = new Date().getDate();
