@@ -27,7 +27,8 @@ const Login = () => {
     setInput({ ...input, [name]: value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault( )
     const formData = {
       email: input.email,
       password: input.password
@@ -83,7 +84,7 @@ const Login = () => {
   return (
     <section className='flex items-center justify-center  h-screen'>
 
-      <div className='w-11/12 max-w-[600px] mx-auto flex flex-col gap-4 ' >
+      <form className='w-11/12 max-w-[600px] mx-auto flex flex-col gap-4 ' onSubmit={(e) => handleSubmit(e)} >
         <h1 className='font-bold text-[24px] text-center'>Log In</h1>
 
         <div className='justify-self-stretch space-y-5'>
@@ -120,7 +121,10 @@ const Login = () => {
             <p className='text-xs text-red-500 '>User doesn&apos;t exist!</p>
           
           }
-          <button className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]' onClick={handleSubmit} >
+          <button
+           className='bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]' 
+           type="submit">
+
             {
               isLoggingIn
                 ?
@@ -142,7 +146,7 @@ const Login = () => {
 
         </div>
 
-      </div>
+      </form>
     </section>
   )
 }
