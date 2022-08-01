@@ -40,7 +40,7 @@ const Footer = ({ fixed }: IProps) => {
           className="underline underline-offset-2 text-[#2B7FFF]"
           target="_blank"
         >
-          Hackhaton.
+          Hackathon.
         </a>
       </Link>
       

@@ -44,7 +44,8 @@ const Home: NextPage = () => {
 
   // console.log("email" , email)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent ) => {
+    e.preventDefault()
     const formData = {
       long_link: input,
     };
@@ -91,6 +92,8 @@ const Home: NextPage = () => {
             
           </ul>
           <div className="justify-self-stretch">
+            <form onSubmit={(e) => handleSubmit(e)}>
+
             <Input
               className=" text-base pr-3 border-[#C3C0C3] h-[46px]"
               labelFor="original_url"
@@ -102,17 +105,18 @@ const Home: NextPage = () => {
             />
             <button
               className="bg-[#0B1A30] my-2 mini-btn text-[#fff] py-3  w-full h-[46px]"
-              onClick={handleSubmit}
+            type="submit"
             >
               {isLoading ? <Loader /> : "Generate short URL"}
             </button>
+            </form>
             {/* <UrlBanners isURLVeryLong={isURLVeryLong} isURLValid={isURLValid} /> */}
             <UrlBanners
               isURLValid={isURLValid}
               isURLVeryLong={isURLVeryLong}
               url={input}
               isURLShortened={isURLShortened}
-            />
+              />
 
             {shortenedUrl && !isURLVeryLong && isURLValid && (
               <ShortenedUrlBanner shortenedUrl={shortenedUrl} />
