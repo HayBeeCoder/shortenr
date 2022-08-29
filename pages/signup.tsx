@@ -98,7 +98,7 @@ const Signup = () => {
       <div className="w-11/12 max-w-[600px] mx-auto flex flex-col gap-4 ">
         <h1 className="font-bold text-[24px] text-center">Create an account</h1>
 
-      <form className="justify-self-stretch space-y-5k" onSubmit={(e) => handleSubmit(e)}>
+      <form className="justify-self-stretch space-y-5" onSubmit={(e) => handleSubmit(e)}>
           <div>
             <Input
               className=" text-base pr-3 border-[#C3C0C3] rounded-[4px] h-[46px] "
